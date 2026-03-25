@@ -4,7 +4,7 @@
   "description": "If using time mode: stop manually / change last duration. Automatic Pro is a profile family built to automate pre-infusion, bloom, and extraction with clever phase stops.",
   "temperature": 89,
   "favorite": true,
-  "selected": false,
+  "selected": true,
   "utility": false,
   "phases": [
     {
@@ -182,19 +182,6 @@
           "value": 40
         }
       ]
-    },
-    {
-      "name": "New Phase",
-      "phase": "brew",
-      "valve": 1,
-      "duration": 0,
-      "temperature": 0,
-      "transition": {
-        "type": "instant",
-        "duration": 0,
-        "adaptive": true
-      },
-      "pump": 100
     }
   ],
   "name": "Automatic Pro 20g [Adaptive Pressure] vIT3_0_29_3"
