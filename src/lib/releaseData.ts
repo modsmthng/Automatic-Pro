@@ -6,23 +6,25 @@ export const profileTypeDefinitions: { id: ProfileType; label: string; descripti
   {
     id: 'direct-lever',
     label: 'Direct Lever',
-    description: 'Static flow based main extraction (Original Automatic Pro)',
+    description:
+      'Static declining flow based main extraction - suitable for all kinds of beans and drinks (the original Automatic Pro experience)',
     note: 'If this causes issues with a fast pressure drop, switch to one of the other variations.',
   },
   {
     id: 'spring-lever',
     label: 'Spring Lever',
-    description: 'Static decreasing pressure based main extraction',
+    description: 'Static declining pressure based main extraction - suitable for medium to dark roasts',
   },
   {
     id: 'adaptive-pressure',
     label: 'Adaptive Pressure',
-    description: 'Adaptive pressure based main extraction',
+    description:
+      'Adaptive pressure based main extraction - the newest variation, suitable for all kinds of beans and drinks, and seems to work particularly well with light to medium roasts',
   },
   {
     id: 'nine-bar',
     label: '9bar',
-    description: 'Static 9 bar pressure based main extraction',
+    description: 'Static 9 bar pressure based main extraction - good to learn what grind size, ratio and temperature do',
   },
   {
     id: 'experimental',
