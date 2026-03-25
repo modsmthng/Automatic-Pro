@@ -373,6 +373,16 @@ h4,
   color: var(--ap-muted);
 }
 
+.ap-profile-type-note {
+  margin: 0.55rem 0 0;
+  color: var(--ap-muted);
+  font-size: 0.92rem;
+}
+
+.ap-profile-type-note-section {
+  margin: 0 0 1rem;
+}
+
 .ap-profile-type-empty,
 .ap-inline-type-badge {
   display: inline-flex;
@@ -390,6 +400,7 @@ h4,
 .ap-profile-type-sections {
   display: grid;
   gap: 1rem;
+  margin-top: 2rem;
 }
 
 .ap-profile-type-section {

@@ -2,11 +2,12 @@ import rawFamilies from '../data/releases.json';
 
 export type ProfileType = 'direct-lever' | 'spring-lever' | 'adaptive-pressure' | 'nine-bar' | 'experimental';
 
-export const profileTypeDefinitions: { id: ProfileType; label: string; description: string }[] = [
+export const profileTypeDefinitions: { id: ProfileType; label: string; description: string; note?: string }[] = [
   {
     id: 'direct-lever',
     label: 'Direct Lever',
-    description: 'Static flow based main extraction',
+    description: 'Static flow based main extraction (Original Automatic Pro)',
+    note: 'If this causes issues with a fast pressure drop, switch to one of the other variations.',
   },
   {
     id: 'spring-lever',
@@ -16,7 +17,7 @@ export const profileTypeDefinitions: { id: ProfileType; label: string; descripti
   {
     id: 'adaptive-pressure',
     label: 'Adaptive Pressure',
-    description: 'Adaptive based pressure main extraction',
+    description: 'Adaptive pressure based main extraction',
   },
   {
     id: 'nine-bar',
@@ -71,6 +72,7 @@ export type CurrentDownloadGroup = {
   type: ProfileType;
   label: string;
   description: string;
+  note?: string;
   sectionId: string;
   downloads: CurrentDownload[];
 };
@@ -225,6 +227,7 @@ export function getCurrentDownloadGroups(family: Family): CurrentDownloadGroup[]
     type: definition.id,
     label: definition.label,
     description: definition.description,
+    note: definition.note,
     sectionId: `profile-type-${definition.id}`,
     downloads: [...(grouped.get(definition.id) ?? [])].sort(compareCurrentDownloads),
   }));

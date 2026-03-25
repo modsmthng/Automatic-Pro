@@ -69,6 +69,7 @@ const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(
                 {group.downloads.length === 0 && <span class="ap-profile-type-empty">No standalone files</span>}
               </div>
               <p>{group.description || 'Experimental variants are currently listed inside their matching main profile type.'}</p>
+              {group.note && <p class="ap-profile-type-note">{group.note}</p>}
             </a>
           ))}
         </nav>
@@ -78,11 +79,11 @@ const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(
             <section class="ap-profile-type-section" id={group.sectionId}>
               <div class="ap-section-header ap-section-header-stack">
                 <div>
-                  <p class="ap-kicker">Profile type</p>
                   <h3>{group.label}</h3>
                 </div>
                 <p>{group.description || 'Experimental variants are currently listed inside their matching main profile type.'}</p>
               </div>
+              {group.note && <p class="ap-profile-type-note ap-profile-type-note-section">{group.note}</p>}
 
               {group.downloads.length > 0 ? (
                 <ul class="ap-download-list">
