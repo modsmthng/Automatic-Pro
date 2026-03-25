@@ -330,6 +330,81 @@ h4,
   gap: 0.85rem;
 }
 
+.ap-profile-type-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.ap-profile-type-card {
+  display: block;
+  border: 1px solid var(--ap-line);
+  border-radius: 1.2rem;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--ap-surface-strong) 84%, transparent);
+  color: inherit;
+  text-decoration: none;
+}
+
+.ap-profile-type-card:hover {
+  border-color: rgba(165, 77, 27, 0.35);
+}
+
+.ap-profile-type-card-empty {
+  border-style: dashed;
+}
+
+.ap-profile-type-title-row,
+.ap-build-download-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ap-profile-type-title-row h3 {
+  margin: 0;
+}
+
+.ap-profile-type-card p {
+  margin: 0.45rem 0 0;
+  color: var(--ap-muted);
+}
+
+.ap-profile-type-empty,
+.ap-inline-type-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.28rem 0.65rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--ap-line);
+  background: color-mix(in srgb, var(--ap-surface-strong) 86%, transparent);
+  color: var(--sl-color-accent);
+}
+
+.ap-profile-type-sections {
+  display: grid;
+  gap: 1rem;
+}
+
+.ap-profile-type-section {
+  scroll-margin-top: 6rem;
+}
+
+.ap-profile-type-empty-note {
+  margin: 0;
+  border: 1px dashed var(--ap-line);
+  border-radius: 1rem;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--ap-surface-strong) 84%, transparent);
+  color: var(--ap-muted);
+}
+
 .ap-download-row,
 .ap-build-download-row {
   display: flex;
@@ -395,6 +470,8 @@ h4,
   }
 
   .ap-section-header,
+  .ap-profile-type-title-row,
+  .ap-build-download-title-row,
   .ap-download-row,
   .ap-build-head,
   .ap-build-download-row {

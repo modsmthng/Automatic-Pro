@@ -1,5 +1,37 @@
 import rawFamilies from '../data/releases.json';
 
+export type ProfileType = 'direct-lever' | 'spring-lever' | 'adaptive-pressure' | 'nine-bar' | 'experimental';
+
+export const profileTypeDefinitions: { id: ProfileType; label: string; description: string }[] = [
+  {
+    id: 'direct-lever',
+    label: 'Direct Lever',
+    description: 'Static flow based main extraction',
+  },
+  {
+    id: 'spring-lever',
+    label: 'Spring Lever',
+    description: 'Static decreasing pressure based main extraction',
+  },
+  {
+    id: 'adaptive-pressure',
+    label: 'Adaptive Pressure',
+    description: 'Adaptive based pressure main extraction',
+  },
+  {
+    id: 'nine-bar',
+    label: '9bar',
+    description: 'Static 9 bar pressure based main extraction',
+  },
+  {
+    id: 'experimental',
+    label: 'Experimental & In testing',
+    description: '',
+  },
+];
+
+const profileTypeMap = new Map(profileTypeDefinitions.map((entry) => [entry.id, entry]));
+
 export type DownloadEntry = {
   label: string;
   dose: string;
@@ -7,6 +39,8 @@ export type DownloadEntry = {
   file: string;
   temperatureC: number;
   notes: string;
+  slotId?: string;
+  profileType?: ProfileType;
 };
 
 export type Build = {
@@ -31,6 +65,14 @@ export type Family = {
 export type CurrentDownload = DownloadEntry & {
   buildVersion: string;
   releaseDate: string;
+};
+
+export type CurrentDownloadGroup = {
+  type: ProfileType;
+  label: string;
+  description: string;
+  sectionId: string;
+  downloads: CurrentDownload[];
 };
 
 export const releaseFamilies = rawFamilies as Family[];
@@ -99,13 +141,54 @@ export function getLatestBuild(family: Family): Build {
   return family.builds.find((build) => build.isLatest) ?? sortBuilds(family.builds)[0];
 }
 
+function getDownloadSlotId(download: DownloadEntry): string {
+  return download.slotId ?? `${download.label}::${download.variant}`;
+}
+
+function getVariantSortRank(variant: string): number {
+  const normalized = variant.toLowerCase();
+
+  if (normalized.includes('step-down')) {
+    return 1;
+  }
+
+  return 0;
+}
+
+function compareCurrentDownloads(left: CurrentDownload, right: CurrentDownload): number {
+  const leftDose = Number.parseInt(left.dose, 10);
+  const rightDose = Number.parseInt(right.dose, 10);
+  const leftRank = getVariantSortRank(left.variant);
+  const rightRank = getVariantSortRank(right.variant);
+
+  if (leftDose !== rightDose) {
+    return leftDose - rightDose;
+  }
+
+  if (leftRank !== rightRank) {
+    return leftRank - rightRank;
+  }
+
+  return `${left.label} ${left.variant}`.localeCompare(`${right.label} ${right.variant}`);
+}
+
+export function getProfileTypeDefinition(profileType: ProfileType) {
+  const definition = profileTypeMap.get(profileType);
+
+  if (!definition) {
+    throw new Error(`Unknown profile type: ${profileType}`);
+  }
+
+  return definition;
+}
+
 export function getCurrentDownloads(family: Family): CurrentDownload[] {
   const seen = new Set<string>();
   const result: CurrentDownload[] = [];
 
   for (const build of sortBuilds(family.builds)) {
     for (const download of build.downloads) {
-      const key = `${download.label}::${download.variant}`;
+      const key = getDownloadSlotId(download);
 
       if (seen.has(key)) {
         continue;
@@ -120,22 +203,31 @@ export function getCurrentDownloads(family: Family): CurrentDownload[] {
     }
   }
 
-  return result.sort((left, right) => {
-    const leftDose = Number.parseInt(left.dose, 10);
-    const rightDose = Number.parseInt(right.dose, 10);
-    const leftStandard = left.variant.toLowerCase().includes('standard') ? 0 : 1;
-    const rightStandard = right.variant.toLowerCase().includes('standard') ? 0 : 1;
+  return result.sort(compareCurrentDownloads);
+}
 
-    if (leftDose !== rightDose) {
-      return leftDose - rightDose;
+export function getCurrentDownloadGroups(family: Family): CurrentDownloadGroup[] {
+  const grouped = new Map<ProfileType, CurrentDownload[]>();
+
+  for (const definition of profileTypeDefinitions) {
+    grouped.set(definition.id, []);
+  }
+
+  for (const download of getCurrentDownloads(family)) {
+    if (!download.profileType) {
+      continue;
     }
 
-    if (leftStandard !== rightStandard) {
-      return leftStandard - rightStandard;
-    }
+    grouped.get(download.profileType)?.push(download);
+  }
 
-    return `${left.label} ${left.variant}`.localeCompare(`${right.label} ${right.variant}`);
-  });
+  return profileTypeDefinitions.map((definition) => ({
+    type: definition.id,
+    label: definition.label,
+    description: definition.description,
+    sectionId: `profile-type-${definition.id}`,
+    downloads: [...(grouped.get(definition.id) ?? [])].sort(compareCurrentDownloads),
+  }));
 }
 
 export function getHistoryBuilds(family: Family): Build[] {

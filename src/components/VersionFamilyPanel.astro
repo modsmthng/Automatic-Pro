@@ -1,6 +1,6 @@
 ---
 import type { Family } from '../lib/releaseData';
-import { getCurrentDownloads, getDownloadPath, getLatestBuild } from '../lib/releaseData';
+import { getCurrentDownloadGroups, getCurrentDownloads, getDownloadPath, getLatestBuild } from '../lib/releaseData';
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -12,6 +12,7 @@ interface Props {
 const { family } = Astro.props as Props;
 const latestBuild = getLatestBuild(family);
 const currentDownloads = getCurrentDownloads(family);
+const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(family) : [];
 ---
 
 <section class="ap-family-hero">
@@ -48,34 +49,101 @@ const currentDownloads = getCurrentDownloads(family);
     <p>
       {family.status === 'stable'
         ? 'Current files for the active stable build.'
-        : 'Latest available file for each currently published variant.'}
+        : family.slug === 'vit3'
+          ? 'Latest available file for each currently published profile type and dose.'
+          : 'Latest available file for each currently published variant.'}
     </p>
   </div>
 
-  <ul class="ap-download-list">
-    {
-      currentDownloads.map((download) => (
-        <li class="ap-download-row">
-          <div class="ap-download-copy">
-            <div class="ap-download-title-row">
-              <h3>{download.label}</h3>
-              {family.status === 'testing' && <span class="ap-build-tag">{download.buildVersion}</span>}
-            </div>
-            <p class="ap-download-variant">
-              {download.variant} · {download.temperatureC}°C default
-            </p>
-            {download.notes && <p class="ap-download-notes">{download.notes}</p>}
-          </div>
+  {
+    family.slug === 'vit3' ? (
+      <>
+        <nav class="ap-profile-type-nav" aria-label="Profile types">
+          {currentDownloadGroups.map((group) => (
+            <a
+              class:list={['ap-profile-type-card', group.downloads.length === 0 && 'ap-profile-type-card-empty']}
+              href={`#${group.sectionId}`}
+            >
+              <div class="ap-profile-type-title-row">
+                <h3>{group.label}</h3>
+                {group.downloads.length === 0 && <span class="ap-profile-type-empty">No standalone files</span>}
+              </div>
+              <p>{group.description || 'Experimental variants are currently listed inside their matching main profile type.'}</p>
+            </a>
+          ))}
+        </nav>
 
-          <a
-            class="ap-button ap-button-primary"
-            download
-            href={`${base}${getDownloadPath(family.slug, download.buildVersion, download.file)}`}
-          >
-            Download JSON
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+        <div class="ap-profile-type-sections">
+          {currentDownloadGroups.map((group) => (
+            <section class="ap-profile-type-section" id={group.sectionId}>
+              <div class="ap-section-header ap-section-header-stack">
+                <div>
+                  <p class="ap-kicker">Profile type</p>
+                  <h3>{group.label}</h3>
+                </div>
+                <p>{group.description || 'Experimental variants are currently listed inside their matching main profile type.'}</p>
+              </div>
+
+              {group.downloads.length > 0 ? (
+                <ul class="ap-download-list">
+                  {group.downloads.map((download) => (
+                    <li class="ap-download-row">
+                      <div class="ap-download-copy">
+                        <div class="ap-download-title-row">
+                          <h3>{download.label}</h3>
+                          {family.status === 'testing' && <span class="ap-build-tag">{download.buildVersion}</span>}
+                        </div>
+                        <p class="ap-download-variant">
+                          {download.variant} · {download.temperatureC}°C default
+                        </p>
+                        {download.notes && <p class="ap-download-notes">{download.notes}</p>}
+                      </div>
+
+                      <a
+                        class="ap-button ap-button-primary"
+                        download
+                        href={`${base}${getDownloadPath(family.slug, download.buildVersion, download.file)}`}
+                      >
+                        Download JSON
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p class="ap-profile-type-empty-note">
+                  No standalone files in the current build. Experimental variants are currently listed inside their
+                  matching main profile type.
+                </p>
+              )}
+            </section>
+          ))}
+        </div>
+      </>
+    ) : (
+      <ul class="ap-download-list">
+        {currentDownloads.map((download) => (
+          <li class="ap-download-row">
+            <div class="ap-download-copy">
+              <div class="ap-download-title-row">
+                <h3>{download.label}</h3>
+                {family.status === 'testing' && <span class="ap-build-tag">{download.buildVersion}</span>}
+              </div>
+              <p class="ap-download-variant">
+                {download.variant} · {download.temperatureC}°C default
+              </p>
+              {download.notes && <p class="ap-download-notes">{download.notes}</p>}
+            </div>
+
+            <a
+              class="ap-button ap-button-primary"
+              download
+              href={`${base}${getDownloadPath(family.slug, download.buildVersion, download.file)}`}
+            >
+              Download JSON
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
 </section>
