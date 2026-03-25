@@ -1,6 +1,12 @@
 ---
 import type { Family } from '../lib/releaseData';
-import { getCurrentDownloadGroups, getCurrentDownloads, getDownloadPath, getLatestBuild } from '../lib/releaseData';
+import {
+  getCurrentDownloadGroups,
+  getCurrentDownloads,
+  getDownloadMetaLine,
+  getDownloadPath,
+  getLatestBuild,
+} from '../lib/releaseData';
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -94,9 +100,7 @@ const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(
                           <h3>{download.label}</h3>
                           {family.status === 'testing' && <span class="ap-build-tag">{download.buildVersion}</span>}
                         </div>
-                        <p class="ap-download-variant">
-                          {download.variant} · {download.temperatureC}°C default
-                        </p>
+                        <p class="ap-download-variant">{getDownloadMetaLine(download.variant, download.temperatureC)}</p>
                         {download.notes && <p class="ap-download-notes">{download.notes}</p>}
                       </div>
 
@@ -129,9 +133,7 @@ const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(
                 <h3>{download.label}</h3>
                 {family.status === 'testing' && <span class="ap-build-tag">{download.buildVersion}</span>}
               </div>
-              <p class="ap-download-variant">
-                {download.variant} · {download.temperatureC}°C default
-              </p>
+              <p class="ap-download-variant">{getDownloadMetaLine(download.variant, download.temperatureC)}</p>
               {download.notes && <p class="ap-download-notes">{download.notes}</p>}
             </div>
 

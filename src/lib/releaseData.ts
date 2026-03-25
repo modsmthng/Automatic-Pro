@@ -184,6 +184,15 @@ export function getProfileTypeDefinition(profileType: ProfileType) {
   return definition;
 }
 
+export function getVisibleVariant(variant: string): string {
+  return variant.toLowerCase().includes('step-down') ? variant : '';
+}
+
+export function getDownloadMetaLine(variant: string, temperatureC: number): string {
+  const visibleVariant = getVisibleVariant(variant);
+  return visibleVariant ? `${visibleVariant} · ${temperatureC}°C default` : `${temperatureC}°C default`;
+}
+
 export function getCurrentDownloads(family: Family): CurrentDownload[] {
   const seen = new Set<string>();
   const result: CurrentDownload[] = [];

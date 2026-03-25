@@ -69,7 +69,7 @@
     "displayName": "Automatic Pro vIT3",
     "futureDisplayName": "Automatic Pro v3",
     "status": "testing",
-    "summary": "The current in-testing version with ongoing updates and basket-specific variants.",
+    "summary": "The current in-testing version with ongoing updates and main extraction variations.",
     "imageHint": "espresso",
     "builds": [
       {
