@@ -20,7 +20,8 @@
             "variant": "Standard V-shape basket",
             "file": "Automatic Pro v2 9g.json",
             "temperatureC": 91,
-            "notes": "Optimized for low flow and tested the least."
+            "notes": "Optimized for low flow and tested the least.",
+            "slotId": "v2-9g-standard"
           },
           {
             "label": "15g",
@@ -28,7 +29,8 @@
             "variant": "Standard basket",
             "file": "Automatic Pro v2 15g.json",
             "temperatureC": 91,
-            "notes": ""
+            "notes": "",
+            "slotId": "v2-15g-standard"
           },
           {
             "label": "18g",
@@ -36,7 +38,8 @@
             "variant": "Standard basket",
             "file": "Automatic Pro v2 18g.json",
             "temperatureC": 91,
-            "notes": ""
+            "notes": "",
+            "slotId": "v2-18g-standard"
           },
           {
             "label": "20g",
@@ -44,7 +47,8 @@
             "variant": "Standard or HE basket",
             "file": "Automatic Pro v2 20g.json",
             "temperatureC": 91,
-            "notes": ""
+            "notes": "",
+            "slotId": "v2-20g-standard"
           },
           {
             "label": "22g",
@@ -52,7 +56,8 @@
             "variant": "Standard or HE basket",
             "file": "Automatic Pro v2 22g.json",
             "temperatureC": 91,
-            "notes": ""
+            "notes": "",
+            "slotId": "v2-22g-standard"
           }
         ]
       }
@@ -68,9 +73,97 @@
     "imageHint": "espresso",
     "builds": [
       {
-        "buildVersion": "vIT3_0_29_2",
+        "buildVersion": "vIT3_0_29_3",
         "releaseDate": "2026-03-25",
         "isLatest": true,
+        "notes": "Current 0.29.3 testing build with Direct Lever, Spring Lever, Adaptive Pressure, and 9bar branches.",
+        "downloads": [
+          {
+            "label": "18g",
+            "dose": "18g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 18g [Direct Lever] vIT3_0_29_3.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-18g-main",
+            "profileType": "direct-lever"
+          },
+          {
+            "label": "18g Step-Down",
+            "dose": "18g",
+            "variant": "Step-Down basket",
+            "file": "Automatic Pro 18g [Step-Down, Direct Lever] vIT3_0_29_3.json",
+            "temperatureC": 89,
+            "notes": "Experimental step-down variant inside the Direct Lever branch.",
+            "slotId": "vit3-18g-step-down",
+            "profileType": "direct-lever"
+          },
+          {
+            "label": "20g",
+            "dose": "20g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 20g [Direct Lever] vIT3_0_29_3.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-20g-main",
+            "profileType": "direct-lever"
+          },
+          {
+            "label": "21g",
+            "dose": "21g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 21g  [Direct Lever] vIT3_0_29_3.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-21g-main",
+            "profileType": "direct-lever"
+          },
+          {
+            "label": "20g",
+            "dose": "20g",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro 20g [Spring Lever] vIT3_0_29_3.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-20g-spring-lever",
+            "profileType": "spring-lever"
+          },
+          {
+            "label": "21g",
+            "dose": "21g",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro 21g [Spring Lever] vIT3_0_29_3.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-21g-spring-lever",
+            "profileType": "spring-lever"
+          },
+          {
+            "label": "20g",
+            "dose": "20g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 20g [Adaptive Pressure] vIT3_0_29_3.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-20g-adaptive-pressure",
+            "profileType": "adaptive-pressure"
+          },
+          {
+            "label": "20g",
+            "dose": "20g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 20g [9 bar] vIT3_0_29_3.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-20g-nine-bar",
+            "profileType": "nine-bar"
+          }
+        ]
+      },
+      {
+        "buildVersion": "vIT3_0_29_2",
+        "releaseDate": "2026-03-25",
+        "isLatest": false,
         "notes": "Minor testing update for the 18g Step-Down branch.",
         "downloads": [
           {
@@ -79,7 +172,8 @@
             "variant": "Step-Down basket",
             "file": "Automatic Pro 18g [Step-Down] vIT3_0_29_2.json",
             "temperatureC": 89,
-            "notes": "Optional testing variant tuned for step-down baskets."
+            "notes": "Optional testing variant tuned for step-down baskets.",
+            "slotId": "vit3-18g-step-down"
           }
         ]
       },
@@ -95,7 +189,8 @@
             "variant": "Standard basket",
             "file": "Automatic Pro 18g vIT3_0_29_1.json",
             "temperatureC": 89,
-            "notes": ""
+            "notes": "",
+            "slotId": "vit3-18g-main"
           }
         ]
       },
@@ -111,7 +206,8 @@
             "variant": "Standard basket",
             "file": "Automatic Pro 20g vIT3_0_29.json",
             "temperatureC": 89,
-            "notes": ""
+            "notes": "",
+            "slotId": "vit3-20g-main"
           },
           {
             "label": "21g",
@@ -119,7 +215,8 @@
             "variant": "Standard basket",
             "file": "Automatic Pro 21g vIT3_0_29.json",
             "temperatureC": 89,
-            "notes": ""
+            "notes": "",
+            "slotId": "vit3-21g-main"
           },
           {
             "label": "21g Spring Lever",
@@ -127,7 +224,8 @@
             "variant": "Spring Lever basket",
             "file": "Automatic Pro 21g [Spring Lever] vIT3_0_29.json",
             "temperatureC": 89,
-            "notes": "Uses pressure instead of flow during the main extraction. Helpful if you have trouble maintaining stable pressure."
+            "notes": "Uses pressure instead of flow during the main extraction. Helpful if you have trouble maintaining stable pressure.",
+            "slotId": "vit3-21g-spring-lever"
           }
         ]
       }
