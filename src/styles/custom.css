@@ -169,6 +169,10 @@ h4,
   margin-top: 1rem;
 }
 
+.ap-home-video {
+  margin-top: 1.25rem;
+}
+
 .ap-photo-card {
   overflow: hidden;
   min-height: 11rem;
@@ -456,6 +460,53 @@ h4,
   gap: 1rem;
 }
 
+.ap-youtube-shell {
+  border: 1px solid var(--ap-line);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(165, 77, 27, 0.14), rgba(215, 127, 63, 0.16)),
+    color-mix(in srgb, var(--ap-surface-strong) 88%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.ap-youtube-placeholder {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.15rem;
+  min-height: 16rem;
+  background:
+    radial-gradient(circle at top right, rgba(255, 219, 183, 0.28), transparent 24%),
+    radial-gradient(circle at bottom left, rgba(165, 77, 27, 0.12), transparent 28%);
+}
+
+.ap-youtube-copy h3 {
+  margin: 0;
+}
+
+.ap-youtube-copy p {
+  margin: 0.55rem 0 0;
+  max-width: 32rem;
+  color: var(--ap-muted);
+}
+
+.ap-youtube-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: end;
+}
+
+.ap-youtube-iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  background: #000;
+}
+
 .ap-build-card {
   padding: 1.15rem;
 }
@@ -483,6 +534,7 @@ h4,
   .ap-section-header,
   .ap-profile-type-title-row,
   .ap-build-download-title-row,
+  .ap-youtube-placeholder,
   .ap-download-row,
   .ap-build-head,
   .ap-build-download-row {

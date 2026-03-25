@@ -1,0 +1,88 @@
+---
+interface Props {
+  title: string;
+  playlistId: string;
+  videoId?: string;
+}
+
+const { title, playlistId, videoId } = Astro.props as Props;
+const embedUrl = videoId
+  ? `https://www.youtube-nocookie.com/embed/${videoId}?list=${playlistId}&rel=0`
+  : `https://www.youtube-nocookie.com/embed?listType=playlist&list=${playlistId}&rel=0`;
+const watchUrl = videoId
+  ? `https://www.youtube.com/watch?v=${videoId}&list=${playlistId}`
+  : `https://www.youtube.com/playlist?list=${playlistId}`;
+---
+
+<section class="ap-family-section ap-home-video">
+  <div class="ap-section-header ap-section-header-stack">
+    <div>
+      <p class="ap-kicker">Playlist</p>
+      <h2>Watch Automatic Pro</h2>
+    </div>
+    <p>Loads only after your click and uses YouTube's privacy-enhanced domain.</p>
+  </div>
+
+  <div class="ap-youtube-shell" data-youtube-shell data-embed-url={embedUrl} data-title={title}>
+    <div class="ap-youtube-placeholder">
+      <div class="ap-youtube-copy">
+        <h3>{title}</h3>
+        <p>Open the playlist here on the page, or jump to YouTube directly.</p>
+      </div>
+
+      <div class="ap-youtube-actions">
+        <button class="ap-button ap-button-primary" data-youtube-load type="button">
+          Load playlist
+        </button>
+        <a class="ap-button ap-button-secondary" href={watchUrl} rel="noreferrer" target="_blank">
+          Open on YouTube
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const setupYouTubeEmbeds = () => {
+    for (const shell of document.querySelectorAll('[data-youtube-shell]')) {
+      if (shell.dataset.youtubeReady === 'true') {
+        continue;
+      }
+
+      shell.dataset.youtubeReady = 'true';
+
+      const loadButton = shell.querySelector('[data-youtube-load]');
+
+      loadButton?.addEventListener('click', () => {
+        const src = shell.getAttribute('data-embed-url');
+        const title = shell.getAttribute('data-title') || 'YouTube playlist';
+
+        if (!src || shell.querySelector('iframe')) {
+          return;
+        }
+
+        const iframe = document.createElement('iframe');
+        iframe.className = 'ap-youtube-iframe';
+        iframe.src = src;
+        iframe.title = title;
+        iframe.loading = 'lazy';
+        iframe.allow =
+          'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.allowFullscreen = true;
+
+        while (shell.firstChild) {
+          shell.firstChild.remove();
+        }
+
+        shell.appendChild(iframe);
+      });
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupYouTubeEmbeds, { once: true });
+  } else {
+    setupYouTubeEmbeds();
+  }
+</script>

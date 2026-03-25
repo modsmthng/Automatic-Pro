@@ -1,5 +1,6 @@
 ---
 import VersionCards from './VersionCards.astro';
+import YouTubePlaylistEmbed from './YouTubePlaylistEmbed.astro';
 import { releaseFamilies } from '../lib/releaseData';
 
 const rawBase = import.meta.env.BASE_URL;
@@ -21,6 +22,12 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
 </section>
 
 <VersionCards families={releaseFamilies} />
+
+<YouTubePlaylistEmbed
+  playlistId="PLU3cLYAfI4Q7Z_nKsWah8Is_W156wTLRq"
+  title="Automatic Pro video playlist"
+  videoId="U2aFZWOsT5w"
+/>
 
 <p class="ap-home-note">
   Discussion on
