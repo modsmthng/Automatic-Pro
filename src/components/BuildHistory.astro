@@ -1,6 +1,6 @@
 ---
 import type { Family } from '../lib/releaseData';
-import { getDownloadPath, getProfileTypeDefinition, sortBuilds } from '../lib/releaseData';
+import { getDownloadPath, getProfileTypeDefinition, getVisibleVariant, sortBuilds } from '../lib/releaseData';
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -50,7 +50,7 @@ const formatter = new Intl.DateTimeFormat('en-US', {
                         <span class="ap-inline-type-badge">{getProfileTypeDefinition(download.profileType).label}</span>
                       )}
                     </div>
-                    <p>{download.variant}</p>
+                    {getVisibleVariant(download.variant) && <p>{getVisibleVariant(download.variant)}</p>}
                     {download.notes && <p class="ap-build-download-note">{download.notes}</p>}
                   </div>
                   <a
