@@ -1,5 +1,40 @@
 # Automatic Pro
 
-https://modsmthng.github.io/Automatic-Pro/
+Docs site: https://modsmthng.github.io/Automatic-Pro/
 
 GaggiMate: https://github.com/jniebuhr/gaggimate
+
+## Upload workflow
+
+New profile uploads now go through `incoming/` and a GitHub Action.
+
+1. Create a branch from `main`.
+2. Drop new JSON files into `incoming/`.
+3. Push the branch.
+4. The `Ingest Uploaded Profiles` workflow validates the files, moves them into `public/downloads/`, updates `src/data/releases.json`, and opens or updates a PR to `main`.
+5. Review the PR and merge it when it looks right.
+
+`main` does not ingest files directly. The automation only processes uploads from non-`main` branches.
+
+## Supported filenames
+
+`v2`
+
+- `Automatic Pro v2 9g.json`
+- `Automatic Pro v2 15g.json`
+- `Automatic Pro v2 18g.json`
+- `Automatic Pro v2 20g.json`
+- `Automatic Pro v2 22g.json`
+
+`vIT3` / `v3`
+
+- `Automatic Pro 18g [Direct Lever] vIT3_0_29_5.json`
+- `Automatic Pro 18g [Step-Down, Direct Lever] vIT3_0_29_5.json`
+- `Automatic Pro 21g [Spring Lever] vIT3_0_29_5.json`
+- `Automatic Pro 20g [Adaptive Pressure] vIT3_0_29_5.json`
+- `Automatic Pro 20g [9 bar] vIT3_0_29_5.json`
+- `Automatic Pro 18g vIT3_0_29_1.json` for legacy untagged main-slot files
+
+For `v2`, the workflow creates a build named with the current Berlin date, for example `2026-03-26`.
+
+For `vIT3`/`v3`, the build version comes from the filename and partial updates only replace the matching slot.

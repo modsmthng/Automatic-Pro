@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "ingest-profiles": "node scripts/ingest-profiles.cjs"
   },
   "keywords": [],
   "author": "",
