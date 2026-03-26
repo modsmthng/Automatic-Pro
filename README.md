@@ -11,8 +11,9 @@ New profile uploads now go through `incoming/` and a GitHub Action.
 1. Create a branch from `main`.
 2. Drop new JSON files into `incoming/`.
 3. Push the branch.
-4. The `Ingest Uploaded Profiles` workflow validates the files, moves them into `public/downloads/`, updates `src/data/releases.json`, and opens or updates a PR to `main`.
-5. Review the PR and merge it when it looks right.
+
+_4. The `Ingest Uploaded Profiles` workflow validates the files, moves them into `public/downloads/`, updates `src/data/releases.json`, and opens or updates a PR to `main`.
+5. Review the PR and merge it when it looks right._
 
 `main` does not ingest files directly. The automation only processes uploads from non-`main` branches.
 
