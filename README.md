@@ -16,17 +16,37 @@ New profile uploads now go through `incoming/` and a GitHub Action.
 
 `main` does not ingest files directly. The automation only processes uploads from non-`main` branches.
 
-## Supported filenames
+## Filename format
 
 `v2`
 
-- `Automatic Pro v2 9g.json`
-- `Automatic Pro v2 15g.json`
+Format:
+
+- `Automatic Pro v2 <dose>.json`
+
+Examples:
+
+- `Automatic Pro v2 11g.json`
 - `Automatic Pro v2 18g.json`
-- `Automatic Pro v2 20g.json`
 - `Automatic Pro v2 22g.json`
 
+For `v2`, the dose is not limited to the old example list. Files like `Automatic Pro v2 11g.json` are valid too.
+
 `vIT3` / `v3`
+
+Format:
+
+- `Automatic Pro <dose> [<batch name><optional extra info>] <buildVersion>.json`
+
+Known batch names:
+
+- `Direct Lever`
+- `Spring Lever`
+- `Adaptive Pressure`
+- `9 bar`
+- `User Profile`
+
+Examples:
 
 - `Automatic Pro 18g [Direct Lever] vIT3_0_29_5.json`
 - `Automatic Pro 18g [Step-Down, Direct Lever] vIT3_0_29_5.json`
