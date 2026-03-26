@@ -73,9 +73,27 @@
     "imageHint": "espresso",
     "builds": [
       {
+        "buildVersion": "vIT3_0_29_4",
+        "releaseDate": "2026-03-26",
+        "isLatest": true,
+        "notes": "Minor testing update for the 21g Spring Lever branch.",
+        "downloads": [
+          {
+            "label": "21g",
+            "dose": "21g",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro 21g [Spring Lever] vIT3_0_29_4.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-21g-spring-lever",
+            "profileType": "spring-lever"
+          }
+        ]
+      },
+      {
         "buildVersion": "vIT3_0_29_3",
         "releaseDate": "2026-03-25",
-        "isLatest": true,
+        "isLatest": false,
         "notes": "Current 0.29.3 testing build with Direct Lever, Spring Lever, Adaptive Pressure, and 9bar branches.",
         "downloads": [
           {
