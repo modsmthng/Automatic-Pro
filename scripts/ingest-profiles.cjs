@@ -55,7 +55,7 @@ const vit3BatchDefinitions = [
   },
 ];
 
-const v2DoseMap = {
+const v2KnownDoseMap = {
   '9g': {
     label: '9g',
     dose: '9g',
@@ -175,11 +175,7 @@ function parseUpload(sourcePath, currentBerlinDate) {
   const v2Match = fileName.match(/^Automatic Pro\s+v2\s+(?<dose>\d+g)\.json$/i);
 
   if (v2Match?.groups?.dose) {
-    const baseDownload = v2DoseMap[v2Match.groups.dose];
-
-    if (!baseDownload) {
-      throw new Error(`Unsupported v2 dose in filename: ${fileName}`);
-    }
+    const baseDownload = getV2DownloadMetadata(v2Match.groups.dose);
 
     return {
       sourcePath,
@@ -207,8 +203,25 @@ function parseUpload(sourcePath, currentBerlinDate) {
   }
 
   throw new Error(
-    `Unsupported filename "${fileName}". Expected "Automatic Pro v2 18g.json" or "Automatic Pro 21g [Spring Lever] vIT3_0_29_5.json".`
+    `Unsupported filename "${fileName}". Expected "Automatic Pro v2 11g.json" or "Automatic Pro 21g [Spring Lever] vIT3_0_29_5.json".`
   );
+}
+
+function getV2DownloadMetadata(dose) {
+  const knownDose = v2KnownDoseMap[dose];
+
+  if (knownDose) {
+    return knownDose;
+  }
+
+  return {
+    label: dose,
+    dose,
+    variant: 'Custom dose',
+    temperatureC: 91,
+    notes: '',
+    slotId: `v2-${dose}-custom`,
+  };
 }
 
 function buildVit3Download(dose, rawTag, fileName) {
