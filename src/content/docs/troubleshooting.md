@@ -32,7 +32,7 @@ Try:
 
 Time mode is most useful as a practical approximation when no scale is available.
 
-- Use the formula from [Quick Start](./quick-start/) as the baseline.
+- Use the formula from [Quick Start / Dialing In](./quick-start/) as the baseline.
 - If the shot ends too early or too late, adjust the last phase duration to reflect your real observed flow.
 - If you do use a scale, weight mode is usually the more reliable way to stop the shot.
 

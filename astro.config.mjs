@@ -42,9 +42,14 @@ export default defineConfig({
         {
           label: 'Guides',
           items: [
-            { slug: 'quick-start', label: 'Quick Start' },
+            { slug: 'quick-start', label: 'Quick Start / Dialing In' },
             { slug: 'how-automatic-pro-v2-works', label: 'How Automatic Pro v2 Works' },
             { slug: 'troubleshooting', label: 'Troubleshooting' },
+            {
+              label: 'GM Community Espresso Guide',
+              link: 'https://marxd262.github.io/GM_Community_Espresso_Guide/',
+              attrs: { target: '_blank', rel: 'noreferrer' },
+            },
           ],
         },
       ],
