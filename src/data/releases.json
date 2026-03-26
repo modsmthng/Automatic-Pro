@@ -73,9 +73,47 @@
     "imageHint": "espresso",
     "builds": [
       {
-        "buildVersion": "vIT3_0_29_4",
+        "buildVersion": "vIT3_0_29_5",
         "releaseDate": "2026-03-26",
         "isLatest": true,
+        "notes": "Automated update for 18g Spring Lever, 20g Spring Lever, and 21g Spring Lever.",
+        "downloads": [
+          {
+            "label": "18g",
+            "dose": "18g",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro 18g [Spring Lever] vIT3_0_29_5.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-18g-spring-lever",
+            "profileType": "spring-lever"
+          },
+          {
+            "label": "20g",
+            "dose": "20g",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro 20g [Spring Lever] vIT3_0_29_5.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-20g-spring-lever",
+            "profileType": "spring-lever"
+          },
+          {
+            "label": "21g",
+            "dose": "21g",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro 21g [Spring Lever] vIT3_0_29_5.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-21g-spring-lever",
+            "profileType": "spring-lever"
+          }
+        ]
+      },
+      {
+        "buildVersion": "vIT3_0_29_4",
+        "releaseDate": "2026-03-26",
+        "isLatest": false,
         "notes": "Automated update for 18g Spring Lever, 20g Adaptive Pressure, 20g Spring Lever, and 21g Spring Lever.",
         "downloads": [
           {
