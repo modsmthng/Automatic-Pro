@@ -1,6 +1,12 @@
 import rawFamilies from '../data/releases.json';
 
-export type ProfileType = 'direct-lever' | 'spring-lever' | 'adaptive-pressure' | 'nine-bar' | 'experimental';
+export type ProfileType =
+  | 'direct-lever'
+  | 'spring-lever'
+  | 'adaptive-pressure'
+  | 'nine-bar'
+  | 'user-profile'
+  | 'experimental';
 
 export const profileTypeDefinitions: { id: ProfileType; label: string; description: string; note?: string }[] = [
   {
@@ -25,6 +31,12 @@ export const profileTypeDefinitions: { id: ProfileType; label: string; descripti
     id: 'nine-bar',
     label: '9bar',
     description: 'Static 9 bar pressure based main extraction - good to learn what grind size, ratio and temperature do',
+  },
+  {
+    id: 'user-profile',
+    label: 'User Profile',
+    description:
+      'Use this batch when the profile differs from the other profile schemas or is a small variation of an existing profile or variation',
   },
   {
     id: 'experimental',

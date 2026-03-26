@@ -14,7 +14,46 @@ const profileTypeLabels = {
   'spring-lever': 'Spring Lever',
   'adaptive-pressure': 'Adaptive Pressure',
   'nine-bar': '9bar',
+  'user-profile': 'User Profile',
 };
+
+const vit3BatchDefinitions = [
+  {
+    profileType: 'direct-lever',
+    aliases: ['direct lever'],
+    defaultVariant: 'Standard basket',
+    defaultSlotId: (dose) => `vit3-${dose}-main`,
+    customSlotPrefix: (dose) => `vit3-${dose}-main`,
+  },
+  {
+    profileType: 'spring-lever',
+    aliases: ['spring lever'],
+    defaultVariant: 'Spring Lever basket',
+    defaultSlotId: (dose) => `vit3-${dose}-spring-lever`,
+    customSlotPrefix: (dose) => `vit3-${dose}-spring-lever`,
+  },
+  {
+    profileType: 'adaptive-pressure',
+    aliases: ['adaptive pressure'],
+    defaultVariant: 'Standard basket',
+    defaultSlotId: (dose) => `vit3-${dose}-adaptive-pressure`,
+    customSlotPrefix: (dose) => `vit3-${dose}-adaptive-pressure`,
+  },
+  {
+    profileType: 'nine-bar',
+    aliases: ['9 bar', '9bar'],
+    defaultVariant: 'Standard basket',
+    defaultSlotId: (dose) => `vit3-${dose}-nine-bar`,
+    customSlotPrefix: (dose) => `vit3-${dose}-nine-bar`,
+  },
+  {
+    profileType: 'user-profile',
+    aliases: ['user profile'],
+    defaultVariant: 'User Profile',
+    defaultSlotId: (dose) => `vit3-${dose}-user-profile`,
+    customSlotPrefix: (dose) => `vit3-${dose}-user-profile`,
+  },
+];
 
 const v2DoseMap = {
   '9g': {
@@ -173,9 +212,9 @@ function parseUpload(sourcePath, currentBerlinDate) {
 }
 
 function buildVit3Download(dose, rawTag, fileName) {
-  const tag = normalizeTag(rawTag);
+  const parsedTag = parseVit3Tag(rawTag);
 
-  if (!tag) {
+  if (!parsedTag) {
     return {
       label: dose,
       dose,
@@ -187,72 +226,36 @@ function buildVit3Download(dose, rawTag, fileName) {
     };
   }
 
-  if (tag.includes('step-down')) {
+  if (parsedTag.hasStepDown) {
+    const extraLabel = buildVisibleExtraLabel(parsedTag.extraSegments);
+    const label = extraLabel ? `${dose} ${extraLabel}` : `${dose} Step-Down`;
+    const extraSlug = buildExtraSlug(parsedTag.extraSegments.filter((segment) => normalizeSegment(segment) !== 'step-down'));
+
     return {
-      label: `${dose} Step-Down`,
+      label,
       dose,
       variant: 'Step-Down basket',
       file: fileName,
       temperatureC: 89,
       notes: 'Experimental step-down variant inside the Direct Lever branch.',
-      slotId: `vit3-${dose}-step-down`,
+      slotId: extraSlug ? `vit3-${dose}-step-down-${extraSlug}` : `vit3-${dose}-step-down`,
       profileType: 'direct-lever',
     };
   }
 
-  if (tag === 'direct lever') {
-    return {
-      label: dose,
-      dose,
-      variant: 'Standard basket',
-      file: fileName,
-      temperatureC: 89,
-      notes: '',
-      slotId: `vit3-${dose}-main`,
-      profileType: 'direct-lever',
-    };
-  }
+  const extraLabel = buildVisibleExtraLabel(parsedTag.extraSegments);
+  const extraSlug = buildExtraSlug(parsedTag.extraSegments);
 
-  if (tag === 'spring lever') {
-    return {
-      label: dose,
-      dose,
-      variant: 'Spring Lever basket',
-      file: fileName,
-      temperatureC: 89,
-      notes: '',
-      slotId: `vit3-${dose}-spring-lever`,
-      profileType: 'spring-lever',
-    };
-  }
-
-  if (tag === 'adaptive pressure') {
-    return {
-      label: dose,
-      dose,
-      variant: 'Standard basket',
-      file: fileName,
-      temperatureC: 89,
-      notes: '',
-      slotId: `vit3-${dose}-adaptive-pressure`,
-      profileType: 'adaptive-pressure',
-    };
-  }
-
-  if (tag === '9 bar' || tag === '9bar') {
-    return {
-      label: dose,
-      dose,
-      variant: 'Standard basket',
-      file: fileName,
-      temperatureC: 89,
-      notes: '',
-      slotId: `vit3-${dose}-nine-bar`,
-      profileType: 'nine-bar',
-    };
-  }
-
-  throw new Error(`Unsupported vIT3/v3 tag "[${rawTag}]" in filename "${fileName}".`);
+  return {
+    label: extraLabel ? `${dose} ${extraLabel}` : dose,
+    dose,
+    variant: parsedTag.batch.defaultVariant,
+    file: fileName,
+    temperatureC: 89,
+    notes: '',
+    slotId: extraSlug ? `${parsedTag.batch.customSlotPrefix(dose)}-${extraSlug}` : parsedTag.batch.defaultSlotId(dose),
+    profileType: parsedTag.batch.profileType,
+  };
 }
 
 function normalizeTag(rawTag) {
@@ -265,6 +268,77 @@ function normalizeTag(rawTag) {
     .replace(/\s*,\s*/g, ', ')
     .replace(/\s+/g, ' ')
     .toLowerCase();
+}
+
+function normalizeSegment(segment) {
+  return segment
+    .trim()
+    .replace(/\s+/g, ' ')
+    .toLowerCase();
+}
+
+function cleanSegment(segment) {
+  return segment.trim().replace(/\s+/g, ' ');
+}
+
+function parseVit3Tag(rawTag) {
+  const normalizedTag = normalizeTag(rawTag);
+
+  if (!normalizedTag) {
+    return null;
+  }
+
+  const segments = rawTag
+    .split(/\s*(?:,|\/)\s*/)
+    .map(cleanSegment)
+    .filter(Boolean);
+  const normalizedSegments = segments.map(normalizeSegment);
+  const batchIndex = normalizedSegments.findIndex((segment) =>
+    vit3BatchDefinitions.some((definition) => definition.aliases.includes(segment))
+  );
+
+  const hasStepDown = normalizedSegments.includes('step-down');
+
+  if (batchIndex === -1) {
+    if (hasStepDown) {
+      return {
+        batch: vit3BatchDefinitions.find((definition) => definition.profileType === 'direct-lever'),
+        extraSegments: segments,
+        hasStepDown: true,
+      };
+    }
+
+    throw new Error(`Unsupported vIT3/v3 tag "[${rawTag}]".`);
+  }
+
+  const batch = vit3BatchDefinitions.find((definition) => definition.aliases.includes(normalizedSegments[batchIndex]));
+  const extraSegments = segments.filter((_, index) => index !== batchIndex);
+
+  return {
+    batch,
+    extraSegments,
+    hasStepDown,
+  };
+}
+
+function buildVisibleExtraLabel(extraSegments) {
+  if (extraSegments.length === 0) {
+    return '';
+  }
+
+  return extraSegments.map(cleanSegment).join(' / ');
+}
+
+function buildExtraSlug(extraSegments) {
+  const normalized = extraSegments
+    .map((segment) => normalizeSegment(segment))
+    .filter(Boolean)
+    .join('-')
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+
+  return normalized;
 }
 
 function validateIncomingUploads(uploads) {
