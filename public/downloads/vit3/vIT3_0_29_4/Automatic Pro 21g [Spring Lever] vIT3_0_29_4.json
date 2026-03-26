@@ -156,6 +156,30 @@
       ]
     },
     {
+      "name": "Check Extraction",
+      "phase": "brew",
+      "valve": 1,
+      "duration": 20,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": false
+      },
+      "pump": {
+        "target": "pressure",
+        "pressure": 9,
+        "flow": 0
+      },
+      "targets": [
+        {
+          "type": "pressure",
+          "operator": "gte",
+          "value": 8.900001
+        }
+      ]
+    },
+    {
       "name": "Main Extraction",
       "phase": "brew",
       "valve": 1,
