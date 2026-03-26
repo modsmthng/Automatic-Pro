@@ -11,27 +11,11 @@ New profile uploads now go through `incoming/` and a GitHub Action.
 1. Create a branch from `main`.
 2. Drop new JSON files into `incoming/`.
 3. Push the branch.
-4. The `Ingest Uploaded Profiles` workflow validates the files, moves them into `public/downloads/`, updates `src/data/releases.json`, and opens or updates a PR to `main`.
-5. Review the PR and merge it when it looks right.
+4. _The `Ingest Uploaded Profiles` workflow validates the files, moves them into `public/downloads/`, updates `src/data/releases.json`, and opens or updates a PR to `main`._
 
 `main` does not ingest files directly. The automation only processes uploads from non-`main` branches.
 
 ## Filename format
-
-`v2`
-
-Format:
-
-- `Automatic Pro v2 <dose>.json`
-
-Examples:
-
-- `Automatic Pro v2 11g.json`
-- `Automatic Pro v2 18g.json`
-- `Automatic Pro v2 22g.json`
-
-For `v2`, the dose is not limited to the old example list. Files like `Automatic Pro v2 11g.json` are valid too.
-
 `vIT3` / `v3`
 
 Format:
@@ -47,7 +31,7 @@ Known batch names:
 - `Spring Lever`
 - `Adaptive Pressure`
 - `9 bar`
-- `User Profile`
+- **`User Profile`** _<-- Use this batch if you are unsure. You can add a comma and then continue naming the profile, or also add your name. E.g.: [User Profile, Extra Strong]_
 
 If a profile does not contain one of these known batch names, it automatically lands in `Experimental and Other`.
 
@@ -65,6 +49,23 @@ Examples:
 - `Automatic Pro 17g Soup vIT3_0_29_5.json`
 - `Automatic Pro Soup vIT3_0_29_5.json`
 - `Automatic Pro 18g vIT3_0_29_1.json` for legacy untagged main-slot files
+
+
+`v2`
+
+Format:
+
+- `Automatic Pro v2 <dose>.json`
+
+Examples:
+
+- `Automatic Pro v2 11g.json`
+- `Automatic Pro v2 18g.json`
+- `Automatic Pro v2 22g.json`
+
+For `v2`, the dose is not limited to the old example list. Files like `Automatic Pro v2 11g.json` are valid too.
+
+
 
 For `v2`, the workflow creates a build named with the current Berlin date, for example `2026-03-26`.
 
