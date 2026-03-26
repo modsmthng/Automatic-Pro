@@ -40,8 +40,9 @@ export const profileTypeDefinitions: { id: ProfileType; label: string; descripti
   },
   {
     id: 'experimental',
-    label: 'Experimental & In testing',
-    description: '',
+    label: 'Experimental and Other',
+    description:
+      'Profiles without a matching known batch name land here automatically. Remaining names are shown after the dose, for example 20g Soup or Soup.',
   },
 ];
 
@@ -171,9 +172,14 @@ function getVariantSortRank(variant: string): number {
   return 0;
 }
 
+function getDoseSortValue(dose: string): number {
+  const parsedDose = Number.parseInt(dose, 10);
+  return Number.isNaN(parsedDose) ? Number.POSITIVE_INFINITY : parsedDose;
+}
+
 function compareCurrentDownloads(left: CurrentDownload, right: CurrentDownload): number {
-  const leftDose = Number.parseInt(left.dose, 10);
-  const rightDose = Number.parseInt(right.dose, 10);
+  const leftDose = getDoseSortValue(left.dose);
+  const rightDose = getDoseSortValue(right.dose);
   const leftRank = getVariantSortRank(left.variant);
   const rightRank = getVariantSortRank(right.variant);
 

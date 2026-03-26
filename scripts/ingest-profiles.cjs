@@ -15,6 +15,7 @@ const profileTypeLabels = {
   'adaptive-pressure': 'Adaptive Pressure',
   'nine-bar': '9bar',
   'user-profile': 'User Profile',
+  experimental: 'Experimental and Other',
 };
 
 const vit3BatchDefinitions = [
@@ -187,24 +188,61 @@ function parseUpload(sourcePath, currentBerlinDate) {
     };
   }
 
-  const vit3Match = fileName.match(
-    /^Automatic Pro\s+(?<dose>\d+g)(?:\s+\[(?<tag>[^\]]+)\])?\s+(?<version>v(?:IT)?3(?:_\d+)+)\.json$/i
-  );
+  const vit3Match = parseVit3FileName(fileName);
 
-  if (vit3Match?.groups?.dose && vit3Match?.groups?.version) {
+  if (vit3Match?.version) {
     return {
       sourcePath,
       fileName,
       familySlug: 'vit3',
-      buildVersion: vit3Match.groups.version,
+      buildVersion: vit3Match.version,
       releaseDate: currentBerlinDate,
-      download: buildVit3Download(vit3Match.groups.dose, vit3Match.groups.tag, fileName),
+      download: buildVit3Download(vit3Match.dose, vit3Match.rawTag, vit3Match.trailingText, fileName),
     };
   }
 
   throw new Error(
-    `Unsupported filename "${fileName}". Expected "Automatic Pro v2 11g.json" or "Automatic Pro 21g [Spring Lever] vIT3_0_29_5.json".`
+    `Unsupported filename "${fileName}". Expected "Automatic Pro v2 11g.json", "Automatic Pro 21g [Spring Lever] vIT3_0_29_5.json", or "Automatic Pro Soup vIT3_0_29_5.json".`
   );
+}
+
+function parseVit3FileName(fileName) {
+  const matchedFile = fileName.match(/^Automatic Pro\s+(?<body>.+?)\s+(?<version>v(?:IT)?3(?:_\d+)+)\.json$/i);
+
+  if (!matchedFile?.groups?.body || !matchedFile.groups.version) {
+    return null;
+  }
+
+  const body = matchedFile.groups.body.trim();
+  const doseMatch = body.match(/^(?<dose>\d+g)(?:\s+(?<rest>.+))?$/i);
+  const dose = doseMatch?.groups?.dose ?? '';
+  const remainder = doseMatch ? (doseMatch.groups?.rest ?? '').trim() : body;
+
+  if (!dose && !remainder) {
+    return null;
+  }
+
+  const bracketMatch = remainder.match(/^\[(?<tag>[^\]]+)\](?:\s+(?<tail>.+))?$/);
+
+  if (bracketMatch?.groups?.tag) {
+    return {
+      dose,
+      rawTag: bracketMatch.groups.tag,
+      trailingText: (bracketMatch.groups.tail ?? '').trim(),
+      version: matchedFile.groups.version,
+    };
+  }
+
+  if (!dose && !remainder) {
+    return null;
+  }
+
+  return {
+    dose,
+    rawTag: '',
+    trailingText: remainder,
+    version: matchedFile.groups.version,
+  };
 }
 
 function getV2DownloadMetadata(dose) {
@@ -224,25 +262,32 @@ function getV2DownloadMetadata(dose) {
   };
 }
 
-function buildVit3Download(dose, rawTag, fileName) {
+function buildVit3Download(dose, rawTag, trailingText, fileName) {
   const parsedTag = parseVit3Tag(rawTag);
+  const trailingSegments = splitTrailingTextSegments(trailingText);
 
-  if (!parsedTag) {
+  if (!parsedTag && trailingSegments.length === 0) {
     return {
-      label: dose,
+      label: formatDisplayLabel(dose),
       dose,
       variant: 'Standard basket',
       file: fileName,
       temperatureC: 89,
       notes: '',
-      slotId: `vit3-${dose}-main`,
+      slotId: `vit3-${getDoseKey(dose)}-main`,
+      profileType: 'direct-lever',
     };
   }
 
+  if (!parsedTag) {
+    return buildExperimentalDownload(dose, buildVisibleExtraLabel(trailingSegments), fileName);
+  }
+
   if (parsedTag.hasStepDown) {
-    const extraLabel = buildVisibleExtraLabel(parsedTag.extraSegments);
-    const label = extraLabel ? `${dose} ${extraLabel}` : `${dose} Step-Down`;
-    const extraSlug = buildExtraSlug(parsedTag.extraSegments.filter((segment) => normalizeSegment(segment) !== 'step-down'));
+    const combinedSegments = [...parsedTag.extraSegments, ...trailingSegments];
+    const extraLabel = buildVisibleExtraLabel(combinedSegments);
+    const label = formatDisplayLabel(dose, extraLabel || 'Step-Down');
+    const extraSlug = buildExtraSlug(combinedSegments.filter((segment) => normalizeSegment(segment) !== 'step-down'));
 
     return {
       label,
@@ -251,22 +296,32 @@ function buildVit3Download(dose, rawTag, fileName) {
       file: fileName,
       temperatureC: 89,
       notes: 'Experimental step-down variant inside the Direct Lever branch.',
-      slotId: extraSlug ? `vit3-${dose}-step-down-${extraSlug}` : `vit3-${dose}-step-down`,
+      slotId: extraSlug
+        ? `vit3-${getDoseKey(dose)}-step-down-${extraSlug}`
+        : `vit3-${getDoseKey(dose)}-step-down`,
       profileType: 'direct-lever',
     };
   }
 
-  const extraLabel = buildVisibleExtraLabel(parsedTag.extraSegments);
-  const extraSlug = buildExtraSlug(parsedTag.extraSegments);
+  if (!parsedTag.batch) {
+    return buildExperimentalDownload(dose, buildVisibleExtraLabel([...parsedTag.extraSegments, ...trailingSegments]), fileName);
+  }
+
+  const extraSegments = [...parsedTag.extraSegments, ...trailingSegments];
+  const extraLabel = buildVisibleExtraLabel(extraSegments);
+  const extraSlug = buildExtraSlug(extraSegments);
+  const slotDose = getDoseKey(dose);
 
   return {
-    label: extraLabel ? `${dose} ${extraLabel}` : dose,
+    label: formatDisplayLabel(dose, extraLabel || (!dose ? profileTypeLabels[parsedTag.batch.profileType] : '')),
     dose,
     variant: parsedTag.batch.defaultVariant,
     file: fileName,
     temperatureC: 89,
     notes: '',
-    slotId: extraSlug ? `${parsedTag.batch.customSlotPrefix(dose)}-${extraSlug}` : parsedTag.batch.defaultSlotId(dose),
+    slotId: extraSlug
+      ? `${parsedTag.batch.customSlotPrefix(slotDose)}-${extraSlug}`
+      : parsedTag.batch.defaultSlotId(slotDose),
     profileType: parsedTag.batch.profileType,
   };
 }
@@ -321,7 +376,11 @@ function parseVit3Tag(rawTag) {
       };
     }
 
-    throw new Error(`Unsupported vIT3/v3 tag "[${rawTag}]".`);
+    return {
+      batch: null,
+      extraSegments: segments,
+      hasStepDown: false,
+    };
   }
 
   const batch = vit3BatchDefinitions.find((definition) => definition.aliases.includes(normalizedSegments[batchIndex]));
@@ -339,7 +398,55 @@ function buildVisibleExtraLabel(extraSegments) {
     return '';
   }
 
-  return extraSegments.map(cleanSegment).join(' / ');
+  return extraSegments.map(cleanSegment).join(' ');
+}
+
+function splitTrailingTextSegments(trailingText) {
+  if (!trailingText) {
+    return [];
+  }
+
+  return trailingText
+    .split(/\s*(?:,|\/)\s*/)
+    .map(cleanSegment)
+    .filter(Boolean);
+}
+
+function formatDisplayLabel(dose, visibleExtraLabel = '') {
+  if (dose && visibleExtraLabel) {
+    return `${dose} ${visibleExtraLabel}`;
+  }
+
+  if (dose) {
+    return dose;
+  }
+
+  if (visibleExtraLabel) {
+    return visibleExtraLabel;
+  }
+
+  throw new Error('Cannot build a display label without a dose or visible name.');
+}
+
+function getDoseKey(dose) {
+  return dose ? normalizeSegment(dose).replace(/[^a-z0-9]+/g, '-') : 'no-dose';
+}
+
+function buildExperimentalDownload(dose, visibleExtraLabel, fileName) {
+  const label = formatDisplayLabel(dose, visibleExtraLabel);
+  const extraSlug = buildExtraSlug(splitTrailingTextSegments(visibleExtraLabel));
+  const slotPrefix = dose ? `vit3-${getDoseKey(dose)}-experimental` : 'vit3-experimental';
+
+  return {
+    label,
+    dose,
+    variant: 'Experimental',
+    file: fileName,
+    temperatureC: 89,
+    notes: '',
+    slotId: extraSlug ? `${slotPrefix}-${extraSlug}` : slotPrefix,
+    profileType: 'experimental',
+  };
 }
 
 function buildExtraSlug(extraSegments) {
@@ -450,8 +557,8 @@ function createAutomatedBuildNote(familySlug, downloads) {
 }
 
 function compareDownloadsForNotes(left, right) {
-  const leftDose = Number.parseInt(left.dose, 10);
-  const rightDose = Number.parseInt(right.dose, 10);
+  const leftDose = getDoseSortValue(left.dose);
+  const rightDose = getDoseSortValue(right.dose);
 
   if (leftDose !== rightDose) {
     return leftDose - rightDose;
@@ -467,6 +574,10 @@ function formatDownloadForNote(download, familySlug) {
 
   if (download.slotId?.includes('step-down')) {
     return `${download.label} Direct Lever`;
+  }
+
+  if (download.profileType === 'experimental') {
+    return download.label;
   }
 
   if (download.profileType) {
@@ -538,6 +649,11 @@ function compareNumberTuplesDesc(left, right) {
   }
 
   return 0;
+}
+
+function getDoseSortValue(dose) {
+  const parsedDose = Number.parseInt(dose, 10);
+  return Number.isNaN(parsedDose) ? Number.POSITIVE_INFINITY : parsedDose;
 }
 
 function clearIncomingDirectory(incomingDir) {
