@@ -1,0 +1,208 @@
+{
+  "label": "Automatic Pro 18g [Spring Lever] vIT3_0_29_5",
+  "type": "pro",
+  "description": "If using time mode: stop manually / change last duration. Automatic Pro is a profile family built to automate pre-infusion, bloom, and extraction with clever phase stops.",
+  "temperature": 89,
+  "favorite": true,
+  "selected": false,
+  "utility": false,
+  "phases": [
+    {
+      "name": "Stabilize",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 4,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": true
+      },
+      "pump": 0,
+      "targets": [
+        {
+          "type": "pressure",
+          "operator": "lte",
+          "value": 0.7
+        }
+      ]
+    },
+    {
+      "name": "Fill Headspace",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 20,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": true
+      },
+      "pump": {
+        "target": "flow",
+        "pressure": 1.01,
+        "flow": 10
+      },
+      "targets": [
+        {
+          "type": "pressure",
+          "operator": "gte",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "Saturate Puck",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 20,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": false
+      },
+      "pump": {
+        "target": "pressure",
+        "pressure": 2.2,
+        "flow": 3.5
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 3
+        },
+        {
+          "type": "pumped",
+          "operator": "gte",
+          "value": 9
+        }
+      ]
+    },
+    {
+      "name": "Stabilize Bloom",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 1,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": false
+      },
+      "pump": {
+        "target": "pressure",
+        "pressure": 1.7,
+        "flow": 2
+      }
+    },
+    {
+      "name": "Auto Bloom",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 9,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": true
+      },
+      "pump": {
+        "target": "pressure",
+        "pressure": 1.7,
+        "flow": 2
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 5
+        },
+        {
+          "type": "pumped",
+          "operator": "gte",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "Extraction Start",
+      "phase": "brew",
+      "valve": 1,
+      "duration": 5,
+      "temperature": 0,
+      "transition": {
+        "type": "ease-out",
+        "duration": 4,
+        "adaptive": false
+      },
+      "pump": {
+        "target": "pressure",
+        "pressure": 9,
+        "flow": 0
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 6
+        },
+        {
+          "type": "pumped",
+          "operator": "gte",
+          "value": 6
+        }
+      ]
+    },
+    {
+      "name": "Check Extraction",
+      "phase": "brew",
+      "valve": 1,
+      "duration": 20,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": false
+      },
+      "pump": {
+        "target": "pressure",
+        "pressure": 9,
+        "flow": 0
+      },
+      "targets": [
+        {
+          "type": "pressure",
+          "operator": "gte",
+          "value": 8.8
+        }
+      ]
+    },
+    {
+      "name": "Main Extraction",
+      "phase": "brew",
+      "valve": 1,
+      "duration": 90,
+      "temperature": 0,
+      "transition": {
+        "type": "linear",
+        "duration": 40,
+        "adaptive": false
+      },
+      "pump": {
+        "target": "pressure",
+        "pressure": 4,
+        "flow": 0
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 36
+        }
+      ]
+    }
+  ],
+  "name": "Automatic Pro 18g [Spring Lever] vIT3_0_29_5"
+}
