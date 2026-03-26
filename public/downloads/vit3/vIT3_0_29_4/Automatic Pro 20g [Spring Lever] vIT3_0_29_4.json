@@ -1,10 +1,10 @@
 {
-  "label": "Automatic Pro 21g [Spring Lever] vIT3_0_29_4",
+  "label": "Automatic Pro 20g [Spring Lever] vIT3_0_29_4",
   "type": "pro",
   "description": "If using time mode: stop manually / change last duration. Automatic Pro is a profile family built to automate pre-infusion, bloom, and extraction with clever phase stops.",
   "temperature": 89,
-  "favorite": false,
-  "selected": false,
+  "favorite": true,
+  "selected": true,
   "utility": false,
   "phases": [
     {
@@ -76,7 +76,7 @@
         {
           "type": "pumped",
           "operator": "gte",
-          "value": 12.5
+          "value": 11
         }
       ]
     },
@@ -146,12 +146,12 @@
         {
           "type": "volumetric",
           "operator": "gte",
-          "value": 9.5
+          "value": 8
         },
         {
           "type": "pumped",
           "operator": "gte",
-          "value": 9.5
+          "value": 8
         }
       ]
     },
@@ -199,10 +199,10 @@
         {
           "type": "volumetric",
           "operator": "gte",
-          "value": 42
+          "value": 40
         }
       ]
     }
   ],
-  "name": "Automatic Pro 21g [Spring Lever] vIT3_0_29_4"
+  "name": "Automatic Pro 20g [Spring Lever] vIT3_0_29_4"
 }
