@@ -33,8 +33,21 @@ New profile uploads now go through `incoming/` and a GitHub Action.
 - `Automatic Pro 21g [Spring Lever] vIT3_0_29_5.json`
 - `Automatic Pro 20g [Adaptive Pressure] vIT3_0_29_5.json`
 - `Automatic Pro 20g [9 bar] vIT3_0_29_5.json`
+- `Automatic Pro 20g [User Profile] vIT3_0_29_5.json`
+- `Automatic Pro 20g [User Profile, Turbo Shot] vIT3_0_29_5.json`
+- `Automatic Pro 20g [User Profile / Turbo Shot] vIT3_0_29_5.json`
 - `Automatic Pro 18g vIT3_0_29_1.json` for legacy untagged main-slot files
 
 For `v2`, the workflow creates a build named with the current Berlin date, for example `2026-03-26`.
 
 For `vIT3`/`v3`, the build version comes from the filename and partial updates only replace the matching slot.
+
+`[User Profile]` is meant for profiles that differ from the main profile schemas or are small variations of an existing profile or variation.
+
+Additional info inside the brackets is allowed. The workflow extracts the known batch name for sorting and uses the remaining text as the visible variation name after the dose.
+
+Examples:
+
+- `[Step-Down, Direct Lever]` becomes `18g Step-Down` in the `Direct Lever` batch
+- `[User Profile, Turbo Shot]` becomes `20g Turbo Shot` in the `User Profile` batch
+- `[User Profile / Turbo Shot]` behaves the same way
