@@ -81,13 +81,19 @@ jobs:
             exit 0
           fi
 
+          body_file="$(mktemp)"
+
+          cat <<'EOF' > "${body_file}"
+          This pull request was created automatically from files uploaded to `incoming/`.
+
+          - validated incoming JSON files
+          - copied them into `public/downloads/`
+          - updated `src/data/releases.json`
+          - cleared `incoming/` after processing
+          EOF
+
           gh pr create \
             --base main \
             --head "${GITHUB_REF_NAME}" \
             --title "Ingest uploaded profiles from ${GITHUB_REF_NAME}" \
-            --body "This pull request was created automatically from files uploaded to \`incoming/\`.
-
-- validated incoming JSON files
-- copied them into \`public/downloads/\`
-- updated \`src/data/releases.json\`
-- cleared \`incoming/\` after processing"
+            --body-file "${body_file}"
