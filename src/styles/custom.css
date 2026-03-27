@@ -464,6 +464,21 @@ h4,
   color: var(--ap-muted);
 }
 
+.ap-highlight-note {
+  margin: 1rem 0 0;
+  border: 1px solid rgba(165, 77, 27, 0.24);
+  border-radius: 1rem;
+  padding: 1rem 1.05rem;
+  background:
+    linear-gradient(135deg, rgba(215, 127, 63, 0.12), rgba(255, 241, 229, 0.44)),
+    color-mix(in srgb, var(--ap-surface-strong) 90%, transparent);
+  color: var(--ap-muted);
+}
+
+.ap-highlight-note strong {
+  color: var(--ap-ink);
+}
+
 .ap-download-row,
 .ap-build-download-row {
   display: flex;
