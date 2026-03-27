@@ -67,15 +67,25 @@ const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(
         <nav class="ap-profile-type-nav" aria-label="Profile types">
           {currentDownloadGroups.map((group) => (
             <a
-              class:list={['ap-profile-type-card', group.downloads.length === 0 && 'ap-profile-type-card-empty']}
+              class:list={[
+                'ap-profile-type-card',
+                group.featured && 'ap-profile-type-card-featured',
+                group.downloads.length === 0 && 'ap-profile-type-card-empty',
+              ]}
               href={`#${group.sectionId}`}
             >
-              <div class="ap-profile-type-title-row">
-                <h3>{group.label}</h3>
-                {group.downloads.length === 0 && <span class="ap-profile-type-empty">No standalone files</span>}
+              <div class="ap-profile-type-card-copy">
+                <div class="ap-profile-type-title-row">
+                  <h3>{group.label}</h3>
+                  {group.downloads.length === 0 && <span class="ap-profile-type-empty">No standalone files</span>}
+                </div>
+
+                {group.featuredLine && <p class="ap-profile-type-featured-line">{group.featuredLine}</p>}
+                <p>{group.description || 'Experimental variants are currently listed inside their matching main profile type.'}</p>
+                {group.note && <p class="ap-profile-type-note">{group.note}</p>}
               </div>
-              <p>{group.description || 'Experimental variants are currently listed inside their matching main profile type.'}</p>
-              {group.note && <p class="ap-profile-type-note">{group.note}</p>}
+
+              {group.ctaLabel && <span class="ap-profile-type-cta">{group.ctaLabel}</span>}
             </a>
           ))}
         </nav>
