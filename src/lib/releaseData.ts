@@ -8,41 +8,60 @@ export type ProfileType =
   | 'user-profile'
   | 'experimental';
 
-export const profileTypeDefinitions: { id: ProfileType; label: string; description: string; note?: string }[] = [
+export type ProfileTypeDefinition = {
+  id: ProfileType;
+  label: string;
+  description: string;
+  note?: string;
+  featured?: boolean;
+  featuredLine?: string;
+  ctaLabel?: string;
+};
+
+export const profileTypeDefinitions: ProfileTypeDefinition[] = [
   {
     id: 'direct-lever',
     label: 'Direct Lever',
     description:
       'Static declining flow based main extraction - suitable for all kinds of beans and drinks (the original Automatic Pro experience)',
     note: 'If this causes issues with a fast pressure drop, switch to one of the other variations.',
+    featured: true,
+    featuredLine: 'Balanced profile',
+    ctaLabel: 'Go to Direct Lever',
   },
   {
     id: 'spring-lever',
     label: 'Spring Lever',
     description: 'Static declining pressure based main extraction - suitable for medium to dark roasts',
+    note: 'If the shot runs too fast, grind finer.',
+    ctaLabel: 'Go to Spring Lever',
   },
   {
     id: 'adaptive-pressure',
     label: 'Adaptive Pressure',
     description:
       'Adaptive pressure based main extraction - the newest variation, suitable for all kinds of beans and drinks, and seems to work particularly well with light to medium roasts',
+    ctaLabel: 'Go to Adaptive Pressure',
   },
   {
     id: 'nine-bar',
     label: '9bar',
     description: 'Static 9 bar pressure based main extraction - good to learn what grind size, ratio and temperature do',
+    ctaLabel: 'Go to 9bar',
   },
   {
     id: 'user-profile',
     label: 'User Profile',
     description:
       'Use this batch when the profile differs from the other profile schemas or is a small variation of an existing profile or variation',
+    ctaLabel: 'Go to User Profile',
   },
   {
     id: 'experimental',
     label: 'Experimental and Other',
     description:
       'Profiles without a matching known batch name land here automatically. Remaining names are shown after the dose, for example 20g Soup or Soup.',
+    ctaLabel: 'Go to Experimental and Other',
   },
 ];
 
@@ -88,6 +107,9 @@ export type CurrentDownloadGroup = {
   label: string;
   description: string;
   note?: string;
+  featured?: boolean;
+  featuredLine?: string;
+  ctaLabel?: string;
   sectionId: string;
   downloads: CurrentDownload[];
 };
@@ -257,6 +279,9 @@ export function getCurrentDownloadGroups(family: Family): CurrentDownloadGroup[]
     label: definition.label,
     description: definition.description,
     note: definition.note,
+    featured: definition.featured,
+    featuredLine: definition.featuredLine,
+    ctaLabel: definition.ctaLabel,
     sectionId: `profile-type-${definition.id}`,
     downloads: [...(grouped.get(definition.id) ?? [])].sort(compareCurrentDownloads),
   }));
