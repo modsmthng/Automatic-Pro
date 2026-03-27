@@ -73,9 +73,107 @@
     "imageHint": "espresso",
     "builds": [
       {
+        "buildVersion": "vIT3_0_29_6",
+        "releaseDate": "2026-03-27",
+        "isLatest": true,
+        "notes": "Automated update for 9g Direct Lever, 18g Direct Lever, 18g Spring Lever, 20g Adaptive Pressure, 20g Direct Lever, 20g 9bar, 20g Spring Lever, 21g Direct Lever, and 21g Spring Lever.",
+        "downloads": [
+          {
+            "label": "18g",
+            "dose": "18g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 18g [Direct Lever] vIT3_0_29_6.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-18g-main",
+            "profileType": "direct-lever"
+          },
+          {
+            "label": "18g",
+            "dose": "18g",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro 18g [Spring Lever] vIT3_0_29_6.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-18g-spring-lever",
+            "profileType": "spring-lever"
+          },
+          {
+            "label": "20g",
+            "dose": "20g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 20g [9 bar] vIT3_0_29_6.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-20g-nine-bar",
+            "profileType": "nine-bar"
+          },
+          {
+            "label": "20g",
+            "dose": "20g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 20g [Adaptive Pressure] vIT3_0_29_6.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-20g-adaptive-pressure",
+            "profileType": "adaptive-pressure"
+          },
+          {
+            "label": "20g",
+            "dose": "20g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 20g [Direct Lever] vIT3_0_29_6.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-20g-main",
+            "profileType": "direct-lever"
+          },
+          {
+            "label": "20g",
+            "dose": "20g",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro 20g [Spring Lever] vIT3_0_29_6.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-20g-spring-lever",
+            "profileType": "spring-lever"
+          },
+          {
+            "label": "21g",
+            "dose": "21g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 21g  [Direct Lever] vIT3_0_29_6.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-21g-main",
+            "profileType": "direct-lever"
+          },
+          {
+            "label": "21g",
+            "dose": "21g",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro 21g [Spring Lever] vIT3_0_29_6.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-21g-spring-lever",
+            "profileType": "spring-lever"
+          },
+          {
+            "label": "9g",
+            "dose": "9g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 9g [Direct Lever] vIT3_0_29_6.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-9g-main",
+            "profileType": "direct-lever"
+          }
+        ]
+      },
+      {
         "buildVersion": "vIT3_0_29_5",
         "releaseDate": "2026-03-26",
-        "isLatest": true,
+        "isLatest": false,
         "notes": "Automated update for 18g Spring Lever, 20g Spring Lever, and 21g Spring Lever.",
         "downloads": [
           {
