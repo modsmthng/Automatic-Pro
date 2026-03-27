@@ -76,7 +76,7 @@
         "buildVersion": "vIT3_0_29_6",
         "releaseDate": "2026-03-27",
         "isLatest": true,
-        "notes": "Automated update for 9g Direct Lever, 18g Direct Lever, 18g Spring Lever, 20g Adaptive Pressure, 20g Direct Lever, 20g 9bar, 20g Spring Lever, 21g Direct Lever, and 21g Spring Lever.",
+        "notes": "Automated update for 9g Direct Lever, 18g Direct Lever, 18g Spring Lever, 18g Step-Down Direct Lever, 20g Adaptive Pressure, 20g Direct Lever, 20g 9bar, 20g Spring Lever, 21g Direct Lever, and 21g Spring Lever.",
         "downloads": [
           {
             "label": "18g",
@@ -166,6 +166,16 @@
             "temperatureC": 89,
             "notes": "",
             "slotId": "vit3-9g-main",
+            "profileType": "direct-lever"
+          },
+          {
+            "label": "18g Step-Down",
+            "dose": "18g",
+            "variant": "Step-Down basket",
+            "file": "Automatic Pro 18g [Step-Down, Direct Lever] vIT3_0_29_6.json",
+            "temperatureC": 89,
+            "notes": "Experimental step-down variant inside the Direct Lever branch.",
+            "slotId": "vit3-18g-step-down",
             "profileType": "direct-lever"
           }
         ]
