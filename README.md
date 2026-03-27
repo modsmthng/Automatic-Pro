@@ -63,8 +63,6 @@ Examples:
 - `Automatic Pro v2 18g.json`
 - `Automatic Pro v2 22g.json`
 
-For `v2`, the dose is not limited to the old example list. Files like `Automatic Pro v2 11g.json` are valid too.
-
 
 
 For `v2`, the workflow creates a build named with the current Berlin date, for example `2026-03-26`.
