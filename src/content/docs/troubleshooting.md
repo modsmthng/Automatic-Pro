@@ -9,7 +9,7 @@ Start with the simple checks first:
 
 - Grind finer if you want higher pressure, especially because pre-infusion changes the way pressure ramps up.
 - Confirm that you picked the correct dose file for your basket.
-- If your basket has more headspace than expected, review the headspace-dependent logic in [How Automatic Pro v2 Works](./how-automatic-pro-v2-works/).
+- If your basket has more headspace than expected, review the headspace-dependent logic in [How Automatic Pro v2 Works](../how-automatic-pro-v2-works/).
 - In time mode, remember that the last phase may need to be shortened or extended to match your real flow.
 
 ## The shot tastes sour or salty
@@ -32,7 +32,7 @@ Try:
 
 Time mode is most useful as a practical approximation when no scale is available.
 
-- Use the formula from [Quick Start / Dialing In](./quick-start/) as the baseline.
+- Use the formula from [Quick Start / Dialing In](../quick-start/) as the baseline.
 - If the shot ends too early or too late, adjust the last phase duration to reflect your real observed flow.
 - If you do use a scale, weight mode is usually the more reliable way to stop the shot.
 
