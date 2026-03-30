@@ -4,7 +4,7 @@ Docs site: https://modsmthng.github.io/Automatic-Pro/
 
 GaggiMate: https://github.com/jniebuhr/gaggimate
 
-## Upload workflow
+## How to add a Profile
 
 1. Drop new JSON files into `incoming/`.
 2. Push them to `main`.
