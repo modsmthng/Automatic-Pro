@@ -6,10 +6,6 @@ GaggiMate: https://github.com/jniebuhr/gaggimate
 
 ## Upload workflow
 
-New profile uploads now go through `incoming/` and a GitHub Action.
-
-Simple default flow:
-
 1. Drop new JSON files into `incoming/`.
 2. Push them to `main`.
 3. The `Ingest Uploaded Profiles` workflow validates the files, moves them into `public/downloads/`, updates `src/data/releases.json`, and clears `incoming/` again.
