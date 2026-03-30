@@ -8,12 +8,11 @@ GaggiMate: https://github.com/jniebuhr/gaggimate
 
 New profile uploads now go through `incoming/` and a GitHub Action.
 
-1. Create a branch from `main`.
-2. Drop new JSON files into `incoming/`.
-3. Push the branch.
-4. _The `Ingest Uploaded Profiles` workflow validates the files, moves them into `public/downloads/`, updates `src/data/releases.json`, and opens or updates a PR to `main`._
+Simple default flow:
 
-`main` does not ingest files directly. The automation only processes uploads from non-`main` branches.
+1. Drop new JSON files into `incoming/`.
+2. Push them to `main`.
+3. The `Ingest Uploaded Profiles` workflow validates the files, moves them into `public/downloads/`, updates `src/data/releases.json`, and clears `incoming/` again.
 
 ## Filename format
 `vIT3` / `v3`

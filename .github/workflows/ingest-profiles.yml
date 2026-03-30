@@ -2,8 +2,6 @@ name: Ingest Uploaded Profiles
 
 on:
   push:
-    branches-ignore:
-      - main
     paths:
       - 'incoming/*.json'
       - 'incoming/**/*.json'
@@ -19,7 +17,7 @@ concurrency:
 
 jobs:
   ingest:
-    if: github.ref_name != 'main' && github.actor != 'github-actions[bot]'
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
@@ -70,7 +68,7 @@ jobs:
           git push origin HEAD:${GITHUB_REF_NAME}
 
       - name: Create pull request if needed
-        if: steps.changes.outputs.changed == 'true'
+        if: steps.changes.outputs.changed == 'true' && github.ref_name != 'main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
