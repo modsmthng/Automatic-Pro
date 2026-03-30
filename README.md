@@ -8,7 +8,7 @@ GaggiMate: https://github.com/jniebuhr/gaggimate
 
 New profile uploads now go through `incoming/` and a GitHub Action.
 
-1. Create a branch from `main`.
+1. **Create a branch** from `main`. _Do not use the main branch, otherwise the script will not be executed._
 2. Drop new JSON files into `incoming/`.
 3. Push the branch.
 4. _The `Ingest Uploaded Profiles` workflow validates the files, moves them into `public/downloads/`, updates `src/data/releases.json`, and opens or updates a PR to `main`._
