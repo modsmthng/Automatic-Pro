@@ -268,9 +268,9 @@
       },
       {
         "buildVersion": "vIT3_0_29_3",
-        "releaseDate": "2026-03-26",
+        "releaseDate": "2026-03-30",
         "isLatest": false,
-        "notes": "Automated update for 9g Direct Lever, 18g Direct Lever, 18g Spring Lever, 18g Step-Down Direct Lever, 20g Adaptive Pressure, 20g Direct Lever, 20g 9bar, 20g Spring Lever, 21g Direct Lever, and 21g Spring Lever.",
+        "notes": "Automated update for 9g Direct Lever, 15g Step-Down LordApoth Direct Lever, 18g Direct Lever, 18g Spring Lever, 18g Step-Down Direct Lever, 20g Adaptive Pressure, 20g Direct Lever, 20g 9bar, 20g Spring Lever, 21g Direct Lever, and 21g Spring Lever.",
         "downloads": [
           {
             "label": "18g",
@@ -371,6 +371,16 @@
             "notes": "",
             "slotId": "vit3-18g-spring-lever",
             "profileType": "spring-lever"
+          },
+          {
+            "label": "15g Step-Down LordApoth",
+            "dose": "15g",
+            "variant": "Step-Down basket",
+            "file": "Automatic Pro 15g [Step-Down, Direct Lever, LordApoth] vIT3_0_29_3.json",
+            "temperatureC": 89,
+            "notes": "Experimental step-down variant inside the Direct Lever branch.",
+            "slotId": "vit3-15g-step-down-lordapoth",
+            "profileType": "direct-lever"
           }
         ]
       },
