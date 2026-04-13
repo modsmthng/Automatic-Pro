@@ -18,7 +18,8 @@ interface Props {
 const { family } = Astro.props as Props;
 const latestBuild = getLatestBuild(family);
 const currentDownloads = getCurrentDownloads(family);
-const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(family) : [];
+const currentDownloadGroups = family.downloadMode === 'batched' ? getCurrentDownloadGroups(family) : [];
+const hasPublishedBuilds = family.builds.length > 0;
 ---
 
 <section class="ap-family-hero">
@@ -35,9 +36,11 @@ const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(
       )
     }
     <p class="ap-family-note">
-      {family.status === 'stable'
-        ? `Current stable build: ${latestBuild.buildVersion}.`
-        : `Latest family update: ${latestBuild.buildVersion}. Variants that were not touched in the latest update keep their older build number until their next revision.`}
+      {!latestBuild
+        ? 'No published builds yet.'
+        : family.status === 'stable'
+          ? `Current stable build: ${latestBuild.buildVersion}.`
+          : `Latest family update: ${latestBuild.buildVersion}. Variants that were not touched in the latest update keep their older build number until their next revision.`}
     </p>
   </div>
 
@@ -53,16 +56,18 @@ const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(
       <h2>Variations</h2>
     </div>
     <p>
-      {family.status === 'stable'
-        ? 'Current files for the active stable build.'
-        : family.slug === 'vit3'
-          ? 'Latest available file for each currently published profile type and dose.'
-          : 'Latest available file for each currently published variant.'}
+      {!hasPublishedBuilds
+        ? 'No published files yet.'
+        : family.status === 'stable'
+          ? 'Current files for the active stable build.'
+          : family.downloadMode === 'batched'
+            ? 'Latest available file for each currently published profile type and dose.'
+            : 'Latest available file for each currently published variant.'}
     </p>
   </div>
 
   {
-    family.slug === 'vit3' ? (
+    family.downloadMode === 'batched' ? (
       <>
         <nav class="ap-profile-type-nav" aria-label="Profile types">
           {currentDownloadGroups.map((group) => (
@@ -125,35 +130,41 @@ const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(
                   ))}
                 </ul>
               ) : (
-                <p class="ap-profile-type-empty-note">No standalone files in the current build.</p>
+                <p class="ap-profile-type-empty-note">
+                  {hasPublishedBuilds ? 'No standalone files in the current build.' : 'No published files yet for this variation.'}
+                </p>
               )}
             </section>
           ))}
         </div>
       </>
     ) : (
-      <ul class="ap-download-list">
-        {currentDownloads.map((download) => (
-          <li class="ap-download-row">
-            <div class="ap-download-copy">
-              <div class="ap-download-title-row">
-                <h3>{download.label}</h3>
-                {family.status === 'testing' && <span class="ap-build-tag">{download.buildVersion}</span>}
+      currentDownloads.length > 0 ? (
+        <ul class="ap-download-list">
+          {currentDownloads.map((download) => (
+            <li class="ap-download-row">
+              <div class="ap-download-copy">
+                <div class="ap-download-title-row">
+                  <h3>{download.label}</h3>
+                  {family.status === 'testing' && <span class="ap-build-tag">{download.buildVersion}</span>}
+                </div>
+                <p class="ap-download-variant">{getDownloadMetaLine(download.variant, download.temperatureC)}</p>
+                {download.notes && <p class="ap-download-notes">{download.notes}</p>}
               </div>
-              <p class="ap-download-variant">{getDownloadMetaLine(download.variant, download.temperatureC)}</p>
-              {download.notes && <p class="ap-download-notes">{download.notes}</p>}
-            </div>
 
-            <a
-              class="ap-button ap-button-primary"
-              download
-              href={`${base}${getDownloadPath(family.slug, download.buildVersion, download.file)}`}
-            >
-              Download JSON
-            </a>
-          </li>
-        ))}
-      </ul>
+              <a
+                class="ap-button ap-button-primary"
+                download
+                href={`${base}${getDownloadPath(family.slug, download.buildVersion, download.file)}`}
+              >
+                Download JSON
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="ap-profile-type-empty-note">No published files yet.</p>
+      )
     )
   }
 </section>

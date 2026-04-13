@@ -1,0 +1,11 @@
+---
+title: LAb History
+description: Published build history and download archive for LordApoth Laboratory.
+---
+
+import BuildHistory from '../../../components/BuildHistory.astro';
+import { getFamilyBySlug } from '../../../lib/releaseData';
+
+[Back to LAb](../)
+
+<BuildHistory family={getFamilyBySlug('lab')} />

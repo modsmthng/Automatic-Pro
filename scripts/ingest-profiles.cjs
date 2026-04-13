@@ -18,43 +18,8 @@ const profileTypeLabels = {
   experimental: 'Experimental and Other',
 };
 
-const vit3BatchDefinitions = [
-  {
-    profileType: 'direct-lever',
-    aliases: ['direct lever'],
-    defaultVariant: 'Standard basket',
-    defaultSlotId: (dose) => `vit3-${dose}-main`,
-    customSlotPrefix: (dose) => `vit3-${dose}-main`,
-  },
-  {
-    profileType: 'spring-lever',
-    aliases: ['spring lever'],
-    defaultVariant: 'Spring Lever basket',
-    defaultSlotId: (dose) => `vit3-${dose}-spring-lever`,
-    customSlotPrefix: (dose) => `vit3-${dose}-spring-lever`,
-  },
-  {
-    profileType: 'adaptive-pressure',
-    aliases: ['adaptive pressure'],
-    defaultVariant: 'Standard basket',
-    defaultSlotId: (dose) => `vit3-${dose}-adaptive-pressure`,
-    customSlotPrefix: (dose) => `vit3-${dose}-adaptive-pressure`,
-  },
-  {
-    profileType: 'nine-bar',
-    aliases: ['9 bar', '9bar'],
-    defaultVariant: 'Standard basket',
-    defaultSlotId: (dose) => `vit3-${dose}-nine-bar`,
-    customSlotPrefix: (dose) => `vit3-${dose}-nine-bar`,
-  },
-  {
-    profileType: 'user-profile',
-    aliases: ['user profile'],
-    defaultVariant: 'User Profile',
-    defaultSlotId: (dose) => `vit3-${dose}-user-profile`,
-    customSlotPrefix: (dose) => `vit3-${dose}-user-profile`,
-  },
-];
+const vit3BatchDefinitions = createBatchedFamilyDefinitions('vit3');
+const labBatchDefinitions = createBatchedFamilyDefinitions('lab');
 
 const v2KnownDoseMap = {
   '9g': {
@@ -188,7 +153,20 @@ function parseUpload(sourcePath, currentBerlinDate) {
     };
   }
 
-  const vit3Match = parseVit3FileName(fileName);
+  const pureFlowMatch = parsePureFlowFileName(fileName);
+
+  if (pureFlowMatch?.label) {
+    return {
+      sourcePath,
+      fileName,
+      familySlug: 'pure-flow',
+      buildVersion: currentBerlinDate,
+      releaseDate: currentBerlinDate,
+      download: buildPureFlowDownload(pureFlowMatch.label, fileName),
+    };
+  }
+
+  const vit3Match = parseBatchedFileName(fileName, /v(?:IT)?3(?:_\d+)+/i);
 
   if (vit3Match?.version) {
     return {
@@ -197,17 +175,30 @@ function parseUpload(sourcePath, currentBerlinDate) {
       familySlug: 'vit3',
       buildVersion: vit3Match.version,
       releaseDate: currentBerlinDate,
-      download: buildVit3Download(vit3Match.dose, vit3Match.rawTag, vit3Match.trailingText, fileName),
+      download: buildBatchedDownload('vit3', vit3BatchDefinitions, vit3Match.dose, vit3Match.rawTag, vit3Match.trailingText, fileName),
+    };
+  }
+
+  const labMatch = parseBatchedFileName(fileName, /LAb\d+(?:_\d+)*/i);
+
+  if (labMatch?.version) {
+    return {
+      sourcePath,
+      fileName,
+      familySlug: 'lab',
+      buildVersion: labMatch.version,
+      releaseDate: currentBerlinDate,
+      download: buildBatchedDownload('lab', labBatchDefinitions, labMatch.dose, labMatch.rawTag, labMatch.trailingText, fileName),
     };
   }
 
   throw new Error(
-    `Unsupported filename "${fileName}". Expected "Automatic Pro v2 11g.json", "Automatic Pro 21g [Spring Lever] vIT3_0_29_5.json", or "Automatic Pro Soup vIT3_0_29_5.json".`
+    `Unsupported filename "${fileName}". Expected a v2 file, a vIT3/v3 file, an LAb file like "Automatic Pro 18g [Direct Lever] LAb0_1.json", or a Pure Flow file like "Pure Flow (10-20g).json".`
   );
 }
 
-function parseVit3FileName(fileName) {
-  const matchedFile = fileName.match(/^Automatic Pro\s+(?<body>.+?)\s+(?<version>v(?:IT)?3(?:_\d+)+)\.json$/i);
+function parseBatchedFileName(fileName, versionPattern) {
+  const matchedFile = fileName.match(new RegExp(`^Automatic Pro\\s+(?<body>.+?)\\s+(?<version>${versionPattern.source})\\.json$`, 'i'));
 
   if (!matchedFile?.groups?.body || !matchedFile.groups.version) {
     return null;
@@ -245,6 +236,23 @@ function parseVit3FileName(fileName) {
   };
 }
 
+function parsePureFlowFileName(fileName) {
+  const matchedFile = fileName.match(/^Pure Flow\s*(?:\((?<range>[^)]+)\)|(?<plain>.+?))\.json$/i);
+
+  if (!matchedFile) {
+    return null;
+  }
+
+  const rawRange = matchedFile.groups?.range ?? matchedFile.groups?.plain ?? '';
+  const label = normalizePureFlowLabel(rawRange);
+
+  if (!label) {
+    return null;
+  }
+
+  return { label };
+}
+
 function getV2DownloadMetadata(dose) {
   const knownDose = v2KnownDoseMap[dose];
 
@@ -262,8 +270,8 @@ function getV2DownloadMetadata(dose) {
   };
 }
 
-function buildVit3Download(dose, rawTag, trailingText, fileName) {
-  const parsedTag = parseVit3Tag(rawTag);
+function buildBatchedDownload(familyPrefix, batchDefinitions, dose, rawTag, trailingText, fileName) {
+  const parsedTag = parseBatchedTag(rawTag, batchDefinitions);
   const trailingSegments = splitTrailingTextSegments(trailingText);
 
   if (!parsedTag && trailingSegments.length === 0) {
@@ -274,13 +282,13 @@ function buildVit3Download(dose, rawTag, trailingText, fileName) {
       file: fileName,
       temperatureC: 89,
       notes: '',
-      slotId: `vit3-${getDoseKey(dose)}-main`,
+      slotId: `${familyPrefix}-${getDoseKey(dose)}-main`,
       profileType: 'direct-lever',
     };
   }
 
   if (!parsedTag) {
-    return buildExperimentalDownload(dose, buildVisibleExtraLabel(trailingSegments), fileName);
+    return buildExperimentalDownload(familyPrefix, dose, buildVisibleExtraLabel(trailingSegments), fileName);
   }
 
   if (parsedTag.hasStepDown) {
@@ -297,14 +305,19 @@ function buildVit3Download(dose, rawTag, trailingText, fileName) {
       temperatureC: 89,
       notes: 'Experimental step-down variant inside the Direct Lever branch.',
       slotId: extraSlug
-        ? `vit3-${getDoseKey(dose)}-step-down-${extraSlug}`
-        : `vit3-${getDoseKey(dose)}-step-down`,
+        ? `${familyPrefix}-${getDoseKey(dose)}-step-down-${extraSlug}`
+        : `${familyPrefix}-${getDoseKey(dose)}-step-down`,
       profileType: 'direct-lever',
     };
   }
 
   if (!parsedTag.batch) {
-    return buildExperimentalDownload(dose, buildVisibleExtraLabel([...parsedTag.extraSegments, ...trailingSegments]), fileName);
+    return buildExperimentalDownload(
+      familyPrefix,
+      dose,
+      buildVisibleExtraLabel([...parsedTag.extraSegments, ...trailingSegments]),
+      fileName
+    );
   }
 
   const extraSegments = [...parsedTag.extraSegments, ...trailingSegments];
@@ -323,6 +336,18 @@ function buildVit3Download(dose, rawTag, trailingText, fileName) {
       ? `${parsedTag.batch.customSlotPrefix(slotDose)}-${extraSlug}`
       : parsedTag.batch.defaultSlotId(slotDose),
     profileType: parsedTag.batch.profileType,
+  };
+}
+
+function buildPureFlowDownload(label, fileName) {
+  return {
+    label,
+    dose: label,
+    variant: 'Dose range',
+    file: fileName,
+    temperatureC: 94,
+    notes: '',
+    slotId: `pure-flow-${buildExtraSlug([label])}`,
   };
 }
 
@@ -349,7 +374,7 @@ function cleanSegment(segment) {
   return segment.trim().replace(/\s+/g, ' ');
 }
 
-function parseVit3Tag(rawTag) {
+function parseBatchedTag(rawTag, batchDefinitions) {
   const normalizedTag = normalizeTag(rawTag);
 
   if (!normalizedTag) {
@@ -362,7 +387,7 @@ function parseVit3Tag(rawTag) {
     .filter(Boolean);
   const normalizedSegments = segments.map(normalizeSegment);
   const batchIndex = normalizedSegments.findIndex((segment) =>
-    vit3BatchDefinitions.some((definition) => definition.aliases.includes(segment))
+    batchDefinitions.some((definition) => definition.aliases.includes(segment))
   );
 
   const hasStepDown = normalizedSegments.includes('step-down');
@@ -370,7 +395,7 @@ function parseVit3Tag(rawTag) {
   if (batchIndex === -1) {
     if (hasStepDown) {
       return {
-        batch: vit3BatchDefinitions.find((definition) => definition.profileType === 'direct-lever'),
+        batch: batchDefinitions.find((definition) => definition.profileType === 'direct-lever'),
         extraSegments: segments,
         hasStepDown: true,
       };
@@ -383,7 +408,7 @@ function parseVit3Tag(rawTag) {
     };
   }
 
-  const batch = vit3BatchDefinitions.find((definition) => definition.aliases.includes(normalizedSegments[batchIndex]));
+  const batch = batchDefinitions.find((definition) => definition.aliases.includes(normalizedSegments[batchIndex]));
   const extraSegments = segments.filter((_, index) => index !== batchIndex);
 
   return {
@@ -432,10 +457,10 @@ function getDoseKey(dose) {
   return dose ? normalizeSegment(dose).replace(/[^a-z0-9]+/g, '-') : 'no-dose';
 }
 
-function buildExperimentalDownload(dose, visibleExtraLabel, fileName) {
+function buildExperimentalDownload(familyPrefix, dose, visibleExtraLabel, fileName) {
   const label = formatDisplayLabel(dose, visibleExtraLabel);
   const extraSlug = buildExtraSlug(splitTrailingTextSegments(visibleExtraLabel));
-  const slotPrefix = dose ? `vit3-${getDoseKey(dose)}-experimental` : 'vit3-experimental';
+  const slotPrefix = dose ? `${familyPrefix}-${getDoseKey(dose)}-experimental` : `${familyPrefix}-experimental`;
 
   return {
     label,
@@ -447,6 +472,68 @@ function buildExperimentalDownload(dose, visibleExtraLabel, fileName) {
     slotId: extraSlug ? `${slotPrefix}-${extraSlug}` : slotPrefix,
     profileType: 'experimental',
   };
+}
+
+function normalizePureFlowLabel(rawRange) {
+  const cleaned = cleanSegment(rawRange);
+
+  if (!cleaned) {
+    return '';
+  }
+
+  const hyphenRange = cleaned.match(/(?<start>\d+)\s*-\s*(?<end>\d+)\s*g?/i);
+
+  if (hyphenRange?.groups?.start && hyphenRange.groups.end) {
+    return `${hyphenRange.groups.start}-${hyphenRange.groups.end}g`;
+  }
+
+  const spacedRange = cleaned.match(/(?<start>\d+)\s+(?<end>\d+)\s*g?/i);
+
+  if (spacedRange?.groups?.start && spacedRange.groups.end) {
+    return `${spacedRange.groups.start}-${spacedRange.groups.end}g`;
+  }
+
+  return cleaned;
+}
+
+function createBatchedFamilyDefinitions(prefix) {
+  return [
+    {
+      profileType: 'direct-lever',
+      aliases: ['direct lever'],
+      defaultVariant: 'Standard basket',
+      defaultSlotId: (dose) => `${prefix}-${dose}-main`,
+      customSlotPrefix: (dose) => `${prefix}-${dose}-main`,
+    },
+    {
+      profileType: 'spring-lever',
+      aliases: ['spring lever'],
+      defaultVariant: 'Spring Lever basket',
+      defaultSlotId: (dose) => `${prefix}-${dose}-spring-lever`,
+      customSlotPrefix: (dose) => `${prefix}-${dose}-spring-lever`,
+    },
+    {
+      profileType: 'adaptive-pressure',
+      aliases: ['adaptive pressure'],
+      defaultVariant: 'Standard basket',
+      defaultSlotId: (dose) => `${prefix}-${dose}-adaptive-pressure`,
+      customSlotPrefix: (dose) => `${prefix}-${dose}-adaptive-pressure`,
+    },
+    {
+      profileType: 'nine-bar',
+      aliases: ['9 bar', '9bar'],
+      defaultVariant: 'Standard basket',
+      defaultSlotId: (dose) => `${prefix}-${dose}-nine-bar`,
+      customSlotPrefix: (dose) => `${prefix}-${dose}-nine-bar`,
+    },
+    {
+      profileType: 'user-profile',
+      aliases: ['user profile'],
+      defaultVariant: 'User Profile',
+      defaultSlotId: (dose) => `${prefix}-${dose}-user-profile`,
+      customSlotPrefix: (dose) => `${prefix}-${dose}-user-profile`,
+    },
+  ];
 }
 
 function buildExtraSlug(extraSegments) {
@@ -553,6 +640,14 @@ function createAutomatedBuildNote(familySlug, downloads) {
     return `Automated v2 release for ${joinNaturalLanguage(items)}.`;
   }
 
+  if (familySlug === 'pure-flow') {
+    return `Automated Pure Flow release for ${joinNaturalLanguage(items)}.`;
+  }
+
+  if (familySlug === 'lab') {
+    return `Automated LAb update for ${joinNaturalLanguage(items)}.`;
+  }
+
   return `Automated update for ${joinNaturalLanguage(items)}.`;
 }
 
@@ -568,7 +663,7 @@ function compareDownloadsForNotes(left, right) {
 }
 
 function formatDownloadForNote(download, familySlug) {
-  if (familySlug === 'v2') {
+  if (familySlug === 'v2' || familySlug === 'pure-flow') {
     return download.label;
   }
 

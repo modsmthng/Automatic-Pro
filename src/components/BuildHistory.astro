@@ -27,45 +27,51 @@ const formatter = new Intl.DateTimeFormat('en-US', {
     <p>{family.status === 'stable' ? 'All published stable builds.' : 'All published testing builds.'}</p>
   </div>
 
-  <div class="ap-build-history">
-    {
-      builds.map((build) => (
-        <article class="ap-build-card">
-          <div class="ap-build-head">
-            <div>
-              <h3>{build.buildVersion}</h3>
-              <p class="ap-build-date">{formatter.format(new Date(build.releaseDate))}</p>
-            </div>
-            {build.notes && <p class="ap-build-notes">{build.notes}</p>}
-          </div>
+  {
+    builds.length > 0 ? (
+      <div class="ap-build-history">
+        {
+          builds.map((build) => (
+            <article class="ap-build-card">
+              <div class="ap-build-head">
+                <div>
+                  <h3>{build.buildVersion}</h3>
+                  <p class="ap-build-date">{formatter.format(new Date(build.releaseDate))}</p>
+                </div>
+                {build.notes && <p class="ap-build-notes">{build.notes}</p>}
+              </div>
 
-          <ul class="ap-build-downloads">
-            {
-              build.downloads.map((download) => (
-                <li class="ap-build-download-row">
-                  <div>
-                    <div class="ap-build-download-title-row">
-                      <strong>{download.label}</strong>
-                      {download.profileType && (
-                        <span class="ap-inline-type-badge">{getProfileTypeDefinition(download.profileType).label}</span>
-                      )}
-                    </div>
-                    {getVisibleVariant(download.variant) && <p>{getVisibleVariant(download.variant)}</p>}
-                    {download.notes && <p class="ap-build-download-note">{download.notes}</p>}
-                  </div>
-                  <a
-                    class="ap-button ap-button-secondary"
-                    download
-                    href={`${base}${getDownloadPath(family.slug, build.buildVersion, download.file)}`}
-                  >
-                    Download JSON
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </article>
-      ))
-    }
-  </div>
+              <ul class="ap-build-downloads">
+                {
+                  build.downloads.map((download) => (
+                    <li class="ap-build-download-row">
+                      <div>
+                        <div class="ap-build-download-title-row">
+                          <strong>{download.label}</strong>
+                          {download.profileType && (
+                            <span class="ap-inline-type-badge">{getProfileTypeDefinition(download.profileType).label}</span>
+                          )}
+                        </div>
+                        {getVisibleVariant(download.variant) && <p>{getVisibleVariant(download.variant)}</p>}
+                        {download.notes && <p class="ap-build-download-note">{download.notes}</p>}
+                      </div>
+                      <a
+                        class="ap-button ap-button-secondary"
+                        download
+                        href={`${base}${getDownloadPath(family.slug, build.buildVersion, download.file)}`}
+                      >
+                        Download JSON
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    ) : (
+      <p class="ap-profile-type-empty-note">No published builds yet.</p>
+    )
+  }
 </section>

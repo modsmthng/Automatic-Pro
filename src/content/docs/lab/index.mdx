@@ -1,0 +1,25 @@
+---
+title: LAb
+description: LordApoth Laboratory downloads, current files, and build history access.
+---
+
+import QuickStartSections from '../../../components/QuickStartSections.astro';
+import VersionFamilyPanel from '../../../components/VersionFamilyPanel.astro';
+import { getFamilyBySlug } from '../../../lib/releaseData';
+
+<VersionFamilyPanel family={getFamilyBySlug('lab')} />
+
+## Quick notes
+
+- `LAb` stands for `LordApoth Laboratory`.
+- It is adapted by LordApoth for low-flow pumps such as the Olab Silent Green.
+- Discussion and feedback on [GaggiMate Discord](https://discord.com/invite/3JcR5csD4E).
+
+<QuickStartSections />
+
+## Need more detail?
+
+- [Quick Start / Dialing In](../quick-start/) gives the shortest path to choosing a file and setting your recipe.
+- [Troubleshooting](../troubleshooting/) helps if a testing build behaves differently than expected.
+- <a href="https://marxd262.github.io/GM_Community_Espresso_Guide/" rel="noreferrer" target="_blank">GM Community Espresso Guide</a> adds broader espresso background and workflow guidance.
+- [Version history](./history/) lists every published `LAb` build.

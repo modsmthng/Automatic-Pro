@@ -5,7 +5,8 @@
     "displayName": "Automatic Pro v2",
     "futureDisplayName": "Automatic Pro v2",
     "status": "stable",
-    "summary": "The current stable version, proven and well tested.",
+    "downloadMode": "simple",
+    "summary": "<p>The current stable version, proven and well tested.</p><p><em>Created by modsmthng.</em></p>",
     "imageHint": "espresso",
     "builds": [
       {
@@ -69,7 +70,8 @@
     "displayName": "Automatic Pro vIT3",
     "futureDisplayName": "Automatic Pro v3",
     "status": "testing",
-    "summary": "<p>The current in-testing version with ongoing updates and main extraction variations.</p><p>It works across <strong>different basket types</strong>, including regular and step-down baskets, without adjustment.</p>",
+    "downloadMode": "batched",
+    "summary": "<p>The current in-testing version with ongoing updates and main extraction variations.</p><p>It works across <strong>different basket types</strong>, including regular and step-down baskets, without adjustment.</p><p><em>Created by modsmthng.</em></p>",
     "imageHint": "espresso",
     "builds": [
       {
@@ -403,6 +405,47 @@
             "temperatureC": 89,
             "notes": "Uses pressure instead of flow during the main extraction. Helpful if you have trouble maintaining stable pressure.",
             "slotId": "vit3-21g-spring-lever"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "lab",
+    "slug": "lab",
+    "displayName": "LAb",
+    "futureDisplayName": "LAb",
+    "status": "testing",
+    "downloadMode": "batched",
+    "summary": "<p>LordApoth Laboratory profile family for <strong>low flow pumps</strong> like the Olab Silent Green.</p><p><em>Created by LordApoth.</em></p>",
+    "homeFeaturedLine": "For Olab Silent Green",
+    "imageHint": "espresso",
+    "builds": []
+  },
+  {
+    "id": "pure-flow",
+    "slug": "pure-flow",
+    "displayName": "Pure Flow",
+    "futureDisplayName": "Pure Flow",
+    "status": "stable",
+    "downloadMode": "simple",
+    "summary": "<p>Consistent flow throughout, with only maximum pressure and two small stop parameters controlling the phases.</p><p>Less complex than Automatic Pro because only one flow value is used apart from the first filling, hence the name Pure Flow.</p><p><em>Created by modsmthng.</em></p>",
+    "imageHint": "espresso",
+    "builds": [
+      {
+        "buildVersion": "2026-04-13",
+        "releaseDate": "2026-04-13",
+        "isLatest": true,
+        "notes": "Initial Pure Flow release for the 10-20g range.",
+        "downloads": [
+          {
+            "label": "10-20g",
+            "dose": "10-20g",
+            "variant": "Dose range",
+            "file": "Pure Flow (10-20g).json",
+            "temperatureC": 94,
+            "notes": "",
+            "slotId": "pure-flow-10-20g"
           }
         ]
       }

@@ -1,0 +1,11 @@
+---
+title: Pure Flow History
+description: Published build history and download archive for Pure Flow.
+---
+
+import BuildHistory from '../../../components/BuildHistory.astro';
+import { getFamilyBySlug } from '../../../lib/releaseData';
+
+[Back to Pure Flow](../)
+
+<BuildHistory family={getFamilyBySlug('pure-flow')} />
