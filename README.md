@@ -60,6 +60,7 @@ Examples:
 - `Automatic Pro 18g [Spring Lever] LAb0_1.json`
 - `Automatic Pro 20g [Adaptive Pressure] LAb0_1.json`
 - `Automatic Pro 20g [User Profile, Extra Strong] LAb0_1.json`
+- `Automatic Pro 18g LAb04 1.3bar.json`
 
 `Pure Flow`
 
@@ -87,6 +88,7 @@ Examples:
 For `vIT3`/`v3`, the build version comes from the filename and partial updates only replace the matching slot.
 
 For `LAb`, the build version also comes from the filename, for example `LAb0_1`.
+The version token can also appear before a free custom suffix, for example `Automatic Pro 18g LAb04 1.3bar.json`.
 
 For `v2` and `Pure Flow`, the workflow creates a build named with the current Berlin date, for example `2026-03-26`.
 
@@ -101,3 +103,4 @@ Examples:
 - `[User Profile / Turbo Shot]` behaves the same way
 - `[Soup]` becomes `20g Soup` or `Soup`, depending on whether a dose is present
 - `17g Soup` becomes `17g Soup` in `Experimental and Other`
+- `18g LAb04 1.3bar` becomes `18g 1.3bar` in `Experimental and Other`
