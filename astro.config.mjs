@@ -36,6 +36,8 @@ export default defineConfig({
           items: [
             { slug: 'v2', label: 'Automatic Pro v2' },
             { slug: 'vit3', label: 'Automatic Pro vIT3' },
+            { slug: 'lab', label: 'LAb' },
+            { slug: 'pure-flow', label: 'Pure Flow' },
           ],
         },
         { slug: 'downloads', label: 'Downloads' },

@@ -86,13 +86,17 @@ export type Build = {
   downloads: DownloadEntry[];
 };
 
+export type FamilyDownloadMode = 'simple' | 'batched';
+
 export type Family = {
   id: string;
   slug: string;
   displayName: string;
   futureDisplayName: string;
   status: 'stable' | 'testing';
+  downloadMode: FamilyDownloadMode;
   summary: string;
+  homeFeaturedLine?: string;
   imageHint?: string;
   builds: Build[];
 };
@@ -176,7 +180,7 @@ export function getFamilyBySlug(slug: string): Family {
   return family;
 }
 
-export function getLatestBuild(family: Family): Build {
+export function getLatestBuild(family: Family): Build | undefined {
   return family.builds.find((build) => build.isLatest) ?? sortBuilds(family.builds)[0];
 }
 
@@ -260,6 +264,10 @@ export function getCurrentDownloads(family: Family): CurrentDownload[] {
 }
 
 export function getCurrentDownloadGroups(family: Family): CurrentDownloadGroup[] {
+  if (family.downloadMode !== 'batched') {
+    return [];
+  }
+
   const grouped = new Map<ProfileType, CurrentDownload[]>();
 
   for (const definition of profileTypeDefinitions) {
@@ -289,6 +297,11 @@ export function getCurrentDownloadGroups(family: Family): CurrentDownloadGroup[]
 
 export function getHistoryBuilds(family: Family): Build[] {
   const latestBuild = getLatestBuild(family);
+
+  if (!latestBuild) {
+    return [];
+  }
+
   return sortBuilds(family.builds).filter((build) => build.buildVersion !== latestBuild.buildVersion);
 }
 

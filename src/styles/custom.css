@@ -228,6 +228,15 @@ h4,
   margin: 0.65rem 0 0.4rem;
 }
 
+.ap-version-featured-line {
+  margin: 0.1rem 0 0.45rem;
+  font-family: 'Fraunces', serif;
+  font-size: 1.08rem;
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--ap-ink);
+}
+
 .ap-card-note {
   margin: 0.85rem 0 0;
   font-size: 0.92rem;
