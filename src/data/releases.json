@@ -69,14 +69,14 @@
     "displayName": "Automatic Pro vIT3",
     "futureDisplayName": "Automatic Pro v3",
     "status": "testing",
-    "summary": "The current in-testing version with ongoing updates and main extraction variations.",
+    "summary": "<p>The current in-testing version with ongoing updates and main extraction variations.</p><p>It works across <strong>different basket types</strong>, including regular and step-down baskets, without adjustment.</p>",
     "imageHint": "espresso",
     "builds": [
       {
         "buildVersion": "vIT3_0_29_6",
         "releaseDate": "2026-03-27",
         "isLatest": true,
-        "notes": "Automated update for 9g Direct Lever, 18g Direct Lever, 18g Spring Lever, 18g Step-Down Direct Lever, 20g Adaptive Pressure, 20g Direct Lever, 20g 9bar, 20g Spring Lever, 21g Direct Lever, and 21g Spring Lever.",
+        "notes": "Automated update for 9g Direct Lever, 18g Direct Lever, 18g Spring Lever, 20g Adaptive Pressure, 20g Direct Lever, 20g 9bar, 20g Spring Lever, 21g Direct Lever, and 21g Spring Lever.",
         "downloads": [
           {
             "label": "18g",
@@ -166,16 +166,6 @@
             "temperatureC": 89,
             "notes": "",
             "slotId": "vit3-9g-main",
-            "profileType": "direct-lever"
-          },
-          {
-            "label": "18g Step-Down",
-            "dose": "18g",
-            "variant": "Step-Down basket",
-            "file": "Automatic Pro 18g [Step-Down, Direct Lever] vIT3_0_29_6.json",
-            "temperatureC": 89,
-            "notes": "Experimental step-down variant inside the Direct Lever branch.",
-            "slotId": "vit3-18g-step-down",
             "profileType": "direct-lever"
           }
         ]
@@ -270,7 +260,7 @@
         "buildVersion": "vIT3_0_29_3",
         "releaseDate": "2026-03-30",
         "isLatest": false,
-        "notes": "Automated update for 9g Direct Lever, 15g Step-Down LordApoth Direct Lever, 18g Direct Lever, 18g Spring Lever, 18g Step-Down Direct Lever, 20g Adaptive Pressure, 20g Direct Lever, 20g 9bar, 20g Spring Lever, 21g Direct Lever, and 21g Spring Lever.",
+        "notes": "Automated update for 9g Direct Lever, 18g Direct Lever, 18g Spring Lever, 20g Adaptive Pressure, 20g Direct Lever, 20g 9bar, 20g Spring Lever, 21g Direct Lever, and 21g Spring Lever.",
         "downloads": [
           {
             "label": "18g",
@@ -280,16 +270,6 @@
             "temperatureC": 89,
             "notes": "",
             "slotId": "vit3-18g-main",
-            "profileType": "direct-lever"
-          },
-          {
-            "label": "18g Step-Down",
-            "dose": "18g",
-            "variant": "Step-Down basket",
-            "file": "Automatic Pro 18g [Step-Down, Direct Lever] vIT3_0_29_3.json",
-            "temperatureC": 89,
-            "notes": "Experimental step-down variant inside the Direct Lever branch.",
-            "slotId": "vit3-18g-step-down",
             "profileType": "direct-lever"
           },
           {
@@ -371,33 +351,6 @@
             "notes": "",
             "slotId": "vit3-18g-spring-lever",
             "profileType": "spring-lever"
-          },
-          {
-            "label": "15g Step-Down LordApoth",
-            "dose": "15g",
-            "variant": "Step-Down basket",
-            "file": "Automatic Pro 15g [Step-Down, Direct Lever, LordApoth] vIT3_0_29_3.json",
-            "temperatureC": 89,
-            "notes": "Experimental step-down variant inside the Direct Lever branch.",
-            "slotId": "vit3-15g-step-down-lordapoth",
-            "profileType": "direct-lever"
-          }
-        ]
-      },
-      {
-        "buildVersion": "vIT3_0_29_2",
-        "releaseDate": "2026-03-25",
-        "isLatest": false,
-        "notes": "Minor testing update for the 18g Step-Down branch.",
-        "downloads": [
-          {
-            "label": "18g Step-Down",
-            "dose": "18g",
-            "variant": "Step-Down basket",
-            "file": "Automatic Pro 18g [Step-Down] vIT3_0_29_2.json",
-            "temperatureC": 89,
-            "notes": "Optional testing variant tuned for step-down baskets.",
-            "slotId": "vit3-18g-step-down"
           }
         ]
       },

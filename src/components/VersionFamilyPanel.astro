@@ -28,7 +28,7 @@ const currentDownloadGroups = family.slug === 'vit3' ? getCurrentDownloadGroups(
         {family.status === 'stable' ? 'Stable' : 'In testing'}
       </span>
     </div>
-    <p class="ap-family-summary">{family.summary}</p>
+    <div class="ap-family-summary" set:html={family.summary} />
     {
       family.futureDisplayName !== family.displayName && (
         <p class="ap-family-note">This family will be promoted to {family.futureDisplayName} once testing is complete.</p>

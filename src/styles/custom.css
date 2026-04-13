@@ -152,6 +152,7 @@ h4,
 
 .ap-home-note,
 .ap-family-summary,
+.ap-version-summary,
 .ap-family-note,
 .ap-download-variant,
 .ap-download-notes,
@@ -167,6 +168,21 @@ h4,
 
 .ap-home-note {
   margin-top: 1rem;
+}
+
+.ap-version-summary p,
+.ap-family-summary p {
+  margin: 0.45rem 0 0;
+}
+
+.ap-version-summary p:first-child,
+.ap-family-summary p:first-child {
+  margin-top: 0;
+}
+
+.ap-version-summary strong,
+.ap-family-summary strong {
+  color: var(--ap-ink);
 }
 
 .ap-home-video {
