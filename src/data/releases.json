@@ -420,7 +420,36 @@
     "summary": "<p>LordApoth Laboratory profile family for <strong>low flow pumps</strong> like the Olab Silent Green.</p><p><em>Created by LordApoth.</em></p>",
     "homeFeaturedLine": "For Olab Silent Green",
     "imageHint": "espresso",
-    "builds": []
+    "builds": [
+      {
+        "buildVersion": "LAb04",
+        "releaseDate": "2026-04-13",
+        "isLatest": true,
+        "notes": "Automated LAb update for 18g 1.3bar and 18g 2bar.",
+        "downloads": [
+          {
+            "label": "18g 1.3bar",
+            "dose": "18g",
+            "variant": "Experimental",
+            "file": "Automatic Pro 18g LAb04 1.3bar.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "lab-18g-experimental-1-3bar",
+            "profileType": "experimental"
+          },
+          {
+            "label": "18g 2bar",
+            "dose": "18g",
+            "variant": "Experimental",
+            "file": "Automatic Pro 18g LAb04 2bar.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "lab-18g-experimental-2bar",
+            "profileType": "experimental"
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "pure-flow",
