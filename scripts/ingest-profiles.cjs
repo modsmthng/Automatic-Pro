@@ -198,18 +198,21 @@ function parseUpload(sourcePath, currentBerlinDate) {
 }
 
 function parseBatchedFileName(fileName, versionPattern) {
-  const matchedFile = fileName.match(new RegExp(`^Automatic Pro\\s+(?<body>.+?)\\s+(?<version>${versionPattern.source})\\.json$`, 'i'));
+  const matchedFile = fileName.match(
+    new RegExp(`^Automatic Pro(?:\\s+(?<before>.+?))?\\s+(?<version>${versionPattern.source})(?:\\s+(?<after>.+?))?\\.json$`, 'i')
+  );
 
-  if (!matchedFile?.groups?.body || !matchedFile.groups.version) {
+  if (!matchedFile?.groups?.version) {
     return null;
   }
 
-  const body = matchedFile.groups.body.trim();
+  const body = (matchedFile.groups.before ?? '').trim();
+  const trailingAfterVersion = (matchedFile.groups.after ?? '').trim();
   const doseMatch = body.match(/^(?<dose>\d+g)(?:\s+(?<rest>.+))?$/i);
   const dose = doseMatch?.groups?.dose ?? '';
   const remainder = doseMatch ? (doseMatch.groups?.rest ?? '').trim() : body;
 
-  if (!dose && !remainder) {
+  if (!dose && !remainder && !trailingAfterVersion) {
     return null;
   }
 
@@ -219,19 +222,19 @@ function parseBatchedFileName(fileName, versionPattern) {
     return {
       dose,
       rawTag: bracketMatch.groups.tag,
-      trailingText: (bracketMatch.groups.tail ?? '').trim(),
+      trailingText: [bracketMatch.groups.tail ?? '', trailingAfterVersion].filter(Boolean).join(' ').trim(),
       version: matchedFile.groups.version,
     };
   }
 
-  if (!dose && !remainder) {
+  if (!dose && !remainder && !trailingAfterVersion) {
     return null;
   }
 
   return {
     dose,
     rawTag: '',
-    trailingText: remainder,
+    trailingText: [remainder, trailingAfterVersion].filter(Boolean).join(' ').trim(),
     version: matchedFile.groups.version,
   };
 }
