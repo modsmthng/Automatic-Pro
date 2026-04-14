@@ -6,7 +6,7 @@
     "futureDisplayName": "Automatic Pro v2",
     "status": "stable",
     "downloadMode": "simple",
-    "summary": "<p>The current stable version, proven and well tested.</p><p><em>Created by modsmthng.</em></p>",
+    "summary": "<p>The current stable version, proven and well tested.</p>",
     "imageHint": "espresso",
     "builds": [
       {
@@ -71,7 +71,7 @@
     "futureDisplayName": "Automatic Pro v3",
     "status": "testing",
     "downloadMode": "batched",
-    "summary": "<p>The current in-testing version with ongoing updates and main extraction variations.</p><p>It works across <strong>different basket types</strong>, including regular and step-down baskets, without adjustment.</p><p><em>Created by modsmthng.</em></p>",
+    "summary": "<p>The current in-testing version with ongoing updates and main extraction variations.</p><p>It works across <strong>different basket types</strong>, including regular and step-down baskets, without adjustment.</p>",
     "imageHint": "espresso",
     "builds": [
       {
@@ -417,7 +417,7 @@
     "futureDisplayName": "LAb",
     "status": "testing",
     "downloadMode": "batched",
-    "summary": "<p>LordApoth Laboratory profile family for <strong>low flow pumps</strong> like the Olab Silent Green.</p><p><em>Created by LordApoth.</em></p>",
+    "summary": "<p>LordApoth Laboratory profile family for <strong>low flow pumps</strong> like the Olab Silent Green.</p>",
     "homeFeaturedLine": "For Olab Silent Green",
     "imageHint": "espresso",
     "builds": [
@@ -458,7 +458,7 @@
     "futureDisplayName": "Pure Flow",
     "status": "stable",
     "downloadMode": "simple",
-    "summary": "<p>Consistent flow throughout, with only maximum pressure and two small stop parameters controlling the phases.</p><p>Less complex than Automatic Pro because only one flow value is used apart from the first filling, hence the name Pure Flow.</p><p><em>Created by modsmthng.</em></p>",
+    "summary": "<p>Consistent flow throughout, with only maximum pressure and two small stop parameters controlling the phases.</p><p>Less complex than Automatic Pro because only one flow value is used apart from the first filling, hence the name Pure Flow.</p>",
     "imageHint": "espresso",
     "builds": [
       {
