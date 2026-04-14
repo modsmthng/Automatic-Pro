@@ -462,9 +462,44 @@
     "imageHint": "espresso",
     "builds": [
       {
+        "buildVersion": "2026-04-14",
+        "releaseDate": "2026-04-14",
+        "isLatest": true,
+        "notes": "Automated Pure Flow release for 5-10g, 10-20g, and 20-25g.",
+        "downloads": [
+          {
+            "label": "10-20g",
+            "dose": "10-20g",
+            "variant": "Dose range",
+            "file": "Pure Flow (10-20g).json",
+            "temperatureC": 94,
+            "notes": "",
+            "slotId": "pure-flow-10-20g"
+          },
+          {
+            "label": "20-25g",
+            "dose": "20-25g",
+            "variant": "Dose range",
+            "file": "Pure Flow (20-25g).json",
+            "temperatureC": 94,
+            "notes": "",
+            "slotId": "pure-flow-20-25g"
+          },
+          {
+            "label": "5-10g",
+            "dose": "5-10g",
+            "variant": "Dose range",
+            "file": "Pure Flow (5-10g).json",
+            "temperatureC": 94,
+            "notes": "",
+            "slotId": "pure-flow-5-10g"
+          }
+        ]
+      },
+      {
         "buildVersion": "2026-04-13",
         "releaseDate": "2026-04-13",
-        "isLatest": true,
+        "isLatest": false,
         "notes": "Initial Pure Flow release for the 10-20g range.",
         "downloads": [
           {
