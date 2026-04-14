@@ -1,0 +1,84 @@
+{
+  "label": "Pure Flow (10-20g)",
+  "type": "pro",
+  "description": "Balanced flow profile for all bean types and grind sizes. Consistent flow throughout, with only maximum pressure and two small stop parameters controlling the phases. ",
+  "temperature": 93,
+  "favorite": true,
+  "selected": false,
+  "utility": false,
+  "phases": [
+    {
+      "name": "Infuse",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 4,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": true
+      },
+      "pump": {
+        "target": "flow",
+        "pressure": 2,
+        "flow": 6
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "name": "Infusion Bloom",
+      "phase": "brew",
+      "valve": 1,
+      "duration": 15,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": true
+      },
+      "pump": {
+        "target": "flow",
+        "pressure": 2,
+        "flow": 2
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "Pure Flowing",
+      "phase": "brew",
+      "valve": 1,
+      "duration": 26,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": true
+      },
+      "pump": {
+        "target": "flow",
+        "pressure": 12,
+        "flow": 2
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 40
+        }
+      ]
+    }
+  ],
+  "name": "Pure Flow (10-20g)"
+}
