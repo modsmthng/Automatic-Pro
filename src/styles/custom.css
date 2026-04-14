@@ -249,6 +249,13 @@ h4,
   color: var(--sl-color-accent);
 }
 
+.ap-site-credit {
+  margin: 1.25rem 0 1.75rem;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--ap-muted);
+}
+
 .ap-pill-row {
   display: flex;
   flex-wrap: wrap;
