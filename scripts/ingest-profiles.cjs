@@ -88,7 +88,6 @@ async function main() {
   const uploads = incomingFiles.map((filePath) => parseUpload(filePath, currentBerlinDate));
 
   validateIncomingUploads(uploads);
-  uploads.forEach((upload) => validateJsonFile(upload.sourcePath));
 
   const releases = readJsonFile(releasesPath);
   applyUploads(releases, uploads, downloadsRoot);
@@ -138,6 +137,7 @@ function findIncomingJsonFiles(dir) {
 
 function parseUpload(sourcePath, currentBerlinDate) {
   const fileName = path.basename(sourcePath);
+  const profileTemperatureC = readProfileTemperature(sourcePath);
   const v2Match = fileName.match(/^Automatic Pro\s+v2\s+(?<dose>\d+g)\.json$/i);
 
   if (v2Match?.groups?.dose) {
@@ -149,7 +149,7 @@ function parseUpload(sourcePath, currentBerlinDate) {
       familySlug: 'v2',
       buildVersion: currentBerlinDate,
       releaseDate: currentBerlinDate,
-      download: { ...baseDownload, file: fileName },
+      download: applyProfileTemperature({ ...baseDownload, file: fileName }, profileTemperatureC),
     };
   }
 
@@ -162,7 +162,7 @@ function parseUpload(sourcePath, currentBerlinDate) {
       familySlug: 'pure-flow',
       buildVersion: currentBerlinDate,
       releaseDate: currentBerlinDate,
-      download: buildPureFlowDownload(pureFlowMatch.label, fileName),
+      download: applyProfileTemperature(buildPureFlowDownload(pureFlowMatch.label, fileName), profileTemperatureC),
     };
   }
 
@@ -175,7 +175,10 @@ function parseUpload(sourcePath, currentBerlinDate) {
       familySlug: 'vit3',
       buildVersion: vit3Match.version,
       releaseDate: currentBerlinDate,
-      download: buildBatchedDownload('vit3', vit3BatchDefinitions, vit3Match.dose, vit3Match.rawTag, vit3Match.trailingText, fileName),
+      download: applyProfileTemperature(
+        buildBatchedDownload('vit3', vit3BatchDefinitions, vit3Match.dose, vit3Match.rawTag, vit3Match.trailingText, fileName),
+        profileTemperatureC
+      ),
     };
   }
 
@@ -188,13 +191,27 @@ function parseUpload(sourcePath, currentBerlinDate) {
       familySlug: 'lab',
       buildVersion: labMatch.version,
       releaseDate: currentBerlinDate,
-      download: buildBatchedDownload('lab', labBatchDefinitions, labMatch.dose, labMatch.rawTag, labMatch.trailingText, fileName),
+      download: applyProfileTemperature(
+        buildBatchedDownload('lab', labBatchDefinitions, labMatch.dose, labMatch.rawTag, labMatch.trailingText, fileName),
+        profileTemperatureC
+      ),
     };
   }
 
   throw new Error(
     `Unsupported filename "${fileName}". Expected a v2 file, a vIT3/v3 file, an LAb file like "Automatic Pro 18g [Direct Lever] LAb0_1.json", or a Pure Flow file like "Pure Flow (10-20g).json".`
   );
+}
+
+function applyProfileTemperature(download, profileTemperatureC) {
+  if (typeof profileTemperatureC !== 'number' || Number.isNaN(profileTemperatureC)) {
+    return download;
+  }
+
+  return {
+    ...download,
+    temperatureC: profileTemperatureC,
+  };
 }
 
 function parseBatchedFileName(fileName, versionPattern) {
@@ -567,14 +584,25 @@ function validateIncomingUploads(uploads) {
   }
 }
 
-function validateJsonFile(filePath) {
+function readProfileTemperature(filePath) {
   const raw = fs.readFileSync(filePath, 'utf8');
 
+  let parsed;
+
   try {
-    JSON.parse(raw);
+    parsed = JSON.parse(raw);
   } catch (error) {
     throw new Error(`Invalid JSON in ${path.basename(filePath)}: ${error.message}`);
   }
+
+  const temperature = parsed?.temperature;
+
+  if (temperature === undefined || temperature === null || temperature === '') {
+    return undefined;
+  }
+
+  const numericTemperature = typeof temperature === 'number' ? temperature : Number.parseFloat(String(temperature));
+  return Number.isFinite(numericTemperature) ? numericTemperature : undefined;
 }
 
 function readJsonFile(filePath) {
