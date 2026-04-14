@@ -472,7 +472,7 @@
             "dose": "10-20g",
             "variant": "Dose range",
             "file": "Pure Flow (10-20g).json",
-            "temperatureC": 94,
+            "temperatureC": 93,
             "notes": "",
             "slotId": "pure-flow-10-20g"
           },
@@ -481,7 +481,7 @@
             "dose": "20-25g",
             "variant": "Dose range",
             "file": "Pure Flow (20-25g).json",
-            "temperatureC": 94,
+            "temperatureC": 93,
             "notes": "",
             "slotId": "pure-flow-20-25g"
           },
@@ -490,7 +490,7 @@
             "dose": "5-10g",
             "variant": "Dose range",
             "file": "Pure Flow (5-10g).json",
-            "temperatureC": 94,
+            "temperatureC": 93,
             "notes": "",
             "slotId": "pure-flow-5-10g"
           }
