@@ -78,10 +78,10 @@
         "buildVersion": "vIT3_0_30_2",
         "releaseDate": "2026-04-16",
         "isLatest": true,
-        "notes": "Automated update for Direct Lever Direct Lever.",
+        "notes": "Automated update for Direct Lever for all doses.",
         "downloads": [
           {
-            "label": "Direct Lever",
+            "label": "For all doses",
             "dose": "",
             "variant": "Standard basket",
             "file": "Automatic Pro [Direct Lever] vIT3_0_30_2.json",

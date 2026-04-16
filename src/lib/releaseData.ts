@@ -199,6 +199,10 @@ function getVariantSortRank(variant: string): number {
 }
 
 function getDoseSortValue(dose: string): number {
+  if (!dose.trim()) {
+    return -1;
+  }
+
   const parsedDose = Number.parseInt(dose, 10);
   return Number.isNaN(parsedDose) ? Number.POSITIVE_INFINITY : parsedDose;
 }
