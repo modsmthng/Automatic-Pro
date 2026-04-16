@@ -296,7 +296,7 @@ function buildBatchedDownload(familyPrefix, batchDefinitions, dose, rawTag, trai
 
   if (!parsedTag && trailingSegments.length === 0) {
     return {
-      label: formatDisplayLabel(dose),
+      label: formatBatchedDisplayLabel(dose),
       dose,
       variant: 'Standard basket',
       file: fileName,
@@ -314,7 +314,7 @@ function buildBatchedDownload(familyPrefix, batchDefinitions, dose, rawTag, trai
   if (parsedTag.hasStepDown) {
     const combinedSegments = [...parsedTag.extraSegments, ...trailingSegments];
     const extraLabel = buildVisibleExtraLabel(combinedSegments);
-    const label = formatDisplayLabel(dose, extraLabel || 'Step-Down');
+    const label = formatBatchedDisplayLabel(dose, extraLabel || 'Step-Down');
     const extraSlug = buildExtraSlug(combinedSegments.filter((segment) => normalizeSegment(segment) !== 'step-down'));
 
     return {
@@ -346,7 +346,7 @@ function buildBatchedDownload(familyPrefix, batchDefinitions, dose, rawTag, trai
   const slotDose = getDoseKey(dose);
 
   return {
-    label: formatDisplayLabel(dose, extraLabel || (!dose ? profileTypeLabels[parsedTag.batch.profileType] : '')),
+    label: formatBatchedDisplayLabel(dose, extraLabel),
     dose,
     variant: parsedTag.batch.defaultVariant,
     file: fileName,
@@ -471,6 +471,15 @@ function formatDisplayLabel(dose, visibleExtraLabel = '') {
   }
 
   throw new Error('Cannot build a display label without a dose or visible name.');
+}
+
+function formatBatchedDisplayLabel(dose, visibleExtraLabel = '') {
+  if (dose) {
+    return formatDisplayLabel(dose, visibleExtraLabel);
+  }
+
+  const cleanedExtraLabel = cleanSegment(visibleExtraLabel);
+  return cleanedExtraLabel ? `For all doses ${cleanedExtraLabel}` : 'For all doses';
 }
 
 function getDoseKey(dose) {
@@ -698,7 +707,13 @@ function formatDownloadForNote(download, familySlug) {
     return download.label;
   }
 
+  const hasNoDose = !download.dose?.trim();
+
   if (download.slotId?.includes('step-down')) {
+    if (hasNoDose) {
+      return 'Direct Lever for all doses (Step-Down)';
+    }
+
     return `${download.label} Direct Lever`;
   }
 
@@ -707,7 +722,15 @@ function formatDownloadForNote(download, familySlug) {
   }
 
   if (download.profileType) {
+    if (hasNoDose) {
+      return `${profileTypeLabels[download.profileType]} for all doses`;
+    }
+
     return `${download.label} ${profileTypeLabels[download.profileType]}`;
+  }
+
+  if (hasNoDose) {
+    return 'Main profile for all doses';
   }
 
   return `${download.label} Main`;
@@ -778,6 +801,10 @@ function compareNumberTuplesDesc(left, right) {
 }
 
 function getDoseSortValue(dose) {
+  if (!dose?.trim()) {
+    return -1;
+  }
+
   const parsedDose = Number.parseInt(dose, 10);
   return Number.isNaN(parsedDose) ? Number.POSITIVE_INFINITY : parsedDose;
 }

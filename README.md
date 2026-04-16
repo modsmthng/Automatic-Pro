@@ -32,6 +32,7 @@ If a profile does not contain one of these known batch names, it automatically l
 
 Examples:
 
+- `Automatic Pro [Direct Lever] vIT3_0_30_2.json`
 - `Automatic Pro 18g [Direct Lever] vIT3_0_29_5.json`
 - `Automatic Pro 18g [Step-Down, Direct Lever] vIT3_0_29_5.json`
 - `Automatic Pro 21g [Spring Lever] vIT3_0_29_5.json`
@@ -95,9 +96,11 @@ For `v2` and `Pure Flow`, the workflow creates a build named with the current Be
 `[User Profile]` is meant for profiles that differ from the main profile schemas or are small variations of an existing profile or variation.
 
 Additional info inside the brackets is allowed. The workflow extracts the known batch name for sorting and uses the remaining text as the visible variation name after the dose. If no known batch name is found, the remaining text is used as the visible name inside `Experimental and Other`.
+Known batch names can also be used without a dose. In that case, the file stays inside the matching batch and is shown as `For all doses`.
 
 Examples:
 
+- `[Direct Lever]` without a dose becomes `For all doses` in the `Direct Lever` batch
 - `[Step-Down, Direct Lever]` becomes `18g Step-Down` in the `Direct Lever` batch
 - `[User Profile, Turbo Shot]` becomes `20g Turbo Shot` in the `User Profile` batch
 - `[User Profile / Turbo Shot]` behaves the same way
