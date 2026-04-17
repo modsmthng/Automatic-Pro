@@ -75,6 +75,24 @@
     "imageHint": "espresso",
     "builds": [
       {
+        "buildVersion": "vIT3_0_29_7",
+        "releaseDate": "2026-04-17",
+        "isLatest": false,
+        "notes": "Automated update for 20g 9bar.",
+        "downloads": [
+          {
+            "label": "20g",
+            "dose": "20g",
+            "variant": "Standard basket",
+            "file": "Automatic Pro 20g [9 bar] vIT3_0_29_7.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-20g-nine-bar",
+            "profileType": "nine-bar"
+          }
+        ]
+      },
+      {
         "buildVersion": "vIT3_0_30_2",
         "releaseDate": "2026-04-16",
         "isLatest": true,
