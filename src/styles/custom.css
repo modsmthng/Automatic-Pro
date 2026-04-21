@@ -207,7 +207,7 @@ h4,
 
 .ap-version-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   margin: 1.25rem 0 0;
 }
@@ -368,7 +368,7 @@ h4,
 
 .ap-profile-type-nav {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.85rem;
   margin-bottom: 1rem;
 }
@@ -376,7 +376,7 @@ h4,
 .ap-profile-type-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   border: 1px solid var(--ap-line);
   border-radius: 1.2rem;
   padding: 1rem;
@@ -438,29 +438,19 @@ h4,
   color: var(--ap-ink);
 }
 
+.ap-profile-type-featured-line-section {
+  margin-top: 0.3rem;
+  font-size: 1.04rem;
+}
+
 .ap-profile-type-note {
   margin: 0.55rem 0 0;
   color: var(--ap-muted);
   font-size: 0.92rem;
 }
 
-.ap-profile-type-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 1rem;
-  font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--sl-color-accent);
-}
-
-.ap-profile-type-cta::after {
-  content: '→';
-  font-size: 1rem;
-}
-
 .ap-profile-type-note-section {
-  margin: 0 0 1rem;
+  margin: 0.55rem 0 0;
 }
 
 .ap-profile-type-empty,
@@ -485,6 +475,49 @@ h4,
 
 .ap-profile-type-section {
   scroll-margin-top: 6rem;
+}
+
+.ap-profile-type-details {
+  margin: 0 0 1rem;
+  border: 1px solid var(--ap-line);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--ap-surface-strong) 84%, transparent);
+  overflow: hidden;
+}
+
+.ap-profile-type-details-summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+  color: var(--sl-color-accent);
+}
+
+.ap-profile-type-details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.ap-profile-type-details-summary::after {
+  content: '+';
+  float: right;
+  color: var(--sl-color-accent);
+}
+
+.ap-profile-type-details[open] .ap-profile-type-details-summary::after {
+  content: '-';
+}
+
+.ap-profile-type-details-copy {
+  padding: 0 1rem 1rem;
+}
+
+.ap-profile-type-details-copy p {
+  margin: 0;
+  color: var(--ap-muted);
+}
+
+.ap-profile-type-details-copy p + p {
+  margin-top: 0.55rem;
 }
 
 .ap-profile-type-empty-note {

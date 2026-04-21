@@ -30,11 +30,6 @@ const hasPublishedBuilds = family.builds.length > 0;
       </span>
     </div>
     <div class="ap-family-summary" set:html={family.summary} />
-    {
-      family.futureDisplayName !== family.displayName && (
-        <p class="ap-family-note">This family will be promoted to {family.futureDisplayName} once testing is complete.</p>
-      )
-    }
     <p class="ap-family-note">
       {!latestBuild
         ? 'No published builds yet.'
@@ -82,15 +77,10 @@ const hasPublishedBuilds = family.builds.length > 0;
               <div class="ap-profile-type-card-copy">
                 <div class="ap-profile-type-title-row">
                   <h3>{group.label}</h3>
-                  {group.downloads.length === 0 && <span class="ap-profile-type-empty">No standalone files</span>}
                 </div>
 
                 {group.featuredLine && <p class="ap-profile-type-featured-line">{group.featuredLine}</p>}
-                <p>{group.description || 'Experimental variants are currently listed inside their matching main profile type.'}</p>
-                {group.note && <p class="ap-profile-type-note">{group.note}</p>}
               </div>
-
-              {group.ctaLabel && <span class="ap-profile-type-cta">{group.ctaLabel}</span>}
             </a>
           ))}
         </nav>
@@ -101,10 +91,19 @@ const hasPublishedBuilds = family.builds.length > 0;
               <div class="ap-section-header ap-section-header-stack">
                 <div>
                   <h3>{group.label}</h3>
+                  {group.featuredLine && (
+                    <p class="ap-profile-type-featured-line ap-profile-type-featured-line-section">{group.featuredLine}</p>
+                  )}
                 </div>
-                <p>{group.description || 'Experimental variants are currently listed inside their matching main profile type.'}</p>
               </div>
-              {group.note && <p class="ap-profile-type-note ap-profile-type-note-section">{group.note}</p>}
+
+              <details class="ap-profile-type-details">
+                <summary class="ap-profile-type-details-summary">More details</summary>
+                <div class="ap-profile-type-details-copy">
+                  <p>{group.description || 'Experimental variants are currently listed inside their matching main profile type.'}</p>
+                  {group.note && <p class="ap-profile-type-note ap-profile-type-note-section">{group.note}</p>}
+                </div>
+              </details>
 
               {group.downloads.length > 0 ? (
                 <ul class="ap-download-list">

@@ -23,9 +23,6 @@ const { families } = Astro.props as Props;
         <h2>{family.displayName}</h2>
         {family.homeFeaturedLine && <p class="ap-version-featured-line">{family.homeFeaturedLine}</p>}
         <div class="ap-version-summary" set:html={family.summary} />
-        {family.futureDisplayName !== family.displayName && (
-          <p class="ap-card-note">Will become {family.futureDisplayName} after testing.</p>
-        )}
         <span class="ap-card-link">Go to version</span>
       </a>
     ))
