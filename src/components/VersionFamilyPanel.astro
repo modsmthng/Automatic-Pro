@@ -10,7 +10,8 @@ import {
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
-const directLeverImagePath = `${base}images/direct-lever.svg`;
+const directLeverImagePath = `${base}images/direct-lever.png`;
+const springLeverImagePath = `${base}images/spring-lever.png`;
 
 interface Props {
   family: Family;
@@ -21,6 +22,18 @@ const latestBuild = getLatestBuild(family);
 const currentDownloads = getCurrentDownloads(family);
 const currentDownloadGroups = family.downloadMode === 'batched' ? getCurrentDownloadGroups(family) : [];
 const hasPublishedBuilds = family.builds.length > 0;
+
+function getProfileTypeImage(groupType: string) {
+  if (groupType === 'direct-lever') {
+    return directLeverImagePath;
+  }
+
+  if (groupType === 'spring-lever') {
+    return springLeverImagePath;
+  }
+
+  return '';
+}
 ---
 
 <section class="ap-family-hero">
@@ -85,12 +98,12 @@ const hasPublishedBuilds = family.builds.length > 0;
                     {group.featuredLine && <p class="ap-profile-type-featured-line">{group.featuredLine}</p>}
                   </div>
 
-                  {group.type === 'direct-lever' && (
+                  {getProfileTypeImage(group.type) && (
                     <img
-                      alt="Direct Lever icon"
+                      alt={`${group.label} icon`}
                       class="ap-profile-type-icon"
                       loading="lazy"
-                      src={directLeverImagePath}
+                      src={getProfileTypeImage(group.type)}
                     />
                   )}
                 </div>
@@ -114,12 +127,12 @@ const hasPublishedBuilds = family.builds.length > 0;
                       )}
                     </div>
 
-                    {group.type === 'direct-lever' && (
+                    {getProfileTypeImage(group.type) && (
                       <img
-                        alt="Direct Lever icon"
+                        alt={`${group.label} icon`}
                         class="ap-profile-type-icon ap-profile-type-icon-large"
                         loading="lazy"
-                        src={directLeverImagePath}
+                        src={getProfileTypeImage(group.type)}
                       />
                     )}
                   </div>

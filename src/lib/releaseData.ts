@@ -26,7 +26,7 @@ export const profileTypeDefinitions: ProfileTypeDefinition[] = [
       'Static declining flow based main extraction - suitable for all kinds of beans and drinks (the original Automatic Pro experience)',
     note: 'If this causes issues with a fast pressure drop, switch to one of the other variations.',
     featured: true,
-    featuredLine: 'Balanced profile',
+    featuredLine: 'Flow profile',
     ctaLabel: 'Go to Direct Lever',
   },
   {
@@ -34,6 +34,7 @@ export const profileTypeDefinitions: ProfileTypeDefinition[] = [
     label: 'Spring Lever',
     description: 'Static declining pressure based main extraction - suitable for medium to dark roasts',
     note: 'If the shot runs too fast, grind finer.',
+    featuredLine: 'Pressure profile',
     ctaLabel: 'Go to Spring Lever',
   },
   {
