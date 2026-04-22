@@ -6,7 +6,7 @@
     "futureDisplayName": "Automatic Pro v2",
     "status": "stable",
     "downloadMode": "simple",
-    "summary": "<p>The current stable version, proven and well tested.</p>",
+    "summary": "<p>The current stable version, proven and well tested.</p><p>Works with and without scales.</p>",
     "imageHint": "espresso",
     "builds": [
       {
@@ -71,7 +71,7 @@
     "futureDisplayName": "Automatic Pro v3",
     "status": "testing",
     "downloadMode": "batched",
-    "summary": "<p>The current in-testing version with ongoing updates and main extraction variations.</p><p>It works across <strong>different basket types</strong>, including regular and step-down baskets, without adjustment.</p>",
+    "summary": "<p>The current in-testing version with ongoing updates and main extraction variations.</p><p>It works across <strong>different basket types</strong>, including regular and step-down baskets, without adjustment.</p><p>Works with and without scales.</p>",
     "imageHint": "espresso",
     "builds": [
       {
@@ -548,7 +548,7 @@
     "futureDisplayName": "Pure Flow",
     "status": "stable",
     "downloadMode": "simple",
-    "summary": "<p>Consistent flow throughout, with only maximum pressure and two small stop parameters controlling the phases.</p><p>Less complex than Automatic Pro because only one flow value is used apart from the first filling, hence the name Pure Flow.</p>",
+    "summary": "<p>Consistent flow throughout, with only maximum pressure and two small stop parameters controlling the phases.</p><p>Less complex than Automatic Pro because only one flow value is used apart from the first filling, hence the name Pure Flow.</p><p>Works with and without scales.</p>",
     "imageHint": "espresso",
     "builds": [
       {
