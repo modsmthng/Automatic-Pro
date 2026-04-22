@@ -10,6 +10,7 @@ import {
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const directLeverImagePath = `${base}images/direct-lever.svg`;
 
 interface Props {
   family: Family;
@@ -75,11 +76,24 @@ const hasPublishedBuilds = family.builds.length > 0;
               href={`#${group.sectionId}`}
             >
               <div class="ap-profile-type-card-copy">
-                <div class="ap-profile-type-title-row">
-                  <h3>{group.label}</h3>
-                </div>
+                <div class="ap-profile-type-highlight-row">
+                  <div>
+                    <div class="ap-profile-type-title-row">
+                      <h3>{group.label}</h3>
+                    </div>
 
-                {group.featuredLine && <p class="ap-profile-type-featured-line">{group.featuredLine}</p>}
+                    {group.featuredLine && <p class="ap-profile-type-featured-line">{group.featuredLine}</p>}
+                  </div>
+
+                  {group.type === 'direct-lever' && (
+                    <img
+                      alt="Direct Lever icon"
+                      class="ap-profile-type-icon"
+                      loading="lazy"
+                      src={directLeverImagePath}
+                    />
+                  )}
+                </div>
               </div>
             </a>
           ))}
@@ -90,10 +104,25 @@ const hasPublishedBuilds = family.builds.length > 0;
             <section class="ap-profile-type-section" id={group.sectionId}>
               <div class="ap-section-header ap-section-header-stack">
                 <div>
-                  <h3>{group.label}</h3>
-                  {group.featuredLine && (
-                    <p class="ap-profile-type-featured-line ap-profile-type-featured-line-section">{group.featuredLine}</p>
-                  )}
+                  <div class="ap-profile-type-highlight-row ap-profile-type-highlight-row-section">
+                    <div>
+                      <div class="ap-profile-type-heading-row">
+                        <h3>{group.label}</h3>
+                      </div>
+                      {group.featuredLine && (
+                        <p class="ap-profile-type-featured-line ap-profile-type-featured-line-section">{group.featuredLine}</p>
+                      )}
+                    </div>
+
+                    {group.type === 'direct-lever' && (
+                      <img
+                        alt="Direct Lever icon"
+                        class="ap-profile-type-icon ap-profile-type-icon-large"
+                        loading="lazy"
+                        src={directLeverImagePath}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
 
