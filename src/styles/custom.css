@@ -424,13 +424,45 @@ h4,
   margin: 0;
 }
 
+.ap-profile-type-highlight-row,
+.ap-profile-type-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.ap-profile-type-highlight-row {
+  justify-content: space-between;
+}
+
+.ap-profile-type-highlight-row-section {
+  align-items: flex-start;
+}
+
+.ap-profile-type-heading-row h3 {
+  margin: 0;
+}
+
+.ap-profile-type-icon {
+  width: 4.4rem;
+  height: 4.4rem;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.16));
+  flex: 0 0 auto;
+}
+
+.ap-profile-type-icon-large {
+  width: 5.4rem;
+  height: 5.4rem;
+}
+
 .ap-profile-type-card p {
   margin: 0.45rem 0 0;
   color: var(--ap-muted);
 }
 
 .ap-profile-type-featured-line {
-  margin: 0.35rem 0 0;
+  margin: 0;
   font-family: 'Fraunces', serif;
   font-size: 1.18rem;
   line-height: 1.1;
@@ -439,7 +471,6 @@ h4,
 }
 
 .ap-profile-type-featured-line-section {
-  margin-top: 0.3rem;
   font-size: 1.04rem;
 }
 
