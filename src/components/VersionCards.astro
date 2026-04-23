@@ -3,16 +3,28 @@ import type { Family } from '../lib/releaseData';
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
-const homeCardLogoMap: Record<string, string> = {
-  v2: `${base}images/automatic-pro-v2-logo.png`,
-  vit3: `${base}images/automatic-pro-v3-logo.png`,
-};
 
 interface Props {
   families: Family[];
 }
 
 const { families } = Astro.props as Props;
+
+function getHomeCardImagePath(family: Family) {
+  if (family.slug === 'v2') {
+    return `${base}images/automatic-pro-v2-logo.png`;
+  }
+
+  if (family.slug === 'vit3') {
+    return `${base}images/automatic-pro-v3-logo.png`;
+  }
+
+  if (family.slug === 'pure-flow') {
+    return `${base}images/pure-flow-color.png`;
+  }
+
+  return '';
+}
 ---
 
 <div class="ap-version-grid">
@@ -32,9 +44,16 @@ const { families } = Astro.props as Props;
             <span class="ap-card-link">Go to version</span>
           </div>
 
-          {homeCardLogoMap[family.slug] && (
+          {getHomeCardImagePath(family) && (
             <div class="ap-version-card-logo-wrap">
-              <img alt={`${family.displayName} logo`} class="ap-version-card-logo" src={homeCardLogoMap[family.slug]} />
+              <img
+                alt={`${family.displayName} logo`}
+                class:list={[
+                  'ap-version-card-logo',
+                  family.slug === 'pure-flow' && 'ap-version-card-logo-illustration',
+                ]}
+                src={getHomeCardImagePath(family)}
+              />
             </div>
           )}
         </div>

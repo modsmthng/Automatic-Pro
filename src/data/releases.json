@@ -72,7 +72,7 @@
     "status": "testing",
     "downloadMode": "batched",
     "summary": "<p>The current in-testing version with ongoing updates and main extraction variations.</p><p>It works across <strong>different basket types</strong>, including regular and step-down baskets, without adjustment.</p><p>Works with and without scales.</p>",
-    "imageHint": "espresso",
+    "imageHint": "pure-flow",
     "builds": [
       {
         "buildVersion": "vIT3_0_30_10",
