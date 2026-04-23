@@ -75,9 +75,27 @@
     "imageHint": "pure-flow",
     "builds": [
       {
-        "buildVersion": "vIT3_0_30_10",
+        "buildVersion": "vIT3_0_30_11",
         "releaseDate": "2026-04-23",
         "isLatest": true,
+        "notes": "Automated update for Direct Lever for all doses.",
+        "downloads": [
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Standard basket",
+            "file": "Automatic Pro [Direct Lever] vIT3_0_30_11.json",
+            "temperatureC": 91,
+            "notes": "",
+            "slotId": "vit3-no-dose-main",
+            "profileType": "direct-lever"
+          }
+        ]
+      },
+      {
+        "buildVersion": "vIT3_0_30_10",
+        "releaseDate": "2026-04-23",
+        "isLatest": false,
         "notes": "Automated update for Direct Lever for all doses.",
         "downloads": [
           {
