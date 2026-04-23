@@ -221,6 +221,34 @@ h4,
   text-decoration: none;
 }
 
+.ap-version-card-main {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.ap-version-card-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.ap-version-card-logo-wrap {
+  flex: 0 0 clamp(4.8rem, 10vw, 7.5rem);
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  align-self: stretch;
+}
+
+.ap-version-card-logo {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
 .ap-version-card:hover {
   border-color: rgba(165, 77, 27, 0.35);
   box-shadow: 0 22px 52px rgba(52, 22, 6, 0.12);
@@ -249,6 +277,16 @@ h4,
   margin-top: 1rem;
   font-weight: 800;
   color: var(--sl-color-accent);
+}
+
+@media (max-width: 720px) {
+  .ap-version-card-main {
+    gap: 0.9rem;
+  }
+
+  .ap-version-card-logo-wrap {
+    flex-basis: clamp(3.8rem, 18vw, 5.8rem);
+  }
 }
 
 .ap-site-credit {
