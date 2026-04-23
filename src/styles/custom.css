@@ -15,6 +15,7 @@
   --ap-line: rgba(114, 70, 45, 0.18);
   --ap-shadow: 0 20px 50px rgba(52, 22, 6, 0.08);
   --ap-profile-icon-filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.16));
+  --ap-site-logo-filter: none;
   --ap-version-card-logo-filter: none;
 }
 
@@ -30,6 +31,8 @@
   --ap-line: rgba(232, 195, 165, 0.18);
   --ap-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
   --ap-profile-icon-filter: brightness(0) invert(1) drop-shadow(0 10px 18px rgba(0, 0, 0, 0.28));
+  --ap-site-logo-filter: brightness(0) invert(0.94) sepia(0.08) saturate(0.7)
+    drop-shadow(0 8px 18px rgba(0, 0, 0, 0.24));
   --ap-version-card-logo-filter: brightness(0) invert(0.94) sepia(0.08) saturate(0.7)
     drop-shadow(0 8px 18px rgba(0, 0, 0, 0.24));
 }
@@ -89,6 +92,11 @@ h4,
 .ap-button:hover,
 .ap-version-card:hover {
   transform: translateY(-1px);
+}
+
+.site-title img {
+  display: block;
+  filter: var(--ap-site-logo-filter);
 }
 
 .ap-header-links {
