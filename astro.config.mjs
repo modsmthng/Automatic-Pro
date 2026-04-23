@@ -15,9 +15,10 @@ export default defineConfig({
       title: 'Automatic Pro',
       description: 'Simple version pages, downloads, and guides for the Automatic Pro GaggiMate profile family.',
       logo: {
-        src: './src/assets/automatic-pro-mark.svg',
+        src: './src/assets/automatic-pro-site-logo.png',
         alt: 'Automatic Pro',
       },
+      favicon: '/automatic-pro-favicon-solid.png',
       customCss: ['./src/styles/custom.css'],
       components: {
         Footer: './src/components/SiteFooter.astro',
