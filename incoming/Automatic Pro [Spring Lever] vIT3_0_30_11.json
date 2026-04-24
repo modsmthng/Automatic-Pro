@@ -1,0 +1,237 @@
+{
+  "label": "Automatic Pro [Spring Lever] vIT3_0_30_11",
+  "type": "pro",
+  "description": "If using time mode: stop manually / change last duration. Automatic Pro is a profile family built to automate puck saturation, bloom, and extraction with clever phase stops.",
+  "temperature": 91,
+  "utility": false,
+  "phases": [
+    {
+      "name": "Stabilize",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 4,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": true
+      },
+      "pump": 0,
+      "targets": [
+        {
+          "type": "pressure",
+          "operator": "lte",
+          "value": 0.7
+        }
+      ]
+    },
+    {
+      "name": "Fill Headspace",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 20,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": true
+      },
+      "pump": {
+        "target": "flow",
+        "pressure": 2,
+        "flow": 6
+      },
+      "targets": [
+        {
+          "type": "pressure",
+          "operator": "gte",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "Start Saturate",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 10,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": true
+      },
+      "pump": {
+        "target": "flow",
+        "pressure": 2,
+        "flow": 6
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 4
+        },
+        {
+          "type": "flow",
+          "operator": "lte",
+          "value": 1
+        },
+        {
+          "type": "pumped",
+          "operator": "gte",
+          "value": 20
+        }
+      ]
+    },
+    {
+      "name": "Stabilize Saturate",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 3,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": false
+      },
+      "pump": {
+        "target": "flow",
+        "pressure": 1.8,
+        "flow": 6
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 4
+        },
+        {
+          "type": "flow",
+          "operator": "gte",
+          "value": 1.4
+        }
+      ]
+    },
+    {
+      "name": "Auto Bloom",
+      "phase": "preinfusion",
+      "valve": 1,
+      "duration": 9,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": true
+      },
+      "pump": {
+        "target": "flow",
+        "pressure": 1.8,
+        "flow": 6
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 5
+        },
+        {
+          "type": "pumped",
+          "operator": "gte",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "name": "Extraction Start",
+      "phase": "brew",
+      "valve": 1,
+      "duration": 5,
+      "temperature": 0,
+      "transition": {
+        "type": "ease-out",
+        "duration": 2,
+        "adaptive": false
+      },
+      "pump": {
+        "target": "pressure",
+        "pressure": 9,
+        "flow": 6
+      },
+      "targets": [
+        {
+          "type": "pumped",
+          "operator": "gte",
+          "value": 10
+        },
+        {
+          "type": "flow",
+          "operator": "gte",
+          "value": 4
+        },
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 3.375
+        }
+      ]
+    },
+    {
+      "name": "Check Extraction",
+      "phase": "brew",
+      "valve": 1,
+      "duration": 20,
+      "temperature": 0,
+      "transition": {
+        "type": "instant",
+        "duration": 0,
+        "adaptive": false
+      },
+      "pump": {
+        "target": "pressure",
+        "pressure": 9,
+        "flow": 0
+      },
+      "targets": [
+        {
+          "type": "pressure",
+          "operator": "gte",
+          "value": 8.8
+        },
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 20
+        },
+        {
+          "type": "pumped",
+          "operator": "gte",
+          "value": 20
+        }
+      ]
+    },
+    {
+      "name": "Main Extraction",
+      "phase": "brew",
+      "valve": 1,
+      "duration": 90,
+      "temperature": 0,
+      "transition": {
+        "type": "linear",
+        "duration": 40,
+        "adaptive": false
+      },
+      "pump": {
+        "target": "pressure",
+        "pressure": 4,
+        "flow": 0
+      },
+      "targets": [
+        {
+          "type": "volumetric",
+          "operator": "gte",
+          "value": 36
+        }
+      ]
+    }
+  ]
+}
