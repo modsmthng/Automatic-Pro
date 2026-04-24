@@ -76,9 +76,9 @@
     "builds": [
       {
         "buildVersion": "vIT3_0_30_11",
-        "releaseDate": "2026-04-23",
+        "releaseDate": "2026-04-24",
         "isLatest": true,
-        "notes": "Automated update for Direct Lever for all doses.",
+        "notes": "Automated update for Adaptive Pressure for all doses, Direct Lever for all doses, 9bar for all doses, and Spring Lever for all doses.",
         "downloads": [
           {
             "label": "For all doses",
@@ -89,6 +89,36 @@
             "notes": "",
             "slotId": "vit3-no-dose-main",
             "profileType": "direct-lever"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Standard basket",
+            "file": "Automatic Pro [9 bar] vIT3_0_30_11.json",
+            "temperatureC": 91,
+            "notes": "",
+            "slotId": "vit3-no-dose-nine-bar",
+            "profileType": "nine-bar"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Standard basket",
+            "file": "Automatic Pro [Adaptive Pressure] vIT3_0_30_11.json",
+            "temperatureC": 91,
+            "notes": "",
+            "slotId": "vit3-no-dose-adaptive-pressure",
+            "profileType": "adaptive-pressure"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro [Spring Lever] vIT3_0_30_11.json",
+            "temperatureC": 91,
+            "notes": "",
+            "slotId": "vit3-no-dose-spring-lever",
+            "profileType": "spring-lever"
           }
         ]
       },

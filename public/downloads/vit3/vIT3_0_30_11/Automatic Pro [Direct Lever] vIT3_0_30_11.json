@@ -3,8 +3,6 @@
   "type": "pro",
   "description": "If using time mode: stop manually / change last duration. Automatic Pro is a profile family built to automate puck saturation, bloom, and extraction with clever phase stops.",
   "temperature": 91,
-  "favorite": true,
-  "selected": true,
   "utility": false,
   "phases": [
     {
@@ -218,6 +216,5 @@
         }
       ]
     }
-  ],
-  "name": "Automatic Pro [Direct Lever] vIT3_0_30_11"
+  ]
 }
