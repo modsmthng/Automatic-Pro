@@ -76,9 +76,9 @@
     "builds": [
       {
         "buildVersion": "vIT3_0_30_11",
-        "releaseDate": "2026-04-24",
+        "releaseDate": "2026-04-25",
         "isLatest": true,
-        "notes": "Automated update for Adaptive Pressure for all doses, Direct Lever for all doses, 9bar for all doses, and Spring Lever for all doses.",
+        "notes": "Automated update for Ultra Fine, Adaptive Pressure for all doses, Direct Lever for all doses, 9bar for all doses, and Spring Lever for all doses.",
         "downloads": [
           {
             "label": "For all doses",
@@ -119,6 +119,16 @@
             "notes": "",
             "slotId": "vit3-no-dose-spring-lever",
             "profileType": "spring-lever"
+          },
+          {
+            "label": "Ultra Fine",
+            "dose": "",
+            "variant": "Experimental",
+            "file": "Automatic Pro [Ultra Fine] vIT3_0_30_11.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "vit3-experimental-ultra-fine",
+            "profileType": "experimental"
           }
         ]
       },
