@@ -22,6 +22,7 @@ const latestBuild = getLatestBuild(family);
 const currentDownloads = getCurrentDownloads(family);
 const currentDownloadGroups = family.downloadMode === 'batched' ? getCurrentDownloadGroups(family) : [];
 const hasPublishedBuilds = family.builds.length > 0;
+const highlightFeaturedGroups = !['vit3', 'lab'].includes(family.slug);
 
 function getProfileTypeImage(groupType: string) {
   if (groupType === 'direct-lever') {
@@ -83,7 +84,7 @@ function getProfileTypeImage(groupType: string) {
             <a
               class:list={[
                 'ap-profile-type-card',
-                group.featured && 'ap-profile-type-card-featured',
+                highlightFeaturedGroups && group.featured && 'ap-profile-type-card-featured',
                 group.downloads.length === 0 && 'ap-profile-type-card-empty',
               ]}
               href={`#${group.sectionId}`}
