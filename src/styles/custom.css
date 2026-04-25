@@ -166,6 +166,40 @@ h4,
   max-width: 42rem;
 }
 
+.ap-home-details {
+  margin-top: 1rem;
+  border: 1px solid var(--ap-line);
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--ap-surface-strong) 84%, transparent);
+  overflow: hidden;
+  max-width: 42rem;
+}
+
+.ap-home-details-summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+  color: var(--sl-color-accent);
+}
+
+.ap-home-details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.ap-home-details-copy {
+  padding: 0 1rem 1rem;
+}
+
+.ap-home-details-copy p {
+  margin: 0;
+  color: var(--ap-muted);
+}
+
+.ap-home-details-copy p + p {
+  margin-top: 0.75rem;
+}
+
 .ap-home-note,
 .ap-family-summary,
 .ap-version-summary,
@@ -585,16 +619,6 @@ h4,
 
 .ap-profile-type-details-summary::-webkit-details-marker {
   display: none;
-}
-
-.ap-profile-type-details-summary::after {
-  content: '+';
-  float: right;
-  color: var(--sl-color-accent);
-}
-
-.ap-profile-type-details[open] .ap-profile-type-details-summary::after {
-  content: '-';
 }
 
 .ap-profile-type-details-copy {
