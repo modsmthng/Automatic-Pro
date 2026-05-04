@@ -75,9 +75,27 @@
     "imageHint": "pure-flow",
     "builds": [
       {
+        "buildVersion": "vIT3_0_30_13",
+        "releaseDate": "2026-05-04",
+        "isLatest": true,
+        "notes": "Automated update for Classic.",
+        "downloads": [
+          {
+            "label": "Classic",
+            "dose": "",
+            "variant": "Experimental",
+            "file": "Automatic Pro [Classic] vIT3_0_30_13.json",
+            "temperatureC": 91,
+            "notes": "",
+            "slotId": "vit3-experimental-classic",
+            "profileType": "experimental"
+          }
+        ]
+      },
+      {
         "buildVersion": "vIT3_0_30_12",
         "releaseDate": "2026-04-28",
-        "isLatest": true,
+        "isLatest": false,
         "notes": "Automated update for Adaptive Pressure for all doses, Direct Lever for all doses, 9bar for all doses, and Spring Lever for all doses.",
         "downloads": [
           {
