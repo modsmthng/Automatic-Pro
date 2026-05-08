@@ -10,6 +10,7 @@ const GITKEEP_NAME = '.gitkeep';
 const BERLIN_TIME_ZONE = 'Europe/Berlin';
 
 const profileTypeLabels = {
+  classic: 'Classic',
   'direct-lever': 'Direct Lever',
   'spring-lever': 'Spring Lever',
   'adaptive-pressure': 'Adaptive Pressure',
@@ -527,6 +528,13 @@ function normalizePureFlowLabel(rawRange) {
 
 function createBatchedFamilyDefinitions(prefix) {
   return [
+    {
+      profileType: 'classic',
+      aliases: ['classic'],
+      defaultVariant: 'Classic',
+      defaultSlotId: (dose) => `${prefix}-${dose}-classic`,
+      customSlotPrefix: (dose) => `${prefix}-${dose}-classic`,
+    },
     {
       profileType: 'direct-lever',
       aliases: ['direct lever'],

@@ -81,14 +81,14 @@
         "notes": "Automated update for Classic.",
         "downloads": [
           {
-            "label": "Classic",
+            "label": "For all doses",
             "dose": "",
-            "variant": "Experimental",
+            "variant": "Classic",
             "file": "Automatic Pro [Classic] vIT3_0_30_15.json",
             "temperatureC": 93,
             "notes": "",
-            "slotId": "vit3-experimental-classic",
-            "profileType": "experimental"
+            "slotId": "vit3-no-dose-classic",
+            "profileType": "classic"
           }
         ]
       },
@@ -99,14 +99,14 @@
         "notes": "Automated update for Classic.",
         "downloads": [
           {
-            "label": "Classic",
+            "label": "For all doses",
             "dose": "",
-            "variant": "Experimental",
+            "variant": "Classic",
             "file": "Automatic Pro [Classic] vIT3_0_30_14.json",
             "temperatureC": 93,
             "notes": "",
-            "slotId": "vit3-experimental-classic",
-            "profileType": "experimental"
+            "slotId": "vit3-no-dose-classic",
+            "profileType": "classic"
           }
         ]
       },
@@ -117,14 +117,14 @@
         "notes": "Automated update for Classic.",
         "downloads": [
           {
-            "label": "Classic",
+            "label": "For all doses",
             "dose": "",
-            "variant": "Experimental",
+            "variant": "Classic",
             "file": "Automatic Pro [Classic] vIT3_0_30_13.json",
             "temperatureC": 91,
             "notes": "",
-            "slotId": "vit3-experimental-classic",
-            "profileType": "experimental"
+            "slotId": "vit3-no-dose-classic",
+            "profileType": "classic"
           }
         ]
       },

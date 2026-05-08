@@ -10,6 +10,7 @@ import {
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const classicImagePath = `${base}images/Classic.png`;
 const directLeverImagePath = `${base}images/direct-lever.png`;
 const springLeverImagePath = `${base}images/spring-lever.png`;
 
@@ -25,6 +26,10 @@ const hasPublishedBuilds = family.builds.length > 0;
 const highlightFeaturedGroups = !['vit3', 'lab'].includes(family.slug);
 
 function getProfileTypeImage(groupType: string) {
+  if (groupType === 'classic') {
+    return classicImagePath;
+  }
+
   if (groupType === 'direct-lever') {
     return directLeverImagePath;
   }

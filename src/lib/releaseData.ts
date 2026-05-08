@@ -1,6 +1,7 @@
 import rawFamilies from '../data/releases.json';
 
 export type ProfileType =
+  | 'classic'
   | 'direct-lever'
   | 'spring-lever'
   | 'adaptive-pressure'
@@ -19,6 +20,15 @@ export type ProfileTypeDefinition = {
 };
 
 export const profileTypeDefinitions: ProfileTypeDefinition[] = [
+  {
+    id: 'classic',
+    label: 'Classic',
+    description:
+      'This profile can be compared somewhat to a 9-bar profile, except that the pre-infusion logic is "smarter and gentler," while the main extraction phase is flow-based. Unlike all other variants, there is no additional blooming phase, which makes the dialing-in process easier, especially with darker roasts.\n\nThe goal is to reach around 6–9 bar during the main extraction phase. Temperature and ratio can be set according to the roaster\'s recommendation. Time can be ignored, since it is regulated by the flow.',
+    featured: true,
+    featuredLine: 'Easiest to dial in',
+    ctaLabel: 'Go to Classic',
+  },
   {
     id: 'direct-lever',
     label: 'Direct Lever',
