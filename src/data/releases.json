@@ -75,9 +75,27 @@
     "imageHint": "pure-flow",
     "builds": [
       {
-        "buildVersion": "vIT3_0_30_14",
+        "buildVersion": "vIT3_0_30_15",
         "releaseDate": "2026-05-08",
         "isLatest": true,
+        "notes": "Automated update for Classic.",
+        "downloads": [
+          {
+            "label": "Classic",
+            "dose": "",
+            "variant": "Experimental",
+            "file": "Automatic Pro [Classic] vIT3_0_30_15.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "vit3-experimental-classic",
+            "profileType": "experimental"
+          }
+        ]
+      },
+      {
+        "buildVersion": "vIT3_0_30_14",
+        "releaseDate": "2026-05-08",
+        "isLatest": false,
         "notes": "Automated update for Classic.",
         "downloads": [
           {
