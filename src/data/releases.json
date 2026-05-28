@@ -75,9 +75,27 @@
     "imageHint": "pure-flow",
     "builds": [
       {
+        "buildVersion": "vIT3_0_30_17",
+        "releaseDate": "2026-05-28",
+        "isLatest": true,
+        "notes": "Automated update for Classic for all doses.",
+        "downloads": [
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Classic",
+            "file": "Automatic Pro [Classic] vIT3_0_30_17.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "vit3-no-dose-classic",
+            "profileType": "classic"
+          }
+        ]
+      },
+      {
         "buildVersion": "vIT3_0_30_15",
         "releaseDate": "2026-05-08",
-        "isLatest": true,
+        "isLatest": false,
         "notes": "Automated update for Classic.",
         "downloads": [
           {
