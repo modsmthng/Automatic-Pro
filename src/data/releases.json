@@ -75,9 +75,67 @@
     "imageHint": "pure-flow",
     "builds": [
       {
+        "buildVersion": "vIT3_0_31",
+        "releaseDate": "2026-05-30",
+        "isLatest": true,
+        "notes": "Automated update for Adaptive Pressure for all doses, Classic for all doses, Direct Lever for all doses, 9bar for all doses, and Spring Lever for all doses.",
+        "downloads": [
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Standard basket",
+            "file": "Automatic Pro [9 bar] vIT3_0_31.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "vit3-no-dose-nine-bar",
+            "profileType": "nine-bar"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Standard basket",
+            "file": "Automatic Pro [Adaptive Pressure] vIT3_0_31.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "vit3-no-dose-adaptive-pressure",
+            "profileType": "adaptive-pressure"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Classic",
+            "file": "Automatic Pro [Classic] vIT3_0_31.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "vit3-no-dose-classic",
+            "profileType": "classic"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Standard basket",
+            "file": "Automatic Pro [Direct Lever] vIT3_0_31.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "vit3-no-dose-main",
+            "profileType": "direct-lever"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro [Spring Lever] vIT3_0_31.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "vit3-no-dose-spring-lever",
+            "profileType": "spring-lever"
+          }
+        ]
+      },
+      {
         "buildVersion": "vIT3_0_30_17",
         "releaseDate": "2026-05-28",
-        "isLatest": true,
+        "isLatest": false,
         "notes": "Automated update for Classic for all doses.",
         "downloads": [
           {
