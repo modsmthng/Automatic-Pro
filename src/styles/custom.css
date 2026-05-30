@@ -342,8 +342,30 @@ h4,
   }
 }
 
+.ap-site-footer-links {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+.ap-site-footer-links a {
+  color: var(--sl-color-accent);
+}
+
+.ap-site-footer-sep {
+  margin: 0 0.4rem;
+  color: var(--ap-muted);
+}
+
+.ap-site-cookie-hint {
+  margin: 0.35rem 0 0;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--ap-muted);
+}
+
 .ap-site-credit {
-  margin: 1.25rem 0 1.75rem;
+  margin: 0.5rem 0 1.75rem;
   text-align: center;
   font-size: 0.88rem;
   color: var(--ap-muted);
