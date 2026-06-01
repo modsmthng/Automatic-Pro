@@ -24,7 +24,7 @@ export const profileTypeDefinitions: ProfileTypeDefinition[] = [
     id: 'classic',
     label: 'Classic',
     description:
-      'This profile can be compared somewhat to a 9-bar profile, except that the pre-infusion logic is "smarter and gentler," while the main extraction phase is flow-based. Unlike all other variants, there is no additional blooming phase, which makes the dialing-in process easier, especially with darker roasts.\n\nThe goal is to reach around 6–9 bar during the main extraction phase. Temperature and ratio can be set according to the roaster\'s recommendation. Time can be ignored, since it is regulated by the flow.',
+      'Recommended for older beans or supermarket beans with no known roast date. - This profile variation can be compared somewhat to a 9-bar profile, except that the pre-infusion logic is "smarter and gentler," while the main extraction phase is flow-based. Unlike all other variants, there is no additional blooming phase, which makes the dialing-in process easier, especially with darker roasts. The goal is to reach around 6–9 bar during the main extraction phase. Temperature and ratio can be set according to the roaster\'s recommendation. Time can be ignored, since it is regulated by the flow.',
     featured: true,
     featuredLine: 'Easiest to dial in',
     ctaLabel: 'Go to Classic',
@@ -51,7 +51,7 @@ export const profileTypeDefinitions: ProfileTypeDefinition[] = [
     id: 'adaptive-pressure',
     label: 'Adaptive Pressure',
     description:
-      'Adaptive pressure based main extraction - the newest variation, suitable for all kinds of beans and drinks, and seems to work particularly well with light to medium roasts',
+      'Adaptive pressure based main extraction - the newest variation, suitable for all kinds of beans and drinks, but more prone to errors than others.',
     ctaLabel: 'Go to Adaptive Pressure',
   },
   {
