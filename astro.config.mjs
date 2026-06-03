@@ -23,6 +23,7 @@ export default defineConfig({
       components: {
         Footer: './src/components/SiteFooter.astro',
         SocialIcons: './src/components/HeaderLinks.astro',
+        SiteTitle: './src/components/SiteTitle.astro',
       },
       social: [
         {

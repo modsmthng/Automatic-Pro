@@ -97,9 +97,41 @@ h4,
   transform: translateY(-1px);
 }
 
+.site-title {
+  color: var(--sl-color-text-accent);
+  text-decoration: none;
+  font-size: 1.35rem;
+  font-weight: 600;
+  white-space: nowrap;
+  gap: 0.75rem;
+}
+
 .site-title img {
   display: block;
+  height: calc(var(--sl-nav-height) - 2 * var(--sl-nav-pad-y));
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: 0 50%;
   filter: var(--ap-site-logo-filter);
+}
+
+.ap-site-title-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.ap-site-title-text {
+  line-height: 1.15;
+}
+
+.ap-site-title-sub {
+  font-size: 0.7rem;
+  font-weight: 400;
+  opacity: 0.7;
+  line-height: 1;
 }
 
 .ap-header-links {
