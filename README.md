@@ -4,6 +4,17 @@ Docs site: https://modsmthng.github.io/Automatic-Pro/
 
 GaggiMate: https://github.com/jniebuhr/gaggimate
 
+## License note
+
+This repository uses the [MIT License](./LICENSE) for the project in general.
+
+The legal texts in:
+
+- `src/content/docs/imprint.mdx`
+- `src/content/docs/privacy-policy.mdx`
+
+are excluded from that license and are covered by the note in [LEGAL-NOTICE.md](./LEGAL-NOTICE.md).
+
 ## How to add a Profile
 
 1. Drop new JSON files into `incoming/`.
