@@ -168,13 +168,35 @@ export const releaseFamilies = [...(rawFamilies as Family[])].sort((left, right)
 });
 
 function toNumberTuple(buildVersion: string): number[] {
-  const matchedBuild = buildVersion.match(/v(?:it3|v?3|v?2)?_?([0-9_]+)/i);
+  const normalized = buildVersion.trim();
+  const v3Match = normalized.match(/^v3(?:_(?<suffix>\d+(?:_\d+)*))?$/i);
 
-  if (matchedBuild?.[1]) {
-    return matchedBuild[1].split('_').map((chunk) => Number.parseInt(chunk, 10));
+  if (v3Match) {
+    const suffix = v3Match.groups?.suffix;
+    return [4, ...(suffix ? suffix.split('_').map((chunk) => Number.parseInt(chunk, 10)) : [])];
   }
 
-  const digits = buildVersion.match(/\d+/g);
+  const vit3Match = normalized.match(/^vit3(?:_(?<suffix>\d+(?:_\d+)*))?$/i);
+
+  if (vit3Match) {
+    const suffix = vit3Match.groups?.suffix;
+    return [3, ...(suffix ? suffix.split('_').map((chunk) => Number.parseInt(chunk, 10)) : [])];
+  }
+
+  const v2Match = normalized.match(/^v2(?:_(?<suffix>\d+(?:_\d+)*))?$/i);
+
+  if (v2Match) {
+    const suffix = v2Match.groups?.suffix;
+    return [2, ...(suffix ? suffix.split('_').map((chunk) => Number.parseInt(chunk, 10)) : [])];
+  }
+
+  const labMatch = normalized.match(/^lab(?<suffix>\d+(?:_\d+)*)$/i);
+
+  if (labMatch?.groups?.suffix) {
+    return [1, ...labMatch.groups.suffix.split('_').map((chunk) => Number.parseInt(chunk, 10))];
+  }
+
+  const digits = normalized.match(/\d+/g);
   return digits ? digits.map((chunk) => Number.parseInt(chunk, 10)) : [];
 }
 

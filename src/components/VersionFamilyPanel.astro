@@ -84,7 +84,9 @@ function getProfileTypeImage(groupType: string) {
         ? 'Most coffees can work well with multiple profiles. Choose your starting point below, then download the matching file.'
         : !hasPublishedBuilds
           ? 'No published files yet.'
-          : family.status === 'stable'
+          : family.downloadMode === 'batched' && family.currentDownloadStrategy === 'merged'
+            ? 'Latest available file for each currently published profile type and dose.'
+            : family.status === 'stable'
             ? 'Current files for the active stable build.'
             : family.downloadMode === 'batched'
               ? 'Latest available file for each currently published profile type and dose.'

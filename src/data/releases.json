@@ -8,7 +8,7 @@
     "downloadMode": "simple",
     "summary": "<p>The previous stable version, proven and well tested.</p><p>Works with and without scales.</p>",
     "imageHint": "espresso",
-    "currentDownloadStrategy": "latest-build",
+    "currentDownloadStrategy": "merged",
     "builds": [
       {
         "buildVersion": "2026-01-14",
