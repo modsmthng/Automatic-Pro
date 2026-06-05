@@ -6,6 +6,7 @@ export type ProfileType =
   | 'spring-lever'
   | 'adaptive-pressure'
   | 'nine-bar'
+  | 'ultra-fine'
   | 'user-profile'
   | 'experimental';
 
@@ -13,6 +14,7 @@ export type ProfileTypeDefinition = {
   id: ProfileType;
   label: string;
   description: string;
+  chooserSummary?: string;
   note?: string;
   featured?: boolean;
   featuredLine?: string;
@@ -24,7 +26,8 @@ export const profileTypeDefinitions: ProfileTypeDefinition[] = [
     id: 'classic',
     label: 'Classic',
     description:
-      'Recommended for older beans or supermarket beans with no known roast date. - This profile variation can be compared somewhat to a 9-bar profile, except that the pre-infusion logic is "smarter and gentler," while the main extraction phase is flow-based. Unlike all other variants, there is no additional blooming phase, which makes the dialing-in process easier, especially with darker roasts. The goal is to reach around 6–9 bar during the main extraction phase. Temperature and ratio can be set according to the roaster\'s recommendation. Time can be ignored, since it is regulated by the flow.',
+      'Often works well with older beans, supermarket beans, darker roasts, and coffees with no known roast date. There is no dedicated bloom phase, the main extraction is flow-based, and the profile reacts directly to puck resistance.',
+    chooserSummary: 'Often works well with older beans, supermarket beans, darker roasts and coffees with unknown roast dates.',
     featured: true,
     featuredLine: 'Easiest to dial in',
     ctaLabel: 'Go to Classic',
@@ -33,7 +36,8 @@ export const profileTypeDefinitions: ProfileTypeDefinition[] = [
     id: 'direct-lever',
     label: 'Direct Lever',
     description:
-      'Static declining flow based main extraction - suitable for all kinds of beans and drinks (the original Automatic Pro experience)',
+      'Original Automatic Pro experience. Flow-based extraction that simulates a direct/manual lever machine and reacts directly to puck resistance.',
+    chooserSummary: "Default recommendation for most coffees. If you're unsure where to start, start here.",
     note: 'If this causes issues with a fast pressure drop, switch to one of the other variations.',
     featured: true,
     featuredLine: 'Flow profile',
@@ -42,8 +46,10 @@ export const profileTypeDefinitions: ProfileTypeDefinition[] = [
   {
     id: 'spring-lever',
     label: 'Spring Lever',
-    description: 'Static declining pressure based main extraction - suitable for medium to dark roasts',
-    note: 'If the shot runs too fast, grind finer.',
+    description:
+      'Pressure-based extraction that simulates a traditional spring lever machine with declining pressure throughout the shot.',
+    chooserSummary: 'Try this if Direct Lever loses pressure very quickly or produces overly acidic results.',
+    note: 'Useful if Direct Lever loses pressure very quickly or tastes overly acidic. If the shot runs too fast, grind finer.',
     featuredLine: 'Pressure profile',
     ctaLabel: 'Go to Spring Lever',
   },
@@ -51,14 +57,22 @@ export const profileTypeDefinitions: ProfileTypeDefinition[] = [
     id: 'adaptive-pressure',
     label: 'Adaptive Pressure',
     description:
-      'Adaptive pressure based main extraction - the newest variation, suitable for all kinds of beans and drinks, but more prone to errors than others.',
+      'Experimental pressure-based extraction where pressure adapts to puck resistance. It can reduce acidity for some coffees, but is still actively evolving.',
     ctaLabel: 'Go to Adaptive Pressure',
   },
   {
     id: 'nine-bar',
     label: '9bar',
-    description: 'Static 9 bar pressure based main extraction - good to learn what grind size, ratio and temperature do',
+    description:
+      'Traditional flat-pressure extraction using Automatic Pro pre-extraction logic. It usually needs a finer grind than traditional 9 bar profiles.',
     ctaLabel: 'Go to 9bar',
+  },
+  {
+    id: 'ultra-fine',
+    label: 'Ultra Fine',
+    description:
+      'Experimental profile designed for very fine grind sizes. It is mainly intended for light roasts and aims to reduce perceived acidity while preserving fruit notes.',
+    ctaLabel: 'Go to Ultra Fine',
   },
   {
     id: 'user-profile',
@@ -98,6 +112,7 @@ export type Build = {
 };
 
 export type FamilyDownloadMode = 'simple' | 'batched';
+export type FamilyCurrentDownloadStrategy = 'merged' | 'latest-build';
 
 export type Family = {
   id: string;
@@ -109,6 +124,7 @@ export type Family = {
   summary: string;
   homeFeaturedLine?: string;
   imageHint?: string;
+  currentDownloadStrategy?: FamilyCurrentDownloadStrategy;
   builds: Build[];
 };
 
@@ -121,6 +137,7 @@ export type CurrentDownloadGroup = {
   type: ProfileType;
   label: string;
   description: string;
+  chooserSummary?: string;
   note?: string;
   featured?: boolean;
   featuredLine?: string;
@@ -129,7 +146,26 @@ export type CurrentDownloadGroup = {
   downloads: CurrentDownload[];
 };
 
-export const releaseFamilies = rawFamilies as Family[];
+const publicFamilyOrder = ['v3', 'pure-flow', 'lab', 'v2'];
+
+export const releaseFamilies = [...(rawFamilies as Family[])].sort((left, right) => {
+  const leftIndex = publicFamilyOrder.indexOf(left.slug);
+  const rightIndex = publicFamilyOrder.indexOf(right.slug);
+
+  if (leftIndex === -1 && rightIndex === -1) {
+    return 0;
+  }
+
+  if (leftIndex === -1) {
+    return 1;
+  }
+
+  if (rightIndex === -1) {
+    return -1;
+  }
+
+  return leftIndex - rightIndex;
+});
 
 function toNumberTuple(buildVersion: string): number[] {
   const matchedBuild = buildVersion.match(/v(?:it3|v?3|v?2)?_?([0-9_]+)/i);
@@ -255,6 +291,22 @@ export function getDownloadMetaLine(variant: string, temperatureC: number): stri
 }
 
 export function getCurrentDownloads(family: Family): CurrentDownload[] {
+  if (family.currentDownloadStrategy === 'latest-build') {
+    const latestBuild = getLatestBuild(family);
+
+    if (!latestBuild) {
+      return [];
+    }
+
+    return latestBuild.downloads
+      .map((download) => ({
+        ...download,
+        buildVersion: latestBuild.buildVersion,
+        releaseDate: latestBuild.releaseDate,
+      }))
+      .sort(compareCurrentDownloads);
+  }
+
   const seen = new Set<string>();
   const result: CurrentDownload[] = [];
 
@@ -301,6 +353,7 @@ export function getCurrentDownloadGroups(family: Family): CurrentDownloadGroup[]
     type: definition.id,
     label: definition.label,
     description: definition.description,
+    chooserSummary: definition.chooserSummary,
     note: definition.note,
     featured: definition.featured,
     featuredLine: definition.featuredLine,

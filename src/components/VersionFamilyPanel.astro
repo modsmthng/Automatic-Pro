@@ -16,14 +16,19 @@ const springLeverImagePath = `${base}images/spring-lever.png`;
 
 interface Props {
   family: Family;
+  showHero?: boolean;
+  hideEmptyGroups?: boolean;
 }
 
-const { family } = Astro.props as Props;
+const { family, showHero = true, hideEmptyGroups = false } = Astro.props as Props;
 const latestBuild = getLatestBuild(family);
 const currentDownloads = getCurrentDownloads(family);
 const currentDownloadGroups = family.downloadMode === 'batched' ? getCurrentDownloadGroups(family) : [];
+const visibleDownloadGroups = hideEmptyGroups
+  ? currentDownloadGroups.filter((group) => group.downloads.length > 0)
+  : currentDownloadGroups;
 const hasPublishedBuilds = family.builds.length > 0;
-const highlightFeaturedGroups = !['vit3', 'lab'].includes(family.slug);
+const highlightFeaturedGroups = !['v3', 'lab'].includes(family.slug);
 
 function getProfileTypeImage(groupType: string) {
   if (groupType === 'classic') {
@@ -42,50 +47,71 @@ function getProfileTypeImage(groupType: string) {
 }
 ---
 
-<section class="ap-family-hero">
-  <div>
-    <div class="ap-pill-row">
-      <span class:list={['ap-pill', family.status === 'stable' ? 'ap-pill-stable' : 'ap-pill-testing']}>
-        {family.status === 'stable' ? 'Stable' : 'In testing'}
-      </span>
-    </div>
-    <div class="ap-family-summary" set:html={family.summary} />
-    <p class="ap-family-note">
-      {!latestBuild
-        ? 'No published builds yet.'
-        : family.status === 'stable'
-          ? `Current stable build: ${latestBuild.buildVersion}.`
-          : `Latest family update: ${latestBuild.buildVersion}.`}
-    </p>
-  </div>
+{
+  showHero && (
+    <section class="ap-family-hero">
+      <div>
+        <div class="ap-pill-row">
+          <span class:list={['ap-pill', family.status === 'stable' ? 'ap-pill-stable' : 'ap-pill-testing']}>
+            {family.status === 'stable' ? 'Stable' : 'In testing'}
+          </span>
+        </div>
+        <div class="ap-family-summary" set:html={family.summary} />
+        <p class="ap-family-note">
+          {!latestBuild
+            ? 'No published builds yet.'
+            : family.status === 'stable'
+              ? `Current stable build: ${latestBuild.buildVersion}.`
+              : `Latest family update: ${latestBuild.buildVersion}.`}
+        </p>
+      </div>
 
-  <figure class="ap-photo-card ap-photo-card-tight">
-    <img alt="Espresso in a cup" class="ap-photo-card-image" src={`${base}images/espresso.jpg`} />
-  </figure>
-</section>
+      <figure class="ap-photo-card ap-photo-card-tight">
+        <img alt="Espresso in a cup" class="ap-photo-card-image" src={`${base}images/espresso.jpg`} />
+      </figure>
+    </section>
+  )
+}
 
 <section class="ap-family-section">
   <div class="ap-section-header ap-section-header-stack">
     <div>
       <p class="ap-kicker">Downloads</p>
-      <h2>Variations</h2>
+      <h2>{family.slug === 'v3' ? 'Which profile should I choose?' : 'Variations'}</h2>
     </div>
     <p>
-      {!hasPublishedBuilds
-        ? 'No published files yet.'
-        : family.status === 'stable'
-          ? 'Current files for the active stable build.'
-          : family.downloadMode === 'batched'
-            ? 'Latest available file for each currently published profile type and dose.'
-            : 'Latest available file for each currently published variant.'}
+      {family.slug === 'v3'
+        ? 'Most coffees can work well with multiple profiles. Choose your starting point below, then download the matching file.'
+        : !hasPublishedBuilds
+          ? 'No published files yet.'
+          : family.status === 'stable'
+            ? 'Current files for the active stable build.'
+            : family.downloadMode === 'batched'
+              ? 'Latest available file for each currently published profile type and dose.'
+              : 'Latest available file for each currently published variant.'}
     </p>
   </div>
 
   {
     family.downloadMode === 'batched' ? (
       <>
+        {
+          family.slug === 'v3' && (
+            <div class="ap-inline-download-hint">
+              <span>Dialing in, profile choice, and FAQs in one file.</span>
+              <a
+                class="ap-button ap-button-secondary"
+                download
+                href={`${base}downloads/v3/cheat-sheet/Automatic%20Pro%20v3%20-%20Cheat%20Sheet.pdf`}
+              >
+                Download the v3 Cheat Sheet
+              </a>
+            </div>
+          )
+        }
+
         <nav class="ap-profile-type-nav" aria-label="Profile types">
-          {currentDownloadGroups.map((group) => (
+          {visibleDownloadGroups.map((group) => (
             <a
               class:list={[
                 'ap-profile-type-card',
@@ -102,6 +128,9 @@ function getProfileTypeImage(groupType: string) {
                     </div>
 
                     {group.featuredLine && <p class="ap-profile-type-featured-line">{group.featuredLine}</p>}
+                    {family.slug === 'v3' && group.chooserSummary && (
+                      <p class="ap-profile-type-card-summary">{group.chooserSummary}</p>
+                    )}
                   </div>
 
                   {getProfileTypeImage(group.type) && (
@@ -119,7 +148,7 @@ function getProfileTypeImage(groupType: string) {
         </nav>
 
         <div class="ap-profile-type-sections">
-          {currentDownloadGroups.map((group) => (
+          {visibleDownloadGroups.map((group) => (
             <section class="ap-profile-type-section" id={group.sectionId}>
               <div class="ap-section-header ap-section-header-stack">
                 <div>

@@ -15,11 +15,12 @@ const profileTypeLabels = {
   'spring-lever': 'Spring Lever',
   'adaptive-pressure': 'Adaptive Pressure',
   'nine-bar': '9bar',
+  'ultra-fine': 'Ultra Fine',
   'user-profile': 'User Profile',
   experimental: 'Experimental and Other',
 };
 
-const vit3BatchDefinitions = createBatchedFamilyDefinitions('vit3');
+const v3BatchDefinitions = createBatchedFamilyDefinitions('v3');
 const labBatchDefinitions = createBatchedFamilyDefinitions('lab');
 
 const v2KnownDoseMap = {
@@ -167,17 +168,17 @@ function parseUpload(sourcePath, currentBerlinDate) {
     };
   }
 
-  const vit3Match = parseBatchedFileName(fileName, /v(?:IT)?3(?:_\d+)+/i);
+  const v3Match = parseBatchedFileName(fileName, /v(?:IT)?3(?:_\d+)*/i);
 
-  if (vit3Match?.version) {
+  if (v3Match?.version) {
     return {
       sourcePath,
       fileName,
-      familySlug: 'vit3',
-      buildVersion: vit3Match.version,
+      familySlug: 'v3',
+      buildVersion: v3Match.version,
       releaseDate: currentBerlinDate,
       download: applyProfileTemperature(
-        buildBatchedDownload('vit3', vit3BatchDefinitions, vit3Match.dose, vit3Match.rawTag, vit3Match.trailingText, fileName),
+        buildBatchedDownload('v3', v3BatchDefinitions, v3Match.dose, v3Match.rawTag, v3Match.trailingText, fileName),
         profileTemperatureC
       ),
     };
@@ -200,7 +201,7 @@ function parseUpload(sourcePath, currentBerlinDate) {
   }
 
   throw new Error(
-    `Unsupported filename "${fileName}". Expected a v2 file, a vIT3/v3 file, an LAb file like "Automatic Pro 18g [Direct Lever] LAb0_1.json", or a Pure Flow file like "Pure Flow (10-20g).json".`
+    `Unsupported filename "${fileName}". Expected a v2 file, a v3/vIT3 file, an LAb file like "Automatic Pro 18g [Direct Lever] LAb0_1.json", or a Pure Flow file like "Pure Flow (10-20g).json".`
   );
 }
 
@@ -564,6 +565,13 @@ function createBatchedFamilyDefinitions(prefix) {
       customSlotPrefix: (dose) => `${prefix}-${dose}-nine-bar`,
     },
     {
+      profileType: 'ultra-fine',
+      aliases: ['ultra fine'],
+      defaultVariant: 'Ultra Fine',
+      defaultSlotId: (dose) => `${prefix}-${dose}-ultra-fine`,
+      customSlotPrefix: (dose) => `${prefix}-${dose}-ultra-fine`,
+    },
+    {
       profileType: 'user-profile',
       aliases: ['user profile'],
       defaultVariant: 'User Profile',
@@ -694,6 +702,10 @@ function createAutomatedBuildNote(familySlug, downloads) {
 
   if (familySlug === 'lab') {
     return `Automated LAb update for ${joinNaturalLanguage(items)}.`;
+  }
+
+  if (familySlug === 'v3') {
+    return `Automated v3 release for ${joinNaturalLanguage(items)}.`;
   }
 
   return `Automated update for ${joinNaturalLanguage(items)}.`;

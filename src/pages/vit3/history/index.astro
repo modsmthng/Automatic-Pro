@@ -1,0 +1,6 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+return Astro.redirect(`${base}v3/history/`);
+---

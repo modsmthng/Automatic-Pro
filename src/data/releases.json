@@ -6,8 +6,9 @@
     "futureDisplayName": "Automatic Pro v2",
     "status": "stable",
     "downloadMode": "simple",
-    "summary": "<p>The current stable version, proven and well tested.</p><p>Works with and without scales.</p>",
+    "summary": "<p>The previous stable version, proven and well tested.</p><p>Works with and without scales.</p>",
     "imageHint": "espresso",
+    "currentDownloadStrategy": "latest-build",
     "builds": [
       {
         "buildVersion": "2026-01-14",
@@ -65,19 +66,88 @@
     ]
   },
   {
-    "id": "vit3",
-    "slug": "vit3",
-    "displayName": "Automatic Pro vIT3",
+    "id": "v3",
+    "slug": "v3",
+    "displayName": "Automatic Pro v3",
     "futureDisplayName": "Automatic Pro v3",
-    "status": "testing",
+    "status": "stable",
     "downloadMode": "batched",
-    "summary": "<p>The current in-testing version with ongoing updates and main extraction variations.</p><p>It works across <strong>different basket types</strong>, including regular and step-down baskets, without adjustment.</p><p>Works with and without scales.</p>",
-    "imageHint": "pure-flow",
+    "summary": "<p>The current main release with adaptive phase control and multiple extraction styles.</p><p>Works with and without scales.</p>",
+    "imageHint": "espresso",
+    "currentDownloadStrategy": "latest-build",
     "builds": [
+      {
+        "buildVersion": "v3",
+        "releaseDate": "2026-06-05",
+        "isLatest": true,
+        "notes": "Automated v3 release for Adaptive Pressure for all doses, Classic for all doses, Direct Lever for all doses, 9bar for all doses, Spring Lever for all doses, and Ultra Fine for all doses.",
+        "downloads": [
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Standard basket",
+            "file": "Automatic Pro [9 bar] v3.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "v3-no-dose-nine-bar",
+            "profileType": "nine-bar"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Standard basket",
+            "file": "Automatic Pro [Adaptive Pressure] v3.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "v3-no-dose-adaptive-pressure",
+            "profileType": "adaptive-pressure"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Classic",
+            "file": "Automatic Pro [Classic] v3.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "v3-no-dose-classic",
+            "profileType": "classic"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Standard basket",
+            "file": "Automatic Pro [Direct Lever] v3.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "v3-no-dose-main",
+            "profileType": "direct-lever"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Spring Lever basket",
+            "file": "Automatic Pro [Spring Lever] v3.json",
+            "temperatureC": 93,
+            "notes": "",
+            "slotId": "v3-no-dose-spring-lever",
+            "profileType": "spring-lever"
+          },
+          {
+            "label": "For all doses",
+            "dose": "",
+            "variant": "Ultra Fine",
+            "file": "Automatic Pro [Ultra Fine] v3.json",
+            "temperatureC": 89,
+            "notes": "",
+            "slotId": "v3-no-dose-ultra-fine",
+            "profileType": "ultra-fine"
+          }
+        ]
+      },
       {
         "buildVersion": "vIT3_0_31",
         "releaseDate": "2026-05-30",
-        "isLatest": true,
+        "isLatest": false,
         "notes": "Automated update for Adaptive Pressure for all doses, Classic for all doses, Direct Lever for all doses, 9bar for all doses, and Spring Lever for all doses.",
         "downloads": [
           {
@@ -301,12 +371,12 @@
           {
             "label": "Ultra Fine",
             "dose": "",
-            "variant": "Experimental",
+            "variant": "Ultra Fine",
             "file": "Automatic Pro [Ultra Fine] vIT3_0_30_11.json",
             "temperatureC": 89,
             "notes": "",
             "slotId": "vit3-experimental-ultra-fine",
-            "profileType": "experimental"
+            "profileType": "ultra-fine"
           }
         ]
       },
@@ -804,6 +874,7 @@
     "downloadMode": "simple",
     "summary": "<p>Consistent flow throughout, with only maximum pressure and two small stop parameters controlling the phases.</p><p>Less complex than Automatic Pro because only one flow value is used apart from the first filling, hence the name Pure Flow.</p><p>Works with and without scales.</p>",
     "imageHint": "espresso",
+    "currentDownloadStrategy": "latest-build",
     "builds": [
       {
         "buildVersion": "2026-04-14",

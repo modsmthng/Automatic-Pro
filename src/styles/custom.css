@@ -4,6 +4,7 @@
   --sl-color-accent-low: #f8dfc6;
   --sl-color-accent: #a54d1b;
   --sl-color-accent-high: #5d2205;
+  --sl-content-width: 72rem;
   --sl-font: 'Manrope', sans-serif;
   --sl-font-system: 'Manrope', sans-serif;
   --sl-font-mono: 'IBM Plex Mono', monospace;
@@ -50,6 +51,11 @@ body {
 
 body {
   color: var(--ap-ink);
+}
+
+.main-pane .sl-container {
+  max-width: none;
+  width: 100%;
 }
 
 h1,
@@ -816,6 +822,60 @@ h4,
   gap: 0.75rem;
 }
 
+.ap-profile-type-card-summary {
+  margin: 0.55rem 0 0;
+  color: var(--ap-muted);
+  font-size: 0.96rem;
+  line-height: 1.5;
+  max-width: 40rem;
+}
+
+.ap-inline-download-hint {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 1rem;
+  color: var(--ap-muted);
+}
+
+.ap-choice-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.ap-choice-card,
+.ap-cheat-sheet-card {
+  border: 1px solid var(--ap-line);
+  border-radius: 1.25rem;
+  background: color-mix(in srgb, var(--ap-surface-strong) 92%, transparent);
+  box-shadow: 0 16px 35px -28px rgba(47, 35, 20, 0.55);
+}
+
+.ap-choice-card {
+  padding: 1.15rem;
+}
+
+.ap-choice-card h3,
+.ap-cheat-sheet-copy h2 {
+  margin: 0;
+}
+
+.ap-choice-card p,
+.ap-cheat-sheet-copy p {
+  margin: 0.55rem 0 0;
+  color: var(--ap-muted);
+}
+
+.ap-cheat-sheet-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.15rem;
+}
+
 @media (max-width: 900px) {
   .ap-home-shell,
   .ap-family-hero,
@@ -826,6 +886,8 @@ h4,
   .ap-section-header,
   .ap-profile-type-title-row,
   .ap-build-download-title-row,
+  .ap-inline-download-hint,
+  .ap-cheat-sheet-card,
   .ap-youtube-placeholder,
   .ap-download-row,
   .ap-build-head,

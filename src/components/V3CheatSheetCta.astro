@@ -1,0 +1,22 @@
+---
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+---
+
+<section class="ap-family-section">
+  <div class="ap-cheat-sheet-card">
+    <div class="ap-cheat-sheet-copy">
+      <p class="ap-kicker">Cheat sheet</p>
+      <h2>Download the v3 Cheat Sheet</h2>
+      <p>Includes profile choice, dialing in, profile notes, and FAQs in one file.</p>
+    </div>
+
+    <a
+      class="ap-button ap-button-primary"
+      download
+      href={`${base}downloads/v3/cheat-sheet/Automatic%20Pro%20v3%20-%20Cheat%20Sheet.pdf`}
+    >
+      Download v3 Cheat Sheet
+    </a>
+  </div>
+</section>

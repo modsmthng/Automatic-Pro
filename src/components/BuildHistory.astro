@@ -1,6 +1,6 @@
 ---
 import type { Family } from '../lib/releaseData';
-import { getDownloadPath, getProfileTypeDefinition, getVisibleVariant, sortBuilds } from '../lib/releaseData';
+import { getDownloadPath, getHistoryBuilds, getProfileTypeDefinition, getVisibleVariant } from '../lib/releaseData';
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const { family } = Astro.props as Props;
-const builds = sortBuilds(family.builds);
+const builds = getHistoryBuilds(family);
 const formatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'long',
@@ -24,7 +24,7 @@ const formatter = new Intl.DateTimeFormat('en-US', {
       <p class="ap-kicker">History</p>
       <h2>Build history</h2>
     </div>
-    <p>{family.status === 'stable' ? 'All published stable builds.' : 'All published testing builds.'}</p>
+    <p>{family.status === 'stable' ? 'Older published stable builds.' : 'Older published testing builds.'}</p>
   </div>
 
   {

@@ -37,24 +37,34 @@ export default defineConfig({
         {
           label: 'Versions',
           items: [
-            { slug: 'v2', label: 'Automatic Pro v2' },
-            { slug: 'vit3', label: 'Automatic Pro vIT3' },
-            { slug: 'lab', label: 'LAb' },
+            { slug: 'v3', label: 'Automatic Pro v3' },
             { slug: 'pure-flow', label: 'Pure Flow' },
+            { slug: 'lab', label: 'LAb' },
+            { slug: 'v2', label: 'Automatic Pro v2' },
           ],
         },
         { slug: 'downloads', label: 'Downloads' },
         {
           label: 'Guides',
           items: [
-            { slug: 'quick-start', label: 'Quick Start / Dialing In' },
-            { slug: 'how-automatic-pro-v2-works', label: 'How Automatic Pro v2 Works' },
-            { slug: 'troubleshooting', label: 'Troubleshooting' },
+            { slug: 'quick-start', label: 'Dialing In' },
+            { slug: 'before-your-first-shot', label: 'Before Your First Shot' },
+            { slug: 'faqs', label: 'FAQs' },
+            { slug: 'acknowledgements', label: 'Acknowledgements' },
             {
               label: 'GM Community Espresso Guide',
               link: 'https://marxd262.github.io/GM_Community_Espresso_Guide/',
               attrs: { target: '_blank', rel: 'noreferrer' },
             },
+          ],
+        },
+        { slug: 'watch-automatic-pro', label: 'Watch Automatic Pro' },
+        {
+          label: 'Old Main Version',
+          items: [
+            { slug: 'v2/dialing-in', label: 'Automatic Pro v2 Dialing In' },
+            { slug: 'how-automatic-pro-v2-works', label: 'How Automatic Pro v2 Works' },
+            { slug: 'troubleshooting', label: 'Troubleshooting' },
           ],
         },
       ],
