@@ -831,8 +831,7 @@
     "futureDisplayName": "LAb",
     "status": "testing",
     "downloadMode": "batched",
-    "summary": "<p>LordApoth Laboratory profile family for <strong>low flow pumps</strong> like the Olab Silent Green.</p>",
-    "homeFeaturedLine": "For Olab Silent Green",
+    "summary": "<p>LordApoth Laboratory profile family. All profiles in here are based on the Ideas and knowledge from the Automatic Pro profiles but tuned for machines where a bit less pressure during the beginning phases is desirable.</p>",
     "imageHint": "espresso",
     "builds": [
       {
