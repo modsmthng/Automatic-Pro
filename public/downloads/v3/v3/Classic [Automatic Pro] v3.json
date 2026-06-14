@@ -1,5 +1,5 @@
 {
-  "label": "Automatic Pro [Direct Lever] v3",
+  "label": "Classic [Automatic Pro] v3",
   "type": "pro",
   "description": "If using time mode: stop manually / change last duration. Automatic Pro is a profile family built to automate puck saturation and extraction with clever phase stops, created by modsmthng.",
   "temperature": 93,
@@ -63,7 +63,7 @@
       "pump": {
         "target": "flow",
         "pressure": 2,
-        "flow": 6
+        "flow": 3
       },
       "targets": [
         {
@@ -87,7 +87,7 @@
       "name": "Stabilize Saturate",
       "phase": "preinfusion",
       "valve": 1,
-      "duration": 3,
+      "duration": 2,
       "temperature": 0,
       "transition": {
         "type": "instant",
@@ -109,35 +109,6 @@
           "type": "flow",
           "operator": "gte",
           "value": 1.4
-        }
-      ]
-    },
-    {
-      "name": "Auto Bloom",
-      "phase": "preinfusion",
-      "valve": 1,
-      "duration": 9,
-      "temperature": 0,
-      "transition": {
-        "type": "instant",
-        "duration": 0,
-        "adaptive": true
-      },
-      "pump": {
-        "target": "flow",
-        "pressure": 2,
-        "flow": 6
-      },
-      "targets": [
-        {
-          "type": "volumetric",
-          "operator": "gte",
-          "value": 4
-        },
-        {
-          "type": "pumped",
-          "operator": "gte",
-          "value": 1
         }
       ]
     },
@@ -189,7 +160,7 @@
       "pump": {
         "target": "flow",
         "pressure": 9,
-        "flow": 2.2
+        "flow": 2.4
       }
     },
     {

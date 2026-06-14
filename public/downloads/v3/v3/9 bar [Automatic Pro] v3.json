@@ -1,5 +1,5 @@
 {
-  "label": "Automatic Pro [Adaptive Pressure] v3",
+  "label": "9 bar [Automatic Pro] v3",
   "type": "pro",
   "description": "If using time mode: stop manually / change last duration. Automatic Pro is a profile family built to automate puck saturation and extraction with clever phase stops, created by modsmthng.",
   "temperature": 93,
@@ -125,7 +125,7 @@
       },
       "pump": {
         "target": "flow",
-        "pressure": 2,
+        "pressure": 1.9,
         "flow": 6
       },
       "targets": [
@@ -176,23 +176,6 @@
       ]
     },
     {
-      "name": "Stabilize Extraction",
-      "phase": "brew",
-      "valve": 1,
-      "duration": 2,
-      "temperature": 0,
-      "transition": {
-        "type": "linear",
-        "duration": 1,
-        "adaptive": true
-      },
-      "pump": {
-        "target": "flow",
-        "pressure": 9,
-        "flow": 2
-      }
-    },
-    {
       "name": "Main Extraction",
       "phase": "brew",
       "valve": 1,
@@ -205,8 +188,8 @@
       },
       "pump": {
         "target": "pressure",
-        "pressure": -1,
-        "flow": 6
+        "pressure": 9,
+        "flow": 0
       },
       "targets": [
         {

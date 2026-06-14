@@ -26,6 +26,8 @@ are excluded from that license and are covered by the note in [LEGAL-NOTICE.md](
 
 Format:
 
+- `<batch name><optional extra info> [Automatic Pro] <buildVersion>.json`
+- `<dose> <batch name><optional extra info> [Automatic Pro] <buildVersion>.json`
 - `Automatic Pro <dose> [<batch name><optional extra info>] <buildVersion>.json`
 - `Automatic Pro <dose> <custom name> <buildVersion>.json`
 - `Automatic Pro [<custom name>] <buildVersion>.json`
@@ -43,6 +45,12 @@ If a profile does not contain one of these known batch names, it automatically l
 
 Examples:
 
+- `Classic [Automatic Pro] v3.json`
+- `Direct Lever [Automatic Pro] v3.json`
+- `Spring Lever [Automatic Pro] v3.json`
+- `Adaptive Pressure [Automatic Pro] v3.json`
+- `9 bar [Automatic Pro] v3.json`
+- `Ultra Fine [Automatic Pro] v3.json`
 - `Automatic Pro [Direct Lever] vIT3_0_30_2.json`
 - `Automatic Pro 18g [Direct Lever] vIT3_0_29_5.json`
 - `Automatic Pro 18g [Step-Down, Direct Lever] vIT3_0_29_5.json`

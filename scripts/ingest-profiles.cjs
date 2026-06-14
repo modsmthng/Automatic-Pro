@@ -168,7 +168,9 @@ function parseUpload(sourcePath, currentBerlinDate) {
     };
   }
 
-  const v3Match = parseBatchedFileName(fileName, /v(?:IT)?3(?:_\d+)*/i);
+  const v3Match =
+    parseFamilyMarkerBatchedFileName(fileName, 'Automatic Pro', /v(?:IT)?3(?:_\d+)*/i) ??
+    parseBatchedFileName(fileName, /v(?:IT)?3(?:_\d+)*/i);
 
   if (v3Match?.version) {
     return {
@@ -254,6 +256,34 @@ function parseBatchedFileName(fileName, versionPattern) {
     dose,
     rawTag: '',
     trailingText: [remainder, trailingAfterVersion].filter(Boolean).join(' ').trim(),
+    version: matchedFile.groups.version,
+  };
+}
+
+function parseFamilyMarkerBatchedFileName(fileName, familyMarker, versionPattern) {
+  const escapedFamilyMarker = familyMarker.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const matchedFile = fileName.match(
+    new RegExp(`^(?<before>.+?)\\s+\\[(?<family>${escapedFamilyMarker})\\]\\s+(?<version>${versionPattern.source})(?:\\s+(?<after>.+?))?\\.json$`, 'i')
+  );
+
+  if (!matchedFile?.groups?.version) {
+    return null;
+  }
+
+  const body = (matchedFile.groups.before ?? '').trim();
+  const trailingAfterVersion = (matchedFile.groups.after ?? '').trim();
+  const doseMatch = body.match(/^(?<dose>\d+g)(?:\s+(?<rest>.+))?$/i);
+  const dose = doseMatch?.groups?.dose ?? '';
+  const rawTag = doseMatch ? (doseMatch.groups?.rest ?? '').trim() : body;
+
+  if (!rawTag && !trailingAfterVersion) {
+    return null;
+  }
+
+  return {
+    dose,
+    rawTag,
+    trailingText: trailingAfterVersion,
     version: matchedFile.groups.version,
   };
 }
@@ -670,7 +700,16 @@ function applyUploads(releases, uploads, downloadsRoot) {
     const existingIndex = build.downloads.findIndex((entry) => getSlotKey(entry) === getSlotKey(upload.download));
 
     if (existingIndex >= 0) {
+      const previousFile = build.downloads[existingIndex].file;
       build.downloads[existingIndex] = upload.download;
+
+      if (previousFile && previousFile !== upload.download.file) {
+        const previousPath = path.join(destinationDir, previousFile);
+
+        if (fs.existsSync(previousPath)) {
+          fs.unlinkSync(previousPath);
+        }
+      }
     } else {
       build.downloads.push(upload.download);
     }

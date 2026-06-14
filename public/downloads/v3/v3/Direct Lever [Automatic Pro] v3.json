@@ -1,5 +1,5 @@
 {
-  "label": "Automatic Pro [Spring Lever] v3",
+  "label": "Direct Lever [Automatic Pro] v3",
   "type": "pro",
   "description": "If using time mode: stop manually / change last duration. Automatic Pro is a profile family built to automate puck saturation and extraction with clever phase stops, created by modsmthng.",
   "temperature": 93,
@@ -125,7 +125,7 @@
       },
       "pump": {
         "target": "flow",
-        "pressure": 2,
+        "pressure": 1.9,
         "flow": 6
       },
       "targets": [
@@ -176,41 +176,24 @@
       ]
     },
     {
-      "name": "Check Extraction",
+      "name": "Stabilize Extraction",
       "phase": "brew",
       "valve": 1,
-      "duration": 20,
+      "duration": 2,
       "temperature": 0,
       "transition": {
-        "type": "instant",
-        "duration": 0,
-        "adaptive": false
+        "type": "linear",
+        "duration": 1,
+        "adaptive": true
       },
       "pump": {
-        "target": "pressure",
+        "target": "flow",
         "pressure": 9,
-        "flow": 0
-      },
-      "targets": [
-        {
-          "type": "pressure",
-          "operator": "gte",
-          "value": 8.8
-        },
-        {
-          "type": "volumetric",
-          "operator": "gte",
-          "value": 20
-        },
-        {
-          "type": "pumped",
-          "operator": "gte",
-          "value": 20
-        }
-      ]
+        "flow": 2.2
+      }
     },
     {
-      "name": "Main Extraction",
+      "name": "Extraction",
       "phase": "brew",
       "valve": 1,
       "duration": 90,
@@ -221,9 +204,9 @@
         "adaptive": false
       },
       "pump": {
-        "target": "pressure",
-        "pressure": 2,
-        "flow": 0
+        "target": "flow",
+        "pressure": 9,
+        "flow": 1.8
       },
       "targets": [
         {
