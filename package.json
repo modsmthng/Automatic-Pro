@@ -7,7 +7,10 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "ingest-profiles": "node scripts/ingest-profiles.cjs"
+    "ingest-profiles": "node scripts/ingest-profiles.cjs",
+    "test": "npm run test:legal-content && npm run test:site-modes",
+    "test:legal-content": "node --test tests/legal-content.test.mjs",
+    "test:site-modes": "node scripts/test-site-modes.mjs"
   },
   "keywords": [],
   "author": "",

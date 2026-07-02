@@ -3,15 +3,24 @@ import DefaultFooter from '@astrojs/starlight/components/Footer.astro';
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const routePath = Astro.url.pathname.startsWith(base) ? Astro.url.pathname.slice(base.length) : Astro.url.pathname;
+const routeSegments = routePath.split('/').filter(Boolean);
+const currentPathIsFile = routeSegments.at(-1)?.includes('.') ?? false;
+const routeDepth = routeSegments.length - (currentPathIsFile ? 1 : 0);
+const legalRoot = routeDepth === 0 ? './' : '../'.repeat(routeDepth);
+const legalPagesEnabled = Boolean(import.meta.env.LEGAL_CONTENT_DIR?.trim());
+const legalLinks = `<!-- legal-links:start -->
+<p class="ap-site-footer-links">
+  <a href="${legalRoot}legal/">Imprint</a>
+  <span class="ap-site-footer-sep">·</span>
+  <a href="${legalRoot}privacy/">Privacy Policy</a>
+</p>
+<!-- legal-links:end -->`;
 ---
 
 <DefaultFooter />
 
-<p class="ap-site-footer-links">
-  <a href={`${base}imprint/`}>Imprint</a>
-  <span class="ap-site-footer-sep">·</span>
-  <a href={`${base}privacy-policy/`}>Privacy Policy</a>
-</p>
+{legalPagesEnabled && <Fragment set:html={legalLinks} />}
 
 <p class="ap-site-cookie-hint">This site uses no tracking cookies. Embedded content loads only on your interaction.</p>
 
