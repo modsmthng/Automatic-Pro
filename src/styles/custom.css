@@ -840,6 +840,13 @@ h4,
   color: var(--ap-muted);
 }
 
+.ap-latest-profiles-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}
+
 .ap-choice-grid {
   display: grid;
   gap: 1rem;

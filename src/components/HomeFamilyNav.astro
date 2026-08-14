@@ -1,6 +1,7 @@
 ---
 import VersionCards from './VersionCards.astro';
 import YouTubePlaylistEmbed from './YouTubePlaylistEmbed.astro';
+import LatestProfilesCta from './LatestProfilesCta.astro';
 import { releaseFamilies } from '../lib/releaseData';
 
 const rawBase = import.meta.env.BASE_URL;
@@ -35,6 +36,8 @@ const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
     <img alt="Espresso in a cup" class="ap-photo-card-image" src={`${base}images/espresso.jpg`} />
   </figure>
 </section>
+
+<LatestProfilesCta />
 
 <VersionCards families={releaseFamilies} />
 

@@ -1,0 +1,48 @@
+---
+interface Props {
+  family?: 'v3' | 'pure-flow' | 'both';
+}
+
+const { family = 'both' } = Astro.props as Props;
+
+const automaticProLink = {
+  href: 'https://mybrewfolio.com/profiles/automatic-pro-2',
+  label: 'Open Automatic Pro on MyBrewfolio',
+};
+const pureFlowLink = {
+  href: 'https://mybrewfolio.com/profiles/pure-flow-2',
+  label: 'Open Pure Flow on MyBrewfolio',
+};
+
+const links =
+  family === 'v3' ? [automaticProLink] : family === 'pure-flow' ? [pureFlowLink] : [automaticProLink, pureFlowLink];
+
+const headline =
+  family === 'v3'
+    ? 'Latest Automatic Pro profiles on MyBrewfolio'
+    : family === 'pure-flow'
+      ? 'Latest Pure Flow profiles on MyBrewfolio'
+      : 'Latest profiles on MyBrewfolio';
+
+const copy =
+  family === 'both'
+    ? 'The most up-to-date Automatic Pro and Pure Flow profiles are now published on MyBrewfolio. The JSON files on this site remain available as an archive and alternative.'
+    : 'The most up-to-date profiles are now published on MyBrewfolio. The JSON files on this site remain available as an archive and alternative.';
+---
+
+<section class="ap-family-section">
+  <div class="ap-cheat-sheet-card">
+    <div class="ap-cheat-sheet-copy">
+      <p class="ap-kicker">MyBrewfolio</p>
+      <h2>{headline}</h2>
+      <p>{copy}</p>
+    </div>
+    <div class="ap-latest-profiles-actions">
+      {links.map((link) => (
+        <a class="ap-button ap-button-primary" href={link.href} rel="noreferrer" target="_blank">
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

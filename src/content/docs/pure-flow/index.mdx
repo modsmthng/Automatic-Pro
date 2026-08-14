@@ -4,7 +4,10 @@ description: Stable Pure Flow downloads and the quickest path into the current P
 ---
 
 import VersionFamilyPanel from '../../../components/VersionFamilyPanel.astro';
+import LatestProfilesCta from '../../../components/LatestProfilesCta.astro';
 import { getFamilyBySlug } from '../../../lib/releaseData';
+
+<LatestProfilesCta family="pure-flow" />
 
 <VersionFamilyPanel family={getFamilyBySlug('pure-flow')} />
 

@@ -60,9 +60,7 @@ function getProfileTypeImage(groupType: string) {
         <p class="ap-family-note">
           {!latestBuild
             ? 'No published builds yet.'
-            : family.status === 'stable'
-              ? `Current stable build: ${latestBuild.buildVersion}.`
-              : `Latest family update: ${latestBuild.buildVersion}.`}
+            : `Latest site-hosted build: ${latestBuild.buildVersion}.`}
         </p>
       </div>
 
@@ -87,7 +85,7 @@ function getProfileTypeImage(groupType: string) {
           : family.downloadMode === 'batched' && family.currentDownloadStrategy === 'merged'
             ? 'Latest available file for each currently published profile type and dose.'
             : family.status === 'stable'
-            ? 'Current files for the active stable build.'
+            ? 'Site-hosted files for the active build.'
             : family.downloadMode === 'batched'
               ? 'Latest available file for each currently published profile type and dose.'
               : 'Latest available file for each currently published variant.'}

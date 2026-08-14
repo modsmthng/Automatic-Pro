@@ -7,7 +7,10 @@ import V3DialingInSections from '../../../components/V3DialingInSections.astro';
 import V3BeforeFirstShot from '../../../components/V3BeforeFirstShot.astro';
 import V3FaqSections from '../../../components/V3FaqSections.astro';
 import VersionFamilyPanel from '../../../components/VersionFamilyPanel.astro';
+import LatestProfilesCta from '../../../components/LatestProfilesCta.astro';
 import { getFamilyBySlug } from '../../../lib/releaseData';
+
+<LatestProfilesCta family="v3" />
 
 <VersionFamilyPanel family={getFamilyBySlug('v3')} showHero={false} hideEmptyGroups={true} />
 
